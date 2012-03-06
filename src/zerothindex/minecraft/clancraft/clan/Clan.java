@@ -2,6 +2,8 @@ package zerothindex.minecraft.clancraft.clan;
 
 import java.util.HashSet;
 
+import zerothindex.minecraft.clancraft.Messageable;
+
 /**
  * A Clan has a collection of CMembers and a ClanPlot.
  * 
@@ -12,6 +14,7 @@ public class Clan {
 
 	private HashSet<ClanPlayer> members;
 	private HashSet<ClanPlayer> invites;
+	private HashSet<ClanPlayer> online;
 	
 	private HashSet<Clan> allies;
 	private HashSet<Clan> enemies;
@@ -39,6 +42,13 @@ public class Clan {
 		}
 	}
 	
+	public void checkIn(ClanPlayer member) {
+		online.add(member);
+	}
+	public void checkOut(ClanPlayer member) {
+		online.remove(member);
+	}
+	
 	public void addAlly(Clan ally) {
 		allies.add(ally);
 	}
@@ -62,6 +72,13 @@ public class Clan {
 	
 	public boolean isInvited(ClanPlayer player) {
 		return invites.contains(player);
+	}
+
+	public void messagePlayers(String msg) {
+		for (ClanPlayer p : online) {
+			p.message(msg);
+		}
+		
 	}
 	
 }

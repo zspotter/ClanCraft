@@ -1,0 +1,7 @@
+name: ClanCraft
+version: 0.0
+main: zerothindex.minecraft.clancraft.bukkit.Plugin
+author: zerothindex@gmail.com
+commands:
+  c:
+    description: the root command

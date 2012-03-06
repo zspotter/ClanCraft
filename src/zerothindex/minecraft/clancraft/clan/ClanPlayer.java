@@ -1,13 +1,15 @@
 package zerothindex.minecraft.clancraft.clan;
 
+import zerothindex.minecraft.clancraft.Messageable;
+
 /**
- * Represents a clan member. This is not a wrapper object for Bukkit's Player,
- * although the saved name will be used to identify connected objects.
+ * Represents a clan member. It will try not to be a wrapper for Bukkit's
+ * Player object.
  * 
  * @author zerothindex
  *
  */
-public class ClanPlayer {
+public class ClanPlayer implements Messageable {
 
 	/*
 	 * Static variables
@@ -24,6 +26,7 @@ public class ClanPlayer {
 	 * Private variables
 	 */
 	private String name;
+	private Messageable messageable;
 	private Clan clan;
 	private int chatMode;
 	private long lastLogin;
@@ -36,10 +39,9 @@ public class ClanPlayer {
 	/**
 	 * Creates a default instance of a ClanPlayer
 	 * @param name the name of the player this object represents
-	 * @param clan the clan this ClanPlayer belongs to
 	 */
-	public ClanPlayer(String name, Clan clan) {
-		this(name, clan, ROLE_NORMAL, CHAT_PUBLIC, System.currentTimeMillis());
+	public ClanPlayer(Messageable object) {
+		this(object, null, ROLE_NORMAL, CHAT_PUBLIC, System.currentTimeMillis());
 	}
 	
 	/**
@@ -50,8 +52,9 @@ public class ClanPlayer {
 	 * @param chatMode see ClanPlayer's public static final int variables for values
 	 * @param lastLogin the time in milliseconds (System.currentTimeMillis())
 	 */
-	public ClanPlayer(String name, Clan clan, int role, int chatMode, long lastLogin) {
-		this.name = name;
+	public ClanPlayer(Messageable object, Clan clan, int role, int chatMode, long lastLogin) {
+		this.name = object.getName();
+		this.messageable = object;
 		this.clan = clan;
 		this.chatMode = chatMode;
 		this.lastLogin = lastLogin;
@@ -100,6 +103,17 @@ public class ClanPlayer {
 	
 	public long getLastLogin() {
 		return lastLogin;
+	}
+
+	@Override
+	public void message(String msg) {
+		messageable.message(msg);
+		
+	}
+
+	@Override
+	public Object getObject() {
+		return messageable;
 	}
 	
 	
