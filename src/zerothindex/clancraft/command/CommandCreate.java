@@ -1,6 +1,6 @@
-package zerothindex.minecraft.clancraft.command;
+package zerothindex.clancraft.command;
 
-import zerothindex.minecraft.clancraft.Messageable;
+import zerothindex.clancraft.Messageable;
 
 public class CommandCreate extends CommandBase {
 

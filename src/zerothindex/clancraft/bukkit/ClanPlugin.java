@@ -1,4 +1,4 @@
-package zerothindex.minecraft.clancraft.bukkit;
+package zerothindex.clancraft.bukkit;
 
 import java.util.HashMap;
 
@@ -8,10 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import zerothindex.minecraft.clancraft.Messageable;
-import zerothindex.minecraft.clancraft.clan.ClanManager;
-import zerothindex.minecraft.clancraft.clan.ClanPlayer;
-import zerothindex.minecraft.clancraft.command.CommandManager;
+import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.clan.ClanManager;
+import zerothindex.clancraft.clan.ClanPlayer;
+import zerothindex.clancraft.command.CommandManager;
 
 /**
  * The "main" class of the Bukkit plugin. Because this plugin aims to convert

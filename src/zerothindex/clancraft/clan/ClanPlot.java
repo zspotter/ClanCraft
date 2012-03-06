@@ -1,4 +1,4 @@
-package zerothindex.minecraft.clancraft.clan;
+package zerothindex.clancraft.clan;
 
 import org.bukkit.Location;
 

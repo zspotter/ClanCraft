@@ -1,4 +1,4 @@
-package zerothindex.minecraft.clancraft.command;
+package zerothindex.clancraft.command;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
-import zerothindex.minecraft.clancraft.Messageable;
-import zerothindex.minecraft.clancraft.bukkit.ClanPlugin;
-import zerothindex.minecraft.clancraft.clan.Clan;
-import zerothindex.minecraft.clancraft.clan.ClanComparator;
+import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.bukkit.ClanPlugin;
+import zerothindex.clancraft.clan.Clan;
+import zerothindex.clancraft.clan.ClanComparator;
 
 public class CommandList extends CommandBase {
 

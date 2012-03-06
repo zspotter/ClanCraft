@@ -1,6 +1,6 @@
-package zerothindex.minecraft.clancraft.clan;
+package zerothindex.clancraft.clan;
 
-import zerothindex.minecraft.clancraft.Messageable;
+import zerothindex.clancraft.Messageable;
 
 /**
  * Represents a clan member. It will try not to be a wrapper for Bukkit's

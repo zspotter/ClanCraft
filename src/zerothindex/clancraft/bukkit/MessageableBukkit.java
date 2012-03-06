@@ -1,8 +1,8 @@
-package zerothindex.minecraft.clancraft.bukkit;
+package zerothindex.clancraft.bukkit;
 
 import org.bukkit.command.CommandSender;
 
-import zerothindex.minecraft.clancraft.Messageable;
+import zerothindex.clancraft.Messageable;
 
 /**
  * A wrapper for CommandSenders

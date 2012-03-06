@@ -1,6 +1,6 @@
 name: ClanCraft
 version: 0.0
-main: zerothindex.minecraft.clancraft.bukkit.ClanPlugin
+main: zerothindex.clancraft.bukkit.ClanPlugin
 author: zerothindex@gmail.com
 commands:
   c:

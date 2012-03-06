@@ -1,4 +1,4 @@
-package zerothindex.minecraft.clancraft;
+package zerothindex.clancraft;
 
 /**
  * An interface for something that can be messaged (player, console, etc)

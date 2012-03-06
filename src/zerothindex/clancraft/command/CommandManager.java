@@ -1,9 +1,9 @@
-package zerothindex.minecraft.clancraft.command;
+package zerothindex.clancraft.command;
 
 import java.util.HashSet;
 
-import zerothindex.minecraft.clancraft.Messageable;
-import zerothindex.minecraft.clancraft.bukkit.ClanPlugin;
+import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.bukkit.ClanPlugin;
 
 public class CommandManager {
 
