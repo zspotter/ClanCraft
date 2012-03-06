@@ -8,7 +8,7 @@ public class ClanManager {
 	private HashSet<Clan> clans;
 	
 	public ClanManager() {
-		this(new HashSet<Clan>());
+		clans = new HashSet<Clan>();
 	}
 	
 	public ClanManager(Set<Clan> clans) {

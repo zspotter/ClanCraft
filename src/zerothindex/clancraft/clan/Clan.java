@@ -38,6 +38,7 @@ public class Clan {
 		this.invites = invites;
 		this.allies = allies;
 		this.enemies = enemies;
+		this.online = new HashSet<ClanPlayer>();
 		this.closed = closed;
 		this.plot = plot;
 	}
@@ -46,19 +47,24 @@ public class Clan {
 		newb.setClan(this);
 		members.add(newb);
 		invites.remove(newb);
+		newb.message("You have joined "+getName()+".");
 	}
 	
 	public void kickMember(ClanPlayer member) {
 		if (member.getClan().equals(this)) {
 			member.setClan(null);
+			member.setRole(ClanPlayer.ROLE_NORMAL);
 			members.remove(member);
 			online.remove(member);
+			member.message("You have left "+getName()+".");
 		}
 	}
 	
 	public void disband() {
 		for (ClanPlayer cp : members) {
 			cp.setClan(null);
+			cp.setRole(ClanPlayer.ROLE_NORMAL);
+			cp.message("Your faction has been disbanded.");
 		}
 		members = null;
 		invites = null;

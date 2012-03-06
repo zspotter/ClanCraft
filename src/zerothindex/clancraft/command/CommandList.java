@@ -38,7 +38,7 @@ public class CommandList extends CommandBase {
 
 	@Override
 	public boolean handle(Messageable sender, String[] args) {
-		sender.message("-Clans-");
+		sender.message("-Clan List-");
 		List<Clan> clans = new ArrayList<Clan>();
 		if (ClanPlugin.getInstance().getClanManager().getClans() != null) {
 			clans.addAll(ClanPlugin.getInstance().getClanManager().getClans());
