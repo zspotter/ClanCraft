@@ -7,7 +7,7 @@ package zerothindex.minecraft.clancraft.clan;
  * @author zerothindex
  *
  */
-public class CMember {
+public class ClanPlayer {
 
 	/*
 	 * Static variables
@@ -34,23 +34,23 @@ public class CMember {
 	 */
 	
 	/**
-	 * Creates a default instance of a CMember
+	 * Creates a default instance of a ClanPlayer
 	 * @param name the name of the player this object represents
-	 * @param clan the clan this CMember belongs to. Should not be null.
+	 * @param clan the clan this ClanPlayer belongs to
 	 */
-	public CMember(String name, Clan clan) {
+	public ClanPlayer(String name, Clan clan) {
 		this(name, clan, ROLE_NORMAL, CHAT_PUBLIC, System.currentTimeMillis());
 	}
 	
 	/**
 	 * A complete constructor
 	 * @param name the player's name (must match Bukkit Player's name exactly)
-	 * @param clan should not ever be null
-	 * @param role see CMember's public static final int variables for values
-	 * @param chatMode see CMember's public static final int variables for values
+	 * @param clan
+	 * @param role see ClanPlayer's public static final int variables for values
+	 * @param chatMode see ClanPlayer's public static final int variables for values
 	 * @param lastLogin the time in milliseconds (System.currentTimeMillis())
 	 */
-	public CMember(String name, Clan clan, int role, int chatMode, long lastLogin) {
+	public ClanPlayer(String name, Clan clan, int role, int chatMode, long lastLogin) {
 		this.name = name;
 		this.clan = clan;
 		this.chatMode = chatMode;
