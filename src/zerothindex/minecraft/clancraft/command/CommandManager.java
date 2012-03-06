@@ -4,8 +4,10 @@ import java.util.HashSet;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 
 import zerothindex.minecraft.clancraft.Messageable;
+import zerothindex.minecraft.clancraft.bukkit.ClanPlugin;
 import zerothindex.minecraft.clancraft.clan.ClanPlayer;
 
 public class CommandManager {
@@ -20,18 +22,21 @@ public class CommandManager {
 	
 	
 	public void handle(Messageable sender, String[] args) {
-		if (args.length == 1 || args.length == 0) {
+		
+		ClanPlugin.getInstance().log(args.toString());
+		
+		if (args.length == 0) {
 			commandHome.handle(sender, args);
 			return;
 		} 
 		
 		for (CommandBase cmd : commands) {
-			if (cmd.getName().equalsIgnoreCase(args[2])) {
+			if (cmd.getName().equalsIgnoreCase(args[0])) {
 				cmd.handle(sender, args);
 				return;
 			}
 		}
 		
-		sender.message("Unkown command \""+args[2]+"\"");
+		sender.message("Unkown command \""+args[0]+"\"");
 	}
 }

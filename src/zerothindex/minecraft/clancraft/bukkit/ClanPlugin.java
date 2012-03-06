@@ -24,18 +24,21 @@ import zerothindex.minecraft.clancraft.command.CommandManager;
  * @author zerothindex
  *
  */
-public class Plugin extends JavaPlugin {
+public class ClanPlugin extends JavaPlugin {
 	
 	private ClanManager clanManager;
 	private CommandManager commandManager;
 	
 	private HashMap<Player, ClanPlayer> players;
 	
+	private static ClanPlugin instance;
+	
 	/**
 	 * Called when the plugin is enabled.
 	 */
 	public void onEnable() {
-		log("Enabling "+this.getDescription().getFullName()+"...");
+		instance = this;
+		//log("Enabling "+this.getDescription().getFullName()+"...");
 		
 		PluginManager pm = getServer().getPluginManager();
 	    //pm.registerEvents(new DEPListener(), this);
@@ -44,13 +47,14 @@ public class Plugin extends JavaPlugin {
 		
 		clanManager = new ClanManager();
 		commandManager = new CommandManager();
+		
 	}
 	
 	/**
 	 * Called when the plugin is disabled.
 	 */
 	public void onDisable() {
-		log("Disabling "+this.getDescription().getFullName()+"...");
+		//log("Disabling "+this.getDescription().getFullName()+"...");
 	}
 	
 	/**
@@ -63,6 +67,9 @@ public class Plugin extends JavaPlugin {
     	return true; 
     }
 
+    public static ClanPlugin getInstance() {
+    	return instance;
+    }
 
 	/**
 	 * Turns a Bukkit Player into a ClanPlayer
