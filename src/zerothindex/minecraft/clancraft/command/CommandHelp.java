@@ -1,14 +1,12 @@
 package zerothindex.minecraft.clancraft.command;
 
-import org.bukkit.command.CommandSender;
-
 import zerothindex.minecraft.clancraft.Messageable;
 
 public class CommandHelp extends CommandBase {
 
 	@Override
 	public String getName() {
-		return "c";
+		return "help";
 	}
 
 	@Override

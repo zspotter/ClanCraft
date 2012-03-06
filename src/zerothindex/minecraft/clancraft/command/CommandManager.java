@@ -13,6 +13,7 @@ public class CommandManager {
 	public CommandManager() {
 		commands = new HashSet<CommandBase>();
 		commandHelp = new CommandHelp();
+		commands.add(commandHelp);
 		
 		commands.add(new CommandCreate());
 		commands.add(new CommandList());
@@ -32,6 +33,7 @@ public class CommandManager {
 					return;
 				} else {
 					sender.message("Usage: "+cmd.getUsage());
+					return;
 				}
 			}
 		}
