@@ -1,6 +1,7 @@
 package zerothindex.clancraft.command;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import zerothindex.clancraft.Messageable;
 
@@ -16,6 +17,7 @@ public class CommandManager {
 		
 		commands.add(new CommandCreate());
 		commands.add(new CommandList());
+		commands.add(new CommandChatMode());
 	}
 	
 	
@@ -38,5 +40,9 @@ public class CommandManager {
 		}
 		
 		sender.message("Unkown command \""+args[0]+"\"");
+	}
+	
+	public Set<CommandBase> getCommands() {
+		return commands;
 	}
 }

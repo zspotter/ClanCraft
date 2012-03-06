@@ -1,5 +1,6 @@
 package zerothindex.clancraft.command;
 
+import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.Messageable;
 
 public class CommandHelp extends CommandBase {
@@ -31,8 +32,25 @@ public class CommandHelp extends CommandBase {
 
 	@Override
 	public boolean handle(Messageable sender, String[] args) {
-		sender.message("-ClanCraft- Nothing to see here!");
-		return true;
+		if (args.length == 1) {
+			sender.message("-ClanCraft-");
+			sender.message(" (Type \"/help <command> for more information.)");
+			for (CommandBase cmd : ClanPlugin.getInstance().getCommandManager().getCommands()) {
+				sender.message(" "+cmd.getName()+" - "+cmd.getDescription());
+			}
+			return true;
+		} else if (args.length == 2) {
+			for (CommandBase cmd : ClanPlugin.getInstance().getCommandManager().getCommands()) {
+				if (args[1].equalsIgnoreCase(cmd.getName())) {
+					sender.message("-ClanCraft-");
+					sender.message(" "+cmd.getName()+" - "+cmd.getDescription());
+					sender.message(" "+cmd.getUsage());
+					return true;
+				}
+			}
+		}
+		
+		return false;
 		
 	}
 

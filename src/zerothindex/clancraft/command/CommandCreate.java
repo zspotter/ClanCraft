@@ -47,6 +47,7 @@ public class CommandCreate extends CommandBase {
 			if (cp == null) {
 				cp = new ClanPlayer(sender);
 				ClanPlugin.getInstance().addClanPlayer(cp);
+				cp.logIn();
 			}
 			c.addMember(cp);
 			cp.setRole(ClanPlayer.ROLE_LEADER);

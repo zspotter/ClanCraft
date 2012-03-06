@@ -42,7 +42,7 @@ public class ClanPlayer implements Messageable {
 	 * @param name the name of the player this object represents
 	 */
 	public ClanPlayer(Messageable object) {
-		this(object, null, ROLE_NORMAL, CHAT_PUBLIC, System.currentTimeMillis());
+		this(object, null, ROLE_NORMAL, CHAT_PUBLIC, System.currentTimeMillis(), false);
 	}
 	
 	/**
@@ -53,13 +53,14 @@ public class ClanPlayer implements Messageable {
 	 * @param chatMode see ClanPlayer's public static final int variables for values
 	 * @param lastLogin the time in milliseconds (System.currentTimeMillis())
 	 */
-	public ClanPlayer(Messageable object, Clan clan, int role, int chatMode, long lastLogin) {
+	public ClanPlayer(Messageable object, Clan clan, int role, int chatMode, long lastLogin, boolean isOnline) {
 		this.name = object.getName();
 		this.messageable = object;
 		this.clan = clan;
 		this.chatMode = chatMode;
 		this.lastLogin = lastLogin;
 		this.role = role;
+		this.isOnline = isOnline;
 	}
 	
 	/*
