@@ -5,6 +5,7 @@ import java.util.HashMap;
 import zerothindex.clancraft.clan.ClanManager;
 import zerothindex.clancraft.clan.ClanPlayer;
 import zerothindex.clancraft.command.CommandManager;
+import zerothindex.clancraft.event.ClanEventManager;
 
 public class ClanPlugin {
 	
@@ -13,6 +14,7 @@ public class ClanPlugin {
 	private String name;
 	private CommandManager commandManager;
 	private ClanManager clanManager;
+	private ClanEventManager clanEventManager;
 	
 	private HashMap<String, ClanPlayer> players;
 	
@@ -24,6 +26,7 @@ public class ClanPlugin {
 		this.name = name;
 		commandManager = new CommandManager();
 		clanManager = new ClanManager();
+		clanEventManager = new ClanEventManager();
 		players = new HashMap<String, ClanPlayer>();
 		instance = this;
 	}
@@ -44,6 +47,10 @@ public class ClanPlugin {
 	
 	public ClanManager getClanManager() {
 		return clanManager;
+	}
+	
+	public ClanEventManager getClanEventManager() {
+		return clanEventManager;
 	}
 	
 	/**
@@ -67,6 +74,13 @@ public class ClanPlugin {
 			players.put(cp.getName(), cp);
 			return true;
 		}
+	}
+	
+	public void messageAll(String string) {
+		for (ClanPlayer player : players.values()) {
+			player.message(string);
+		}
+		
 	}
 	
 	public void log(String str) {

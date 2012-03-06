@@ -47,6 +47,7 @@ public class Clan {
 		newb.setClan(this);
 		members.add(newb);
 		invites.remove(newb);
+		if (newb.isOnline()) online.add(newb);
 		newb.message("You have joined "+getName()+".");
 	}
 	
@@ -79,9 +80,18 @@ public class Clan {
 		return invites.contains(player);
 	}
 
-	public void messagePlayers(String msg) {
+	public void messageClan(String msg) {
 		for (ClanPlayer p : online) {
 			p.message(msg);
+		}
+	}
+	
+	public void messageAllies(String msg) {
+		for (ClanPlayer p : online) {
+			p.message(msg);
+		}
+		for (Clan a : allies) {
+			a.messageClan(msg);
 		}
 	}
 	

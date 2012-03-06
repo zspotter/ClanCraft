@@ -2,10 +2,12 @@ package zerothindex.clancraft.bukkit;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import zerothindex.clancraft.ClanPlugin;
+import zerothindex.clancraft.clan.ClanPlayer;
 
 /**
  * The "main" class of the Bukkit plugin. Because this plugin aims to convert
@@ -26,11 +28,9 @@ public class BukkitClanPlugin extends JavaPlugin {
 	 * Called when the plugin is enabled.
 	 */
 	public void onEnable() {
-		
-		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(new BukkitPlayerListener(), this);
-		
 		clanPlugin = new ClanPlugin(this.getDescription().getName());
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(new BukkitPlayerListener(this), this);
 		
 	}
 	
@@ -49,6 +49,20 @@ public class BukkitClanPlugin extends JavaPlugin {
     		ClanPlugin.getInstance().getCommandManager().handle(new MessageableBukkit(sender), args);
     	}
     	return true; 
+    }
+    
+    /**
+     * Gets an existing or creates a new ClanPlayer for the given Player
+     * @param p a Player
+     * @return a ClanPlayer
+     */
+    public ClanPlayer getClanPlayer(Player p) {
+    	ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(p.getName());
+		if (cp == null) {
+			cp = new ClanPlayer(new MessageableBukkit(p));
+			ClanPlugin.getInstance().addClanPlayer(cp);
+		}
+		return cp;
     }
 
 }
