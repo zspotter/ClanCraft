@@ -1,5 +1,5 @@
 package zerothindex.clancraft.bukkit;
 
-public class CPlayerListener {
+public class BukkitBlockListener {
 
 }

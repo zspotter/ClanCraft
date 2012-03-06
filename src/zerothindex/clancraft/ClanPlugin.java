@@ -28,6 +28,12 @@ public class ClanPlugin {
 		instance = this;
 	}
 	
+	/**
+	 * Safely destructs the object
+	 */
+	public void disable() {		
+	}
+	
 	public static ClanPlugin getInstance() {
 		return instance;
 	}

@@ -3,7 +3,7 @@ package zerothindex.clancraft.clan;
 import java.util.HashSet;
 
 /**
- * A Clan has a collection of CMembers and a ClanPlot.
+ * A Clan has a collection of ClanPlayers and a ClanPlot.
  * 
  * @author zerothindex
  *

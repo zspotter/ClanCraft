@@ -1,5 +1,5 @@
 package zerothindex.clancraft.bukkit;
 
-public class CEntityListener {
+public class BukkitEntityListener {
 
 }

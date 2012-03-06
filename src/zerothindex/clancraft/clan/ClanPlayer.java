@@ -111,11 +111,11 @@ public class ClanPlayer implements Messageable {
 	}
 	public void logIn() {
 		isOnline = true;
-		clan.checkIn(this);
+		if (clan != null) clan.checkIn(this);
 	}
 	public void logOut() {
 		isOnline = false;
-		clan.checkOut(this);
+		if (clan != null) clan.checkOut(this);
 	}
 
 	@Override

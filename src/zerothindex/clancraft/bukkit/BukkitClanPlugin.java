@@ -26,10 +26,9 @@ public class BukkitClanPlugin extends JavaPlugin {
 	 * Called when the plugin is enabled.
 	 */
 	public void onEnable() {
-		//log("Enabling "+this.getDescription().getFullName()+"...");
 		
 		PluginManager pm = getServer().getPluginManager();
-	    //pm.registerEvents(new DEPListener(), this);
+		pm.registerEvents(new BukkitPlayerListener(), this);
 		
 		clanPlugin = new ClanPlugin(this.getDescription().getName());
 		
@@ -39,7 +38,7 @@ public class BukkitClanPlugin extends JavaPlugin {
 	 * Called when the plugin is disabled.
 	 */
 	public void onDisable() {
-		//log("Disabling "+this.getDescription().getFullName()+"...");
+		clanPlugin.disable();
 	}
 	
 	/**
@@ -47,13 +46,9 @@ public class BukkitClanPlugin extends JavaPlugin {
 	 */
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
     	if(cmd.getName().equalsIgnoreCase("c")){
-    		getClanPlugin().getCommandManager().handle(new MessageableBukkit(sender), args);
+    		ClanPlugin.getInstance().getCommandManager().handle(new MessageableBukkit(sender), args);
     	}
     	return true; 
-    }
-    
-    public static ClanPlugin getClanPlugin() {
-    	return clanPlugin;
     }
 
 }
