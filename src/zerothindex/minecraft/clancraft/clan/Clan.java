@@ -11,6 +11,9 @@ import zerothindex.minecraft.clancraft.Messageable;
  *
  */
 public class Clan {
+	
+	private String name;
+	private String description;
 
 	private HashSet<ClanPlayer> members;
 	private HashSet<ClanPlayer> invites;
@@ -19,14 +22,26 @@ public class Clan {
 	private HashSet<Clan> allies;
 	private HashSet<Clan> enemies;
 	
+	private boolean closed;
+	
 	private ClanPlot plot;
 	
 	public Clan() {
-		members = new HashSet<ClanPlayer>();
-		invites = new HashSet<ClanPlayer>();
-		allies = new HashSet<Clan>();
-		enemies = new HashSet<Clan>();
-		plot = null;
+		this("New Clan", "Default description.", new HashSet<ClanPlayer>(), new HashSet<ClanPlayer>(), 
+				new HashSet<ClanPlayer>(), new HashSet<Clan>(), new HashSet<Clan>(), true, new ClanPlot());
+		
+	}
+	
+	public Clan(String name, String desc, HashSet<ClanPlayer> members, HashSet<ClanPlayer> invites, HashSet<ClanPlayer> online,
+			HashSet<Clan> allies, HashSet<Clan> enemies, boolean closed, ClanPlot plot) {
+		this.name = name;
+		this.description = desc;
+		this.members = members;
+		this.invites = invites;
+		this.allies = allies;
+		this.enemies = enemies;
+		this.closed = closed;
+		this.plot = plot;
 	}
 	
 	public void addMember(ClanPlayer newb) {
@@ -39,7 +54,51 @@ public class Clan {
 		if (member.getClan().equals(this)) {
 			member.setClan(null);
 			members.remove(member);
+			online.remove(member);
 		}
+	}
+	
+	public void disband() {
+		for (ClanPlayer cp : members) {
+			cp.setClan(null);
+		}
+		members = null;
+		invites = null;
+		online = null;
+		allies = null;
+		enemies = null;
+		closed = true;
+		plot.unclaim();
+	}
+
+	public boolean isInvited(ClanPlayer player) {
+		return invites.contains(player);
+	}
+
+	public void messagePlayers(String msg) {
+		for (ClanPlayer p : online) {
+			p.message(msg);
+		}
+	}
+	
+	public int getSize() {
+		return members.size();
+	}
+	public int getOnlineSize() {
+		return online.size();
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String str) {
+		name = str;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String str) {
+		description = str;
 	}
 	
 	public void checkIn(ClanPlayer member) {
@@ -70,15 +129,11 @@ public class Clan {
 		invites.remove(player);
 	}
 	
-	public boolean isInvited(ClanPlayer player) {
-		return invites.contains(player);
+	public boolean isClosed() {
+		return closed;
 	}
-
-	public void messagePlayers(String msg) {
-		for (ClanPlayer p : online) {
-			p.message(msg);
-		}
-		
+	public void setClosed(boolean cls) {
+		closed = cls;
 	}
 	
 }

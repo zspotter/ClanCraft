@@ -37,6 +37,12 @@ public class ClanPlot {
 		return plot;
 	}
 	
+	public void unclaim() {
+		spawn = null;
+		plot = null;
+		radius = -1;
+	}
+	
 	public void setRadius(int r) {
 
 	}

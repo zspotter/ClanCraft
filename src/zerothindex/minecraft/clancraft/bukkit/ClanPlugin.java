@@ -71,6 +71,14 @@ public class ClanPlugin extends JavaPlugin {
     	return instance;
     }
 
+    public ClanManager getClanManager() {
+    	return clanManager;
+    }
+    public CommandManager getCommandManager() {
+    	return commandManager;
+    }
+    
+    
 	/**
 	 * Turns a Bukkit Player into a ClanPlayer
 	 * @param p the Player

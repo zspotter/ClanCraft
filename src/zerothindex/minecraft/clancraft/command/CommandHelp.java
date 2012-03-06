@@ -4,7 +4,7 @@ import org.bukkit.command.CommandSender;
 
 import zerothindex.minecraft.clancraft.Messageable;
 
-public class CommandHome extends CommandBase {
+public class CommandHelp extends CommandBase {
 
 	@Override
 	public String getName() {
@@ -32,8 +32,9 @@ public class CommandHome extends CommandBase {
 	}
 
 	@Override
-	public void handle(Messageable sender, String[] args) {
-		sender.message("-ClanCraft-\nNothing to see here!");
+	public boolean handle(Messageable sender, String[] args) {
+		sender.message("-ClanCraft- Nothing to see here!");
+		return true;
 		
 	}
 

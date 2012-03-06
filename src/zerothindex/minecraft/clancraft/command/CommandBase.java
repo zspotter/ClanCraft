@@ -14,5 +14,5 @@ public abstract class CommandBase {
 	
 	public abstract boolean adminOnly();
 	
-	public abstract void handle(Messageable sender, String[] args);
+	public abstract boolean handle(Messageable sender, String[] args);
 }

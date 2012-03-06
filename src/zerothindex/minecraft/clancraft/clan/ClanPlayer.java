@@ -31,6 +31,7 @@ public class ClanPlayer implements Messageable {
 	private int chatMode;
 	private long lastLogin;
 	private int role;
+	private boolean isOnline;
 	
 	/*
 	 * Constructors
@@ -103,6 +104,18 @@ public class ClanPlayer implements Messageable {
 	
 	public long getLastLogin() {
 		return lastLogin;
+	}
+	
+	public boolean isOnline() {
+		return isOnline;
+	}
+	public void logIn() {
+		isOnline = true;
+		clan.checkIn(this);
+	}
+	public void logOut() {
+		isOnline = false;
+		clan.checkOut(this);
 	}
 
 	@Override
