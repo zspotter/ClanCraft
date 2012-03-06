@@ -25,4 +25,9 @@ public interface Messageable {
 	 */
 	public String getName();
 	
+	/**
+	 * @return true if this is an in-game player
+	 */
+	public boolean isPlayer();
+	
 }

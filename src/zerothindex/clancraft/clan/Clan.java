@@ -2,8 +2,6 @@ package zerothindex.clancraft.clan;
 
 import java.util.HashSet;
 
-import zerothindex.clancraft.Messageable;
-
 /**
  * A Clan has a collection of CMembers and a ClanPlot.
  * 

@@ -128,6 +128,11 @@ public class ClanPlayer implements Messageable {
 	public Object getObject() {
 		return messageable;
 	}
+
+	@Override
+	public boolean isPlayer() {
+		return true;
+	}
 	
 	
 }

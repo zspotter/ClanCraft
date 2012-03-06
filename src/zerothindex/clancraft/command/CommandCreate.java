@@ -1,6 +1,7 @@
 package zerothindex.clancraft.command;
 
 import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.clan.Clan;
 
 public class CommandCreate extends CommandBase {
 
@@ -34,7 +35,16 @@ public class CommandCreate extends CommandBase {
 		if (args.length != 2) {
 			return false;
 		}
-		sender.message("Created the clan \""+args[1]+"\"");
+		sender.message("Created the clan \""+args[1]+"\".");
+		Clan c = new Clan();
+		c.setName(args[1]);
+		c.setDescription("Change the defualt description with the \"c desc\" command.");
+		
+		if (sender.isPlayer()) {
+			
+			
+		}
+		
 		return true;
 		
 	}

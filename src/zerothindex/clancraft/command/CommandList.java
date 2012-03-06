@@ -1,13 +1,11 @@
 package zerothindex.clancraft.command;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
 
+import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.Messageable;
-import zerothindex.clancraft.bukkit.ClanPlugin;
+import zerothindex.clancraft.bukkit.BukkitClanPlugin;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanComparator;
 

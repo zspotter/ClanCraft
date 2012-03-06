@@ -3,7 +3,6 @@ package zerothindex.clancraft.command;
 import java.util.HashSet;
 
 import zerothindex.clancraft.Messageable;
-import zerothindex.clancraft.bukkit.ClanPlugin;
 
 public class CommandManager {
 

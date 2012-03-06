@@ -1,6 +1,7 @@
 package zerothindex.clancraft.bukkit;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import zerothindex.clancraft.Messageable;
 
@@ -31,5 +32,12 @@ public class MessageableBukkit implements Messageable {
 	public String getName() {
 		return sender.getName();
 	}
+
+	@Override
+	public boolean isPlayer() {
+		return (sender instanceof Player);
+	}
+	
+	
 
 }

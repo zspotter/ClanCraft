@@ -2,6 +2,11 @@
 
 A work in progress.
 
+== Note to collaborators! ==
+If you are importing anything that has "bukkit" in the path, you are designing
+something wrong! The only Bukkit specific interaction should be taking place in
+the zerothindex.clancraft.bukkit package. 
+
 == Contact ==
 Feel free to email [zeroth index _at_ gmail _dot_ com].
 
