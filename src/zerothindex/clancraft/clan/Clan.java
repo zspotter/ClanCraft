@@ -26,7 +26,7 @@ public class Clan {
 	
 	public Clan() {
 		this("New Clan", "Default description.", new HashSet<ClanPlayer>(), new HashSet<ClanPlayer>(), 
-				new HashSet<ClanPlayer>(), new HashSet<Clan>(), new HashSet<Clan>(), true, new ClanPlot());
+				new HashSet<ClanPlayer>(), new HashSet<Clan>(), new HashSet<Clan>(), true, null);
 		
 	}
 	

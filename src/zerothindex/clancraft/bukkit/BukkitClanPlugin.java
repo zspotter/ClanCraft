@@ -3,8 +3,11 @@ package zerothindex.clancraft.bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.clan.ClanPlayer;
@@ -23,6 +26,7 @@ import zerothindex.clancraft.clan.ClanPlayer;
 public class BukkitClanPlugin extends JavaPlugin {
 	
 	private static ClanPlugin clanPlugin;
+	private static WorldGuardPlugin worldGuard;
 	
 	/**
 	 * Called when the plugin is enabled.
@@ -32,6 +36,15 @@ public class BukkitClanPlugin extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BukkitPlayerListener(this), this);
 		
+		Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
+	    // WorldGuard may not be loaded
+	    if (plugin != null && (plugin instanceof WorldGuardPlugin)) {
+	    	worldGuard = (WorldGuardPlugin) plugin;
+	    } else {
+	    	ClanPlugin.getInstance().log("WorldGuard not found! Disabling ClanCraft...");
+	    	this.getServer().getPluginManager().disablePlugin(this);
+	    }
+		
 	}
 	
 	/**
@@ -39,6 +52,13 @@ public class BukkitClanPlugin extends JavaPlugin {
 	 */
 	public void onDisable() {
 		clanPlugin.disable();
+	}
+	
+	/**
+	 * @return world guard
+	 */
+	public static WorldGuardPlugin getWorldGuardPlugin() {
+		return worldGuard;
 	}
 	
 	/**

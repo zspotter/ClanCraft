@@ -2,6 +2,7 @@ name: ClanCraft
 version: 0.0
 main: zerothindex.clancraft.bukkit.BukkitClanPlugin
 author: zerothindex@gmail.com
+softdepend: [WorldGuard]
 commands:
   c:
     description: the root command

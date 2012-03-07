@@ -1,49 +1,51 @@
 package zerothindex.clancraft.clan;
 
-import org.bukkit.Location;
-
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-
 /**
- * This class holds a land plot and a "home location". Because this class
- * is very specific to the game world, it will interact with Bukkit specifics.
+ * This class holds a land plot and a "home location". It will be extended
+ * by "platform specific" classes (AKA Bukkit). The land should be managed
+ * and protected by the object independantly from the rest of the game.
  * 
  * @author zerothindex
  *
  */
-public class ClanPlot {
-
-	// a Location to spawn at
-	private Location spawn;
-	// WorldGuard's Region 
-	private ProtectedRegion plot;
-	// radius of the plot
-	private int radius;
+public abstract class ClanPlot {
 	
-	public ClanPlot() {
-		spawn = null;
-		plot = null;
-		radius = -1;
-	}
+	/**
+	 * Set the Clan's respawn position to a given point in a given world
+	 * @param world the name of the world
+	 * @param x coord
+	 * @param y coord
+	 * @param z coord
+	 */
+	public abstract void setSpawn(String world, double x, double y, double z);
 	
-	public void setSpawn(Location s) {
-		spawn = s;
-	}
+	/**
+	 * Set the Clan's center of territory to a given point in a given world
+	 * @param world the name of the world
+	 * @param x coord
+	 * @param y coord
+	 * @param z coord
+	 */
+	public abstract void setCenter(String world, double x, double y, double z);
 	
-	public void setPlot(ProtectedRegion p) {
-		plot = p;
-	}
-	public ProtectedRegion getPlot() {
-		return plot;
-	}
+	/**
+	 * @return the Clan which this plot protects
+	 */
+	public abstract Clan getClan();
 	
-	public void unclaim() {
-		spawn = null;
-		plot = null;
-		radius = -1;
-	}
+	/**
+	 * Stop protecting and forget the territory
+	 */
+	public abstract void unclaim();
 	
-	public void setRadius(int r) {
-
-	}
+	/**
+	 * The radius of a circle to protect around the center
+	 * @param r
+	 */
+	public abstract void setRadius(int r);
+	
+	/**
+	 * @return the radius being protected around the center
+	 */
+	public abstract int getRadius();
 }
