@@ -5,26 +5,26 @@ import zerothindex.clancraft.Messageable;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 
-public class CommandCreate extends CommandBase {
+public class CommandJoin extends CommandBase{
 
 	@Override
 	public String getName() {
-		return "create";
+		return "join";
 	}
 
 	@Override
 	public String getDescription() {
-		return "creates a new clan";
+		return "join the given clan";
 	}
 
 	@Override
 	public String getUsage() {
-		return "/c create <name>";
+		return "/c join <clan>";
 	}
 
 	@Override
 	public boolean playerOnly() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -34,24 +34,19 @@ public class CommandCreate extends CommandBase {
 
 	@Override
 	public boolean handle(Messageable sender, String[] args) {
-		if (args.length != 2) {
-			return false;
+		if (args.length != 2) return false;
+		Clan c = ClanPlugin.getInstance().getClanManager().findClan(args[1]);
+		if (c == null) {
+			sender.message("Clan \""+args[1]+"\" not found.");
+			return true;
 		}
-		sender.message("Created the clan \""+args[1]+"\".");
-		Clan c = new Clan();
-		c.setName(args[1]);
-		c.setDescription("Change the defualt description with the \"c desc\" command.");
-		
-		if (sender.isPlayer()) {
-			ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(sender);
+		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(sender);
+		if (!c.isClosed() || c.isInvited(cp)) {
 			c.addMember(cp);
-			cp.setRole(ClanPlayer.ROLE_LEADER);
+		} else {
+			sender.message("That clan is invite only.");
 		}
-		
-		ClanPlugin.getInstance().getClanManager().addClan(c);
-		
 		return true;
-		
 	}
 
 }

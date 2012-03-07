@@ -32,17 +32,17 @@ public class CommandHelp extends CommandBase {
 
 	@Override
 	public boolean handle(Messageable sender, String[] args) {
-		if (args.length == 1) {
-			sender.message("-ClanCraft-");
-			sender.message(" (Type \"/help <command> for more information.)");
+		if (args.length != 2) {
+			sender.message("-- ClanCraft --");
+			sender.message(" (Type \"/help <command>\" for more information.)");
 			for (CommandBase cmd : ClanPlugin.getInstance().getCommandManager().getCommands()) {
 				sender.message(" "+cmd.getName()+" - "+cmd.getDescription());
 			}
 			return true;
-		} else if (args.length == 2) {
+		} else {
 			for (CommandBase cmd : ClanPlugin.getInstance().getCommandManager().getCommands()) {
 				if (args[1].equalsIgnoreCase(cmd.getName())) {
-					sender.message("-ClanCraft-");
+					sender.message("-- ClanCraft --");
 					sender.message(" "+cmd.getName()+" - "+cmd.getDescription());
 					sender.message(" "+cmd.getUsage());
 					return true;

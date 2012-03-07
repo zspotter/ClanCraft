@@ -58,8 +58,23 @@ public class ClanPlugin {
 	 * @param name the name to identify by
 	 * @return a ClanPlayer or NULL
 	 */
-	public ClanPlayer getClanPlayer(String name) {
+	public ClanPlayer findClanPlayer(String name) {
 		return players.get(name);
+	}
+	
+	/**
+	 * Get or create a ClanPlayer
+	 * @param player
+	 * @return never Null!
+	 */
+	public ClanPlayer getClanPlayer(Messageable player) {
+		ClanPlayer cp = ClanPlugin.getInstance().findClanPlayer(player.getName());
+		if (cp == null) {
+			cp = new ClanPlayer(player);
+			ClanPlugin.getInstance().addClanPlayer(cp);
+			cp.logIn();
+		}
+		return cp;
 	}
 	
 	/**

@@ -18,6 +18,9 @@ public class CommandManager {
 		commands.add(new CommandCreate());
 		commands.add(new CommandList());
 		commands.add(new CommandChatMode());
+		commands.add(new CommandLeave());
+		commands.add(new CommandJoin());
+		commands.add(new CommandPrivate());
 	}
 	
 	
@@ -30,6 +33,10 @@ public class CommandManager {
 		
 		for (CommandBase cmd : commands) {
 			if (cmd.getName().equalsIgnoreCase(args[0])) {
+				if (cmd.playerOnly() && !sender.isPlayer()) {
+					sender.message("You must be a player to use that command.");
+					return;
+				}
 				if (cmd.handle(sender, args)) {
 					return;
 				} else {

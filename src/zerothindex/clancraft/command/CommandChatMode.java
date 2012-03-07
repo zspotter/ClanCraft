@@ -34,15 +34,7 @@ public class CommandChatMode extends CommandBase {
 	@Override
 	public boolean handle(Messageable sender, String[] args) {
 		if (args.length != 2) return false;
-		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(sender.getName());
-		if (sender.isPlayer()) {
-			if (cp == null) {
-				cp = new ClanPlayer(sender);
-				ClanPlugin.getInstance().addClanPlayer(cp);
-			}
-		} else {
-			return false;
-		}
+		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(sender);
 		if (args[1].startsWith("p")) {
 			cp.setChatMode(ClanPlayer.CHAT_PUBLIC);
 			cp.message("Chat mode: public");

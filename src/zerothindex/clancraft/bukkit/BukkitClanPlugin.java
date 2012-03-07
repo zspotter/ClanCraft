@@ -57,7 +57,7 @@ public class BukkitClanPlugin extends JavaPlugin {
      * @return a ClanPlayer
      */
     public ClanPlayer getClanPlayer(Player p) {
-    	ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(p.getName());
+    	ClanPlayer cp = ClanPlugin.getInstance().findClanPlayer(p.getName());
 		if (cp == null) {
 			cp = new ClanPlayer(new MessageableBukkit(p));
 			ClanPlugin.getInstance().addClanPlayer(cp);
