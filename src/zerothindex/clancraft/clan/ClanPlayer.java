@@ -1,6 +1,5 @@
 package zerothindex.clancraft.clan;
 
-import zerothindex.clancraft.MessageReceiver;
 import zerothindex.clancraft.WorldPlayer;
 
 /**
