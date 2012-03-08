@@ -51,8 +51,8 @@ public class BukkitPlayer implements WorldPlayer {
 	}
 
 	@Override
-	public double[] getOrientation() {
-		return new double[] {
+	public float[] getOrientation() {
+		return new float[] {
 				player.getLocation().getYaw(),
 				player.getLocation().getPitch()};
 	}

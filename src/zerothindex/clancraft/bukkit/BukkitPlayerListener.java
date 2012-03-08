@@ -30,7 +30,7 @@ public class BukkitPlayerListener implements Listener {
 		ev.onPlayerQuit(bp.getClanPlayer(e.getPlayer()));
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(PlayerChatEvent e) {
 		ev.onPlayerChat(bp.getClanPlayer(e.getPlayer()), e.getMessage());
 		e.setCancelled(true);

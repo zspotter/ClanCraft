@@ -21,6 +21,7 @@ public class CommandManager {
 		commands.add(new CommandLeave());
 		commands.add(new CommandJoin());
 		commands.add(new CommandPrivate());
+		commands.add(new CommandSetLand());
 	}
 	
 	

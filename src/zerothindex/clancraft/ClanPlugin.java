@@ -74,7 +74,6 @@ public class ClanPlugin {
 			ClanPlugin.getInstance().addClanPlayer(cp);
 			cp.logIn();
 		}
-		log("Tracked ClanPlayers: "+players.size());
 		return cp;
 	}
 	

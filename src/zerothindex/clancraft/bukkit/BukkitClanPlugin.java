@@ -33,6 +33,7 @@ public class BukkitClanPlugin extends JavaPlugin {
 	 * Called when the plugin is enabled.
 	 */
 	public void onEnable() {
+		instance = this;
 		clanPlugin = new ClanPlugin(this.getDescription().getName());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BukkitPlayerListener(this), this);

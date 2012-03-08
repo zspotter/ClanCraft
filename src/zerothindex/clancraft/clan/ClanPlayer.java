@@ -146,7 +146,7 @@ public class ClanPlayer implements WorldPlayer {
 	}
 
 	@Override
-	public double[] getOrientation() {
+	public float[] getOrientation() {
 		return player.getOrientation();
 	}
 	

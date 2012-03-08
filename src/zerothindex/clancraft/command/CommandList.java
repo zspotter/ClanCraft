@@ -5,9 +5,7 @@ import java.util.List;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.MessageReceiver;
-import zerothindex.clancraft.bukkit.BukkitClanPlugin;
 import zerothindex.clancraft.clan.Clan;
-import zerothindex.clancraft.clan.ClanComparator;
 
 public class CommandList extends CommandBase {
 
@@ -47,7 +45,7 @@ public class CommandList extends CommandBase {
 			sender.message(" There aren't any clans!");
 			return true;
 		}
-		java.util.Collections.sort(clans, new ClanComparator()); // sort by largest online
+		java.util.Collections.sort(clans); // sort by largest online
 		for (Clan clan : clans) {
 			sender.message(" "+clan.getName()+" - "+clan.getOnlineSize()+"/"+clan.getSize()+" online");
 		}

@@ -1,6 +1,7 @@
 package zerothindex.clancraft.clan;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Clan has a collection of ClanPlayers and a ClanPlot.
@@ -8,7 +9,7 @@ import java.util.HashSet;
  * @author zerothindex
  *
  */
-public class Clan {
+public class Clan implements Comparable<Clan>{
 	
 	private String name;
 	private String description;
@@ -102,6 +103,10 @@ public class Clan {
 		return online.size();
 	}
 	
+	public Set<ClanPlayer> getOnline() {
+		return online;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -128,12 +133,18 @@ public class Clan {
 	public void removeAlly(Clan ally) {
 		allies.remove(ally);
 	}
+	public boolean isAlly(Clan ally) {
+		return allies.contains(ally);
+	}
 	
 	public void addEnemy(Clan enemy) {
-		allies.add(enemy);
+		enemies.add(enemy);
 	}
 	public void removeEnemy(Clan enemy) {
-		allies.remove(enemy);
+		enemies.remove(enemy);
+	}
+	public boolean isEnemy(Clan enemy) {
+		return enemies.contains(enemy);
 	}
 	
 	public void addInvite(ClanPlayer player) {
@@ -148,6 +159,31 @@ public class Clan {
 	}
 	public void setClosed(boolean cls) {
 		closed = cls;
+	}
+	
+	public ClanPlot getPlot() {
+		return plot;
+	}
+	public void setPlot(ClanPlot p) {
+		if (plot != null) plot.unclaim();
+		plot = p;
+	}
+
+	@Override
+	/**
+	 * Sort by largest online clan
+	 */
+	public int compareTo(Clan c2) {
+		if (this.getOnlineSize() > c2.getOnlineSize())
+			return 1;
+		if (this.getOnlineSize() < c2.getOnlineSize())
+			return -1;
+		if (this.getSize() > c2.getSize())
+			return 1;
+		if (this.getSize() < c2.getSize())
+			return -1;
+		
+		return 0;
 	}
 	
 }

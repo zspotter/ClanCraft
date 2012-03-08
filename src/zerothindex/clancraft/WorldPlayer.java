@@ -21,6 +21,6 @@ public interface WorldPlayer extends MessageReceiver {
 	/**
 	 * @return [yaw, pitch] of the player
 	 */
-	public double[] getOrientation();
+	public float[] getOrientation();
 	
 }
