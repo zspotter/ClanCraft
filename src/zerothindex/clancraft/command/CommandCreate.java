@@ -39,8 +39,7 @@ public class CommandCreate extends CommandBase {
 			return false;
 		}
 		sender.message("Created the clan \""+args[1]+"\".");
-		Clan c = new Clan();
-		c.setName(args[1]);
+		Clan c = new Clan(args[1]);
 		c.setDescription("Change the defualt description with the \"c desc\" command.");
 		
 		if (sender.isPlayer()) {

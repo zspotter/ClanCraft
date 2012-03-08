@@ -8,7 +8,7 @@ package zerothindex.clancraft.clan;
  * @author zerothindex
  *
  */
-public abstract class ClanPlot {
+public interface ClanPlot {
 	
 	/**
 	 * Set the Clan's respawn position to a given point in a given world
@@ -18,22 +18,21 @@ public abstract class ClanPlot {
 	 * @param z coord
 	 * @return success
 	 */
-	public abstract boolean setSpawn(String world, double x, double y, double z, float yaw, float pitch);
+	public boolean setSpawn(String world, double x, double y, double z, float yaw, float pitch);
 	
 	/**
 	 * Set the Clan's center of territory to a given point in a given world
 	 * @param world the name of the world
 	 * @param x coord
-	 * @param y coord
 	 * @param z coord
 	 * @return success
 	 */
-	public abstract boolean setCenter(String world, double x, double y, double z);
+	public boolean setCenter(String world, double x, double z);
 	
 	/**
 	 * @return the Clan which this plot protects
 	 */
-	public abstract Clan getClan();
+	public Clan getClan();
 	
 	/**
 	 * Stop protecting and forget the territory
@@ -44,10 +43,10 @@ public abstract class ClanPlot {
 	 * The radius of a circle to protect around the center
 	 * @param r
 	 */
-	public abstract void setRadius(int r);
+	public void setRadius(int r);
 	
 	/**
 	 * @return the radius being protected around the center
 	 */
-	public abstract int getRadius();
+	public int getRadius();
 }

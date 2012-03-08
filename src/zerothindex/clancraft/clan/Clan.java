@@ -3,6 +3,8 @@ package zerothindex.clancraft.clan;
 import java.util.HashSet;
 import java.util.Set;
 
+import zerothindex.clancraft.bukkit.BukkitWorldPlot;
+
 /**
  * A Clan has a collection of ClanPlayers and a ClanPlot.
  * 
@@ -25,8 +27,8 @@ public class Clan implements Comparable<Clan>{
 	
 	private ClanPlot plot;
 	
-	public Clan() {
-		this("New Clan", "Default description.", new HashSet<ClanPlayer>(), new HashSet<ClanPlayer>(), 
+	public Clan(String name) {
+		this(name, "Default description.", new HashSet<ClanPlayer>(), new HashSet<ClanPlayer>(), 
 				new HashSet<ClanPlayer>(), new HashSet<Clan>(), new HashSet<Clan>(), true, null);
 		
 	}
@@ -41,7 +43,8 @@ public class Clan implements Comparable<Clan>{
 		this.enemies = enemies;
 		this.online = new HashSet<ClanPlayer>();
 		this.closed = closed;
-		this.plot = plot;
+		if (plot == null) this.plot = new BukkitWorldPlot(this);
+		else this.plot = plot;
 	}
 	
 	public void addMember(ClanPlayer newb) {

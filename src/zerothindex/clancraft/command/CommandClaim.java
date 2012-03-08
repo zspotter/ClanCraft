@@ -6,11 +6,11 @@ import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.bukkit.BukkitWorldPlot;
 import zerothindex.clancraft.clan.ClanPlayer;
 
-public class CommandSetLand extends CommandBase {
+public class CommandClaim extends CommandBase {
 
 	@Override
 	public String getName() {
-		return "setLand";
+		return "claim";
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class CommandSetLand extends CommandBase {
 
 	@Override
 	public String getUsage() {
-		return "/c setland";
+		return "/c claim";
 	}
 
 	@Override
@@ -49,7 +49,9 @@ public class CommandSetLand extends CommandBase {
 			cp.getClan().setPlot(new BukkitWorldPlot(cp.getClan()));
 		}
 		double[] coords = cp.getCoordinates();
-		cp.getClan().getPlot().setCenter(cp.getWorld(), coords[0], coords[1], coords[2]);
+		boolean success = cp.getClan().getPlot().setCenter(cp.getWorld(), coords[0], coords[2]);
+		if (success) cp.message("Territory center set to your position.");
+		else cp.message("Error setting territory!");
 		return true;
 	}
 
