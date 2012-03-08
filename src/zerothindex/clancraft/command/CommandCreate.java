@@ -2,6 +2,7 @@ package zerothindex.clancraft.command;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.MessageReceiver;
+import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 
@@ -43,7 +44,7 @@ public class CommandCreate extends CommandBase {
 		c.setDescription("Change the defualt description with the \"c desc\" command.");
 		
 		if (sender.isPlayer()) {
-			ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(sender);
+			ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 			c.addMember(cp);
 			cp.setRole(ClanPlayer.ROLE_LEADER);
 		}

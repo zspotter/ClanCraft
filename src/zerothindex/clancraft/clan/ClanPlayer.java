@@ -1,6 +1,7 @@
 package zerothindex.clancraft.clan;
 
 import zerothindex.clancraft.MessageReceiver;
+import zerothindex.clancraft.WorldPlayer;
 
 /**
  * Represents a clan member. It will try not to be a wrapper for Bukkit's
@@ -9,7 +10,7 @@ import zerothindex.clancraft.MessageReceiver;
  * @author zerothindex
  *
  */
-public class ClanPlayer implements MessageReceiver {
+public class ClanPlayer implements WorldPlayer {
 
 	/*
 	 * Static variables
@@ -26,7 +27,7 @@ public class ClanPlayer implements MessageReceiver {
 	 * Private variables
 	 */
 	private String name;
-	private MessageReceiver messageReceiver;
+	private WorldPlayer player;
 	private Clan clan;
 	private int chatMode;
 	private long lastLogin;
@@ -41,7 +42,7 @@ public class ClanPlayer implements MessageReceiver {
 	 * Creates a default instance of a ClanPlayer
 	 * @param name the name of the player this object represents
 	 */
-	public ClanPlayer(MessageReceiver object) {
+	public ClanPlayer(WorldPlayer object) {
 		this(object, null, ROLE_NORMAL, CHAT_PUBLIC, System.currentTimeMillis(), false);
 	}
 	
@@ -53,9 +54,9 @@ public class ClanPlayer implements MessageReceiver {
 	 * @param chatMode see ClanPlayer's public static final int variables for values
 	 * @param lastLogin the time in milliseconds (System.currentTimeMillis())
 	 */
-	public ClanPlayer(MessageReceiver object, Clan clan, int role, int chatMode, long lastLogin, boolean isOnline) {
+	public ClanPlayer(WorldPlayer object, Clan clan, int role, int chatMode, long lastLogin, boolean isOnline) {
 		this.name = object.getName();
-		this.messageReceiver = object;
+		this.player = object;
 		this.clan = clan;
 		this.chatMode = chatMode;
 		this.lastLogin = lastLogin;
@@ -121,18 +122,33 @@ public class ClanPlayer implements MessageReceiver {
 
 	@Override
 	public void message(String msg) {
-		messageReceiver.message(msg);
+		player.message(msg);
 		
 	}
 
 	@Override
 	public Object getObject() {
-		return messageReceiver;
+		return player;
 	}
 
 	@Override
 	public boolean isPlayer() {
 		return true;
+	}
+
+	@Override
+	public String getWorld() {
+		return player.getWorld();
+	}
+
+	@Override
+	public double[] getCoordinates() {
+		return player.getCoordinates();
+	}
+
+	@Override
+	public double[] getOrientation() {
+		return player.getOrientation();
 	}
 	
 	

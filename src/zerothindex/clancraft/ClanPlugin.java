@@ -67,13 +67,14 @@ public class ClanPlugin {
 	 * @param player
 	 * @return never Null!
 	 */
-	public ClanPlayer getClanPlayer(MessageReceiver player) {
+	public ClanPlayer getClanPlayer(WorldPlayer player) {
 		ClanPlayer cp = ClanPlugin.getInstance().findClanPlayer(player.getName());
 		if (cp == null) {
 			cp = new ClanPlayer(player);
 			ClanPlugin.getInstance().addClanPlayer(cp);
 			cp.logIn();
 		}
+		log("Tracked ClanPlayers: "+players.size());
 		return cp;
 	}
 	

@@ -2,6 +2,7 @@ package zerothindex.clancraft.command;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.MessageReceiver;
+import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 
@@ -40,7 +41,7 @@ public class CommandJoin extends CommandBase{
 			sender.message("Clan \""+args[1]+"\" not found.");
 			return true;
 		}
-		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(sender);
+		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (!c.isClosed() || c.isInvited(cp)) {
 			c.addMember(cp);
 		} else {

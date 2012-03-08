@@ -2,6 +2,7 @@ package zerothindex.clancraft.command;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.MessageReceiver;
+import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.clan.ClanPlayer;
 
 public class CommandChatMode extends CommandBase {
@@ -34,7 +35,7 @@ public class CommandChatMode extends CommandBase {
 	@Override
 	public boolean handle(MessageReceiver sender, String[] args) {
 		if (args.length != 2) return false;
-		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(sender);
+		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (args[1].startsWith("p")) {
 			cp.setChatMode(ClanPlayer.CHAT_PUBLIC);
 			cp.message("Chat mode: public");
