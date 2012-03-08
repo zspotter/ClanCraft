@@ -1,6 +1,6 @@
 package zerothindex.clancraft.command;
 
-import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.MessageReceiver;
 
 public abstract class CommandBase {
 	 
@@ -14,5 +14,5 @@ public abstract class CommandBase {
 	
 	public abstract boolean adminOnly();
 	
-	public abstract boolean handle(Messageable sender, String[] args);
+	public abstract boolean handle(MessageReceiver sender, String[] args);
 }

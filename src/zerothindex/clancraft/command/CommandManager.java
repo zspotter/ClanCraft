@@ -3,7 +3,7 @@ package zerothindex.clancraft.command;
 import java.util.HashSet;
 import java.util.Set;
 
-import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.MessageReceiver;
 
 public class CommandManager {
 
@@ -24,7 +24,7 @@ public class CommandManager {
 	}
 	
 	
-	public void handle(Messageable sender, String[] args) {
+	public void handle(MessageReceiver sender, String[] args) {
 		
 		if (args.length == 0) {
 			commandHelp.handle(sender, args);

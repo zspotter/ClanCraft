@@ -16,8 +16,9 @@ public abstract class ClanPlot {
 	 * @param x coord
 	 * @param y coord
 	 * @param z coord
+	 * @return success
 	 */
-	public abstract void setSpawn(String world, double x, double y, double z);
+	public abstract boolean setSpawn(String world, double x, double y, double z);
 	
 	/**
 	 * Set the Clan's center of territory to a given point in a given world
@@ -25,8 +26,9 @@ public abstract class ClanPlot {
 	 * @param x coord
 	 * @param y coord
 	 * @param z coord
+	 * @return success
 	 */
-	public abstract void setCenter(String world, double x, double y, double z);
+	public abstract boolean setCenter(String world, double x, double y, double z);
 	
 	/**
 	 * @return the Clan which this plot protects

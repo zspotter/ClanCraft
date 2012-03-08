@@ -25,6 +25,7 @@ import zerothindex.clancraft.clan.ClanPlayer;
  */
 public class BukkitClanPlugin extends JavaPlugin {
 	
+	private static BukkitClanPlugin instance;
 	private static ClanPlugin clanPlugin;
 	private static WorldGuardPlugin worldGuard;
 	
@@ -41,7 +42,7 @@ public class BukkitClanPlugin extends JavaPlugin {
 	    if (plugin != null && (plugin instanceof WorldGuardPlugin)) {
 	    	worldGuard = (WorldGuardPlugin) plugin;
 	    } else {
-	    	ClanPlugin.getInstance().log("WorldGuard not found! Disabling ClanCraft...");
+	    	ClanPlugin.getInstance().log("WorldGuard not found! Disabling...");
 	    	this.getServer().getPluginManager().disablePlugin(this);
 	    }
 		
@@ -61,12 +62,19 @@ public class BukkitClanPlugin extends JavaPlugin {
 		return worldGuard;
 	}
 	
+	public static BukkitClanPlugin getInstance() {
+		return instance;
+	}
+	
 	/**
 	 * Called when a command is made
 	 */
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
     	if(cmd.getName().equalsIgnoreCase("c")){
-    		ClanPlugin.getInstance().getCommandManager().handle(new MessageableBukkit(sender), args);
+    		if (sender instanceof Player) 
+    			ClanPlugin.getInstance().getCommandManager().handle(new BukkitPlayer((Player)sender), args);
+    		else
+    			ClanPlugin.getInstance().getCommandManager().handle(new BukkitCommandSender(sender), args);
     	}
     	return true; 
     }
@@ -79,7 +87,7 @@ public class BukkitClanPlugin extends JavaPlugin {
     public ClanPlayer getClanPlayer(Player p) {
     	ClanPlayer cp = ClanPlugin.getInstance().findClanPlayer(p.getName());
 		if (cp == null) {
-			cp = new ClanPlayer(new MessageableBukkit(p));
+			cp = new ClanPlayer(new BukkitPlayer(p));
 			ClanPlugin.getInstance().addClanPlayer(cp);
 		}
 		return cp;

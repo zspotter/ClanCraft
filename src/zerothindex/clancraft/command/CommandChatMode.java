@@ -1,7 +1,7 @@
 package zerothindex.clancraft.command;
 
 import zerothindex.clancraft.ClanPlugin;
-import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.MessageReceiver;
 import zerothindex.clancraft.clan.ClanPlayer;
 
 public class CommandChatMode extends CommandBase {
@@ -32,7 +32,7 @@ public class CommandChatMode extends CommandBase {
 	}
 
 	@Override
-	public boolean handle(Messageable sender, String[] args) {
+	public boolean handle(MessageReceiver sender, String[] args) {
 		if (args.length != 2) return false;
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(sender);
 		if (args[1].startsWith("p")) {

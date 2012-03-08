@@ -67,7 +67,7 @@ public class ClanPlugin {
 	 * @param player
 	 * @return never Null!
 	 */
-	public ClanPlayer getClanPlayer(Messageable player) {
+	public ClanPlayer getClanPlayer(MessageReceiver player) {
 		ClanPlayer cp = ClanPlugin.getInstance().findClanPlayer(player.getName());
 		if (cp == null) {
 			cp = new ClanPlayer(player);

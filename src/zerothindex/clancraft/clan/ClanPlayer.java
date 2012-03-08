@@ -1,6 +1,6 @@
 package zerothindex.clancraft.clan;
 
-import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.MessageReceiver;
 
 /**
  * Represents a clan member. It will try not to be a wrapper for Bukkit's
@@ -9,7 +9,7 @@ import zerothindex.clancraft.Messageable;
  * @author zerothindex
  *
  */
-public class ClanPlayer implements Messageable {
+public class ClanPlayer implements MessageReceiver {
 
 	/*
 	 * Static variables
@@ -26,7 +26,7 @@ public class ClanPlayer implements Messageable {
 	 * Private variables
 	 */
 	private String name;
-	private Messageable messageable;
+	private MessageReceiver messageReceiver;
 	private Clan clan;
 	private int chatMode;
 	private long lastLogin;
@@ -41,7 +41,7 @@ public class ClanPlayer implements Messageable {
 	 * Creates a default instance of a ClanPlayer
 	 * @param name the name of the player this object represents
 	 */
-	public ClanPlayer(Messageable object) {
+	public ClanPlayer(MessageReceiver object) {
 		this(object, null, ROLE_NORMAL, CHAT_PUBLIC, System.currentTimeMillis(), false);
 	}
 	
@@ -53,9 +53,9 @@ public class ClanPlayer implements Messageable {
 	 * @param chatMode see ClanPlayer's public static final int variables for values
 	 * @param lastLogin the time in milliseconds (System.currentTimeMillis())
 	 */
-	public ClanPlayer(Messageable object, Clan clan, int role, int chatMode, long lastLogin, boolean isOnline) {
+	public ClanPlayer(MessageReceiver object, Clan clan, int role, int chatMode, long lastLogin, boolean isOnline) {
 		this.name = object.getName();
-		this.messageable = object;
+		this.messageReceiver = object;
 		this.clan = clan;
 		this.chatMode = chatMode;
 		this.lastLogin = lastLogin;
@@ -121,13 +121,13 @@ public class ClanPlayer implements Messageable {
 
 	@Override
 	public void message(String msg) {
-		messageable.message(msg);
+		messageReceiver.message(msg);
 		
 	}
 
 	@Override
 	public Object getObject() {
-		return messageable;
+		return messageReceiver;
 	}
 
 	@Override

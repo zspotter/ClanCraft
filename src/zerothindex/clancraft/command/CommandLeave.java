@@ -1,7 +1,7 @@
 package zerothindex.clancraft.command;
 
 import zerothindex.clancraft.ClanPlugin;
-import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.MessageReceiver;
 import zerothindex.clancraft.clan.ClanPlayer;
 
 public class CommandLeave extends CommandBase {
@@ -32,7 +32,7 @@ public class CommandLeave extends CommandBase {
 	}
 
 	@Override
-	public boolean handle(Messageable sender, String[] args) {
+	public boolean handle(MessageReceiver sender, String[] args) {
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer(sender);
 		if (cp.getClan() == null) {
 			sender.message("You aren't part of a clan!");

@@ -1,7 +1,7 @@
 package zerothindex.clancraft.command;
 
 import zerothindex.clancraft.ClanPlugin;
-import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.MessageReceiver;
 
 public class CommandHelp extends CommandBase {
 
@@ -31,7 +31,7 @@ public class CommandHelp extends CommandBase {
 	}
 
 	@Override
-	public boolean handle(Messageable sender, String[] args) {
+	public boolean handle(MessageReceiver sender, String[] args) {
 		if (args.length != 2) {
 			sender.message("-- ClanCraft --");
 			sender.message(" (Type \"/help <command>\" for more information.)");

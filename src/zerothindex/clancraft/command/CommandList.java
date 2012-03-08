@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import zerothindex.clancraft.ClanPlugin;
-import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.MessageReceiver;
 import zerothindex.clancraft.bukkit.BukkitClanPlugin;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanComparator;
@@ -37,7 +37,7 @@ public class CommandList extends CommandBase {
 	}
 
 	@Override
-	public boolean handle(Messageable sender, String[] args) {
+	public boolean handle(MessageReceiver sender, String[] args) {
 		sender.message("-- Clan List --");
 		List<Clan> clans = new ArrayList<Clan>();
 		if (ClanPlugin.getInstance().getClanManager().getClans() != null) {

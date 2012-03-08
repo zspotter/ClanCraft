@@ -6,7 +6,7 @@ package zerothindex.clancraft;
  * @author zerothindex
  *
  */
-public interface Messageable {
+public interface MessageReceiver {
 
 	/**
 	 * Send a message to this object

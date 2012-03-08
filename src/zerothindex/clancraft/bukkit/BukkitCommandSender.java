@@ -1,23 +1,23 @@
 package zerothindex.clancraft.bukkit;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-import zerothindex.clancraft.Messageable;
+import zerothindex.clancraft.MessageReceiver;
 
 /**
- * A wrapper for CommandSenders
+ * A Bukkit console or player
+ * 
  * @author zerothindex
  *
  */
-public class MessageableBukkit implements Messageable {
-	
+public class BukkitCommandSender implements MessageReceiver{
+
 	private CommandSender sender;
 	
-	public MessageableBukkit(CommandSender sender) {
+	public BukkitCommandSender(CommandSender sender) {
 		this.sender = sender;
 	}
-
+	
 	@Override
 	public void message(String msg) {
 		sender.sendMessage(msg);
@@ -35,9 +35,7 @@ public class MessageableBukkit implements Messageable {
 
 	@Override
 	public boolean isPlayer() {
-		return (sender instanceof Player);
+		return false;
 	}
-	
-	
 
 }
