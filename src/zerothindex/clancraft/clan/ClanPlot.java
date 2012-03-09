@@ -49,4 +49,24 @@ public interface ClanPlot {
 	 * @return the radius being protected around the center
 	 */
 	public int getRadius();
+
+	/**
+	 * Recalculate bounds after a player has joined or left
+	 */
+	public void recalculate();
+
+	/**
+	 * @return the center of the plot
+	 */
+	public int getX();
+	
+	/**
+	 * @return the center of the plot
+	 */
+	public int getZ();
+	
+	/**
+	 * @return is there land actually claimed?
+	 */
+	public boolean isActive();
 }

@@ -46,8 +46,15 @@ public class CommandList extends CommandBase {
 			return true;
 		}
 		java.util.Collections.sort(clans); // sort by largest online
+		boolean anyPublic = false;
 		for (Clan clan : clans) {
-			sender.message(" "+clan.getName()+" - "+clan.getOnlineSize()+"/"+clan.getSize()+" online");
+			if (!clan.isClosed()) anyPublic = true;
+			sender.message(" "+clan.getName()+(!clan.isClosed()? "*" : "")
+					+" - "+clan.getOnlineSize()+"/"+clan.getSize()+" online"
+					+(clan.getPlot().isActive()? " - radius: "+clan.getPlot().getRadius() : " - no territory"));
+		}
+		if (anyPublic) {
+			sender.message("* - public clan");
 		}
 		return true;
 	}

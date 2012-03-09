@@ -1,6 +1,7 @@
 package zerothindex.clancraft.bukkit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,10 +16,14 @@ import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.UnsupportedIntersectionException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import zerothindex.clancraft.ClanPlugin;
+import zerothindex.clancraft.PluginSettings;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 import zerothindex.clancraft.clan.ClanPlot;
@@ -44,18 +49,22 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 	public BukkitWorldPlot(Clan c) {
 		super(("plot["+c.getName()+"]"), new BlockVector(0,0,0), new BlockVector(0,0,0));
 		clan = c;
-		radius = 10; // default 0
+		radius = 0;
 		spawn = null;
 		centerX = 0;
 		centerZ = 0;
 		world = null;
-		active = true; // default false
+		active = false;
 		domain = new ClanDomain(c);
 		registered = false;
 		this.setMembers(domain);
 		// Set flags for protection
-		this.setFlag(DefaultFlag.GREET_MESSAGE, ("Entering "+clan.getName()+" - "+clan.getDescription()));
-		this.setFlag(DefaultFlag.FAREWELL_MESSAGE, ("Leaving "+clan.getName()+"."));
+		HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
+		flags.put(DefaultFlag.GREET_MESSAGE, ("Entering "+clan.getName()+" - "+clan.getDescription()));
+		flags.put(DefaultFlag.FAREWELL_MESSAGE, ("Leaving "+clan.getName()+"."));
+		flags.put(DefaultFlag.CHEST_ACCESS, StateFlag.State.ALLOW);
+		
+		this.setFlags(flags);
 	}
 	
 	@Override
@@ -98,10 +107,27 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 		radius = 0;
 		active = false;
 	}
+	
+	@Override
+	public void recalculate() {
+		int numPlayers = clan.getSize();
+		int newRadius = (int) Math.round(16*Math.sqrt(4*numPlayers));
+		if (newRadius > PluginSettings.radiusCap) return; // radius cap
+		if (newRadius < radius && active) {
+			clan.messageClan("Territory radius decreased to "+newRadius+" blocks.");
+		} else if (newRadius > radius && active) {
+			clan.messageClan("Territory radius increased to "+newRadius+" blocks.");
+		}
+		setRadius(newRadius);
+		
+	}
 
 	@Override
 	public void setRadius(int r) {
 		radius = r;
+		if (radius <= 0) {
+			active = false;
+		}
 	}
 
 	@Override
@@ -140,6 +166,21 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 	@Override
 	public int volume() {
 		return (int) Math.floor(radius * radius * Math.PI * Bukkit.getWorld(world).getMaxHeight());
+	}
+
+	@Override
+	public int getX() {
+		return centerX;
+	}
+
+	@Override
+	public int getZ() {
+		return centerZ;
+	}
+
+	@Override
+	public boolean isActive() {
+		return active;
 	}
 
 }

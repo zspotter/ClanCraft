@@ -53,6 +53,7 @@ public class Clan implements Comparable<Clan>{
 		invites.remove(newb);
 		if (newb.isOnline()) online.add(newb);
 		newb.message("You have joined "+getName()+".");
+		plot.recalculate();
 	}
 	
 	public void kickMember(ClanPlayer member) {
@@ -62,6 +63,7 @@ public class Clan implements Comparable<Clan>{
 			members.remove(member);
 			online.remove(member);
 			member.message("You have left "+getName()+".");
+			plot.recalculate();
 		}
 	}
 	

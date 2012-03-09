@@ -1,10 +1,15 @@
 package zerothindex.clancraft.command;
 
+import java.util.Set;
+
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.MessageReceiver;
+import zerothindex.clancraft.PluginSettings;
 import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.bukkit.BukkitWorldPlot;
+import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
+import zerothindex.clancraft.clan.ClanPlot;
 
 public class CommandClaim extends CommandBase {
 
@@ -49,10 +54,27 @@ public class CommandClaim extends CommandBase {
 			cp.getClan().setPlot(new BukkitWorldPlot(cp.getClan()));
 		}
 		double[] coords = cp.getCoordinates();
+		// make sure no clans are within distance to grow into each other
+		Set<Clan> clans = ClanPlugin.getInstance().getClanManager().getClans();
+		for (Clan clan : clans) {
+			ClanPlot plot = clan.getPlot();
+			if (plot != null && plot.isActive()
+					&& distance(plot.getX(), plot.getZ(), 
+								(int)coords[0], (int)coords[2]) > 2*PluginSettings.radiusCap) {
+				cp.message("Your territory's center must be "+(2*PluginSettings.radiusCap)
+						+" blocks away from the closest clan's center.");
+				return true;
+			}
+		}
+		
 		boolean success = cp.getClan().getPlot().setCenter(cp.getWorld(), coords[0], coords[2]);
 		if (success) cp.message("Territory center set to your position.");
 		else cp.message("Error setting territory!");
 		return true;
+	}
+	
+	private double distance(int x1, int z1, int x2, int z2) {
+		return Math.sqrt(Math.pow((x1-x2),2)+Math.pow((z1-z2),2));
 	}
 
 }
