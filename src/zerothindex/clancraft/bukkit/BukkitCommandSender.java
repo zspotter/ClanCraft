@@ -20,7 +20,7 @@ public class BukkitCommandSender implements MessageReceiver{
 	
 	@Override
 	public void message(String msg) {
-		sender.sendMessage(msg);
+		sender.sendMessage(BukkitClanPlugin.stripMessage(msg));
 	}
 
 	@Override

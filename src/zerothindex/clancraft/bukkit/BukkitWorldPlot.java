@@ -63,7 +63,7 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 		flags.put(DefaultFlag.GREET_MESSAGE, ("Entering "+clan.getName()+" - "+clan.getDescription()));
 		flags.put(DefaultFlag.FAREWELL_MESSAGE, ("Leaving "+clan.getName()+"."));
 		flags.put(DefaultFlag.CHEST_ACCESS, StateFlag.State.ALLOW);
-		
+		flags.put(DefaultFlag.USE, StateFlag.State.ALLOW);
 		this.setFlags(flags);
 	}
 	
@@ -111,8 +111,8 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 	@Override
 	public void recalculate() {
 		int numPlayers = clan.getSize();
-		int newRadius = (int) Math.round(16*Math.sqrt(4*numPlayers));
-		if (newRadius > PluginSettings.radiusCap) return; // radius cap
+		int newRadius = (int) 4*numPlayers+10; //Math.round(8*Math.sqrt(4*numPlayers));
+		if (newRadius > PluginSettings.maximumRadius) return; // radius cap
 		if (newRadius < radius && active) {
 			clan.messageClan("Territory radius decreased to "+newRadius+" blocks.");
 		} else if (newRadius > radius && active) {

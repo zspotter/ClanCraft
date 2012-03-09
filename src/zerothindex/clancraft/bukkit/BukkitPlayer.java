@@ -19,7 +19,7 @@ public class BukkitPlayer implements WorldPlayer {
 
 	@Override
 	public void message(String msg) {
-		player.sendMessage(msg);
+		player.sendMessage(BukkitClanPlugin.parseMessage(msg));
 	}
 
 	@Override

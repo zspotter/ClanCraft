@@ -60,8 +60,8 @@ public class CommandClaim extends CommandBase {
 			ClanPlot plot = clan.getPlot();
 			if (plot != null && plot.isActive()
 					&& distance(plot.getX(), plot.getZ(), 
-								(int)coords[0], (int)coords[2]) > 2*PluginSettings.radiusCap) {
-				cp.message("Your territory's center must be "+(2*PluginSettings.radiusCap)
+								(int)coords[0], (int)coords[2]) > 2*PluginSettings.maximumRadius) {
+				cp.message("Your territory's center must be "+(2*PluginSettings.maximumRadius)
 						+" blocks away from the closest clan's center.");
 				return true;
 			}
@@ -69,7 +69,7 @@ public class CommandClaim extends CommandBase {
 		
 		boolean success = cp.getClan().getPlot().setCenter(cp.getWorld(), coords[0], coords[2]);
 		if (success) cp.message("Territory center set to your position.");
-		else cp.message("Error setting territory!");
+		else cp.message("<r>Error setting territory!");
 		return true;
 	}
 	

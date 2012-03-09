@@ -7,6 +7,14 @@ If you are importing anything that has "bukkit" in the path, you are designing
 something wrong! The only Bukkit specific interaction should be taking place in
 the zerothindex.clancraft.bukkit package. 
 
+Color tags for Strings sent to MessageReceivers:
+<g> green/friendly
+<b> blue/ally
+<r> red/enemy
+<n> white/normal message
+<t> gold/title
+<m> yellow/server message
+
 == Contact ==
 Feel free to email [zeroth index _at_ gmail _dot_ com].
 

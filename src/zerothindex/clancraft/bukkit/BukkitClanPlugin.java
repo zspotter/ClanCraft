@@ -1,5 +1,10 @@
 package zerothindex.clancraft.bukkit;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -29,6 +34,8 @@ public class BukkitClanPlugin extends JavaPlugin {
 	private static ClanPlugin clanPlugin;
 	private static WorldGuardPlugin worldGuard;
 	
+	private HashMap<String,String> tagMap;
+	
 	/**
 	 * Called when the plugin is enabled.
 	 */
@@ -46,6 +53,14 @@ public class BukkitClanPlugin extends JavaPlugin {
 	    	ClanPlugin.getInstance().log("WorldGuard not found! Disabling...");
 	    	this.getServer().getPluginManager().disablePlugin(this);
 	    }
+	    
+	    tagMap = new HashMap<String,String>();
+	    tagMap.put("<r>", ChatColor.RED.toString());
+	    tagMap.put("<g>", ChatColor.GREEN.toString());
+	    tagMap.put("<b>", ChatColor.BLUE.toString());
+	    tagMap.put("<n>", ChatColor.WHITE.toString());
+	    tagMap.put("<t>", ChatColor.GOLD.toString());
+	    tagMap.put("<m>", ChatColor.YELLOW.toString());
 		
 	}
 	
@@ -92,6 +107,38 @@ public class BukkitClanPlugin extends JavaPlugin {
 			ClanPlugin.getInstance().addClanPlayer(cp);
 		}
 		return cp;
+    }
+    
+    /**
+     * @param str A message to send to a player or console
+     * @return a parsed string with color chars
+     */
+    public static String parseMessage(String str) {
+    	String out = "<m>"+str;
+    	
+    	Iterator<Entry<String,String>> iter = getInstance().tagMap.entrySet().iterator();
+    	
+    	while(iter.hasNext()) {
+    		Entry<String, String> tag = iter.next();
+    		out = out.replaceAll(tag.getKey(), tag.getValue());
+    	}
+    	return out;
+    }
+    
+    /**
+     * @param str A message to strip the tags of
+     * @return a formatless string
+     */
+    public static String stripMessage(String str) {
+    	String out = str;
+    	
+    	Iterator<Entry<String,String>> iter = getInstance().tagMap.entrySet().iterator();
+    	
+    	while(iter.hasNext()) {
+    		Entry<String, String> tag = iter.next();
+    		out = out.replaceAll(tag.getKey(), "");
+    	}
+    	return out;
     }
 
 }
