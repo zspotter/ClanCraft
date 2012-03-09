@@ -3,24 +3,23 @@ package zerothindex.clancraft.command;
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.MessageReceiver;
 import zerothindex.clancraft.WorldPlayer;
-import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 
-public class CommandJoin extends CommandBase{
+public class CmdLeave extends CommandBase {
 
 	@Override
 	public String getName() {
-		return "join";
+		return "leave";
 	}
 
 	@Override
 	public String getDescription() {
-		return "join the given clan";
+		return "leave your faction";
 	}
 
 	@Override
 	public String getUsage() {
-		return "/c join <clan>";
+		return "/c leave";
 	}
 
 	@Override
@@ -29,23 +28,12 @@ public class CommandJoin extends CommandBase{
 	}
 
 	@Override
-	public boolean adminOnly() {
-		return false;
-	}
-
-	@Override
 	public boolean handle(MessageReceiver sender, String[] args) {
-		if (args.length != 2) return false;
-		Clan c = ClanPlugin.getInstance().getClanManager().findClan(args[1]);
-		if (c == null) {
-			sender.message("Clan \""+args[1]+"\" not found.");
-			return true;
-		}
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
-		if (!c.isClosed() || c.isInvited(cp)) {
-			c.addMember(cp);
+		if (cp.getClan() == null) {
+			sender.message("You aren't part of a clan!");
 		} else {
-			sender.message("That clan is invite only.");
+			cp.getClan().kickMember(cp);
 		}
 		return true;
 	}

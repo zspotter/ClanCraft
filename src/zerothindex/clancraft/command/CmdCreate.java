@@ -6,7 +6,7 @@ import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 
-public class CommandCreate extends CommandBase {
+public class CmdCreate extends CommandBase {
 
 	@Override
 	public String getName() {
@@ -29,11 +29,6 @@ public class CommandCreate extends CommandBase {
 	}
 
 	@Override
-	public boolean adminOnly() {
-		return false;
-	}
-
-	@Override
 	public boolean handle(MessageReceiver sender, String[] args) {
 		if (args.length != 2) {
 			return false;
@@ -49,7 +44,7 @@ public class CommandCreate extends CommandBase {
 		}
 		
 		ClanPlugin.getInstance().getClanManager().addClan(c);
-		
+		ClanPlugin.getInstance().log("New clan \""+c.getName()+"\" created by "+sender.getName());
 		return true;
 		
 	}

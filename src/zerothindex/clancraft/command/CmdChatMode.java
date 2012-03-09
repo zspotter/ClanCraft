@@ -5,7 +5,7 @@ import zerothindex.clancraft.MessageReceiver;
 import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.clan.ClanPlayer;
 
-public class CommandChatMode extends CommandBase {
+public class CmdChatMode extends CommandBase {
 
 	@Override
 	public String getName() {
@@ -25,11 +25,6 @@ public class CommandChatMode extends CommandBase {
 	@Override
 	public boolean playerOnly() {
 		return true;
-	}
-
-	@Override
-	public boolean adminOnly() {
-		return false;
 	}
 
 	@Override

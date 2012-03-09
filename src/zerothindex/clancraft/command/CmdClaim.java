@@ -11,7 +11,7 @@ import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 import zerothindex.clancraft.clan.ClanPlot;
 
-public class CommandClaim extends CommandBase {
+public class CmdClaim extends CommandBase {
 
 	@Override
 	public String getName() {
@@ -34,11 +34,6 @@ public class CommandClaim extends CommandBase {
 	}
 
 	@Override
-	public boolean adminOnly() {
-		return false;
-	}
-
-	@Override
 	public boolean handle(MessageReceiver sender, String[] args) {
 		if (!(sender instanceof WorldPlayer)) return false;
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
@@ -49,6 +44,9 @@ public class CommandClaim extends CommandBase {
 		if (cp.getRole() != ClanPlayer.ROLE_LEADER) {
 			cp.message("You must be a leader of your clan to claim land.");
 			return true;
+		}
+		if (cp.getClan().getSize() < PluginSettings.minimumMemberClaim) {
+			cp.message("You need at least "+PluginSettings.minimumMemberClaim+" players to claim land.");
 		}
 		if (cp.getClan().getPlot() == null) {
 			cp.getClan().setPlot(new BukkitWorldPlot(cp.getClan()));
@@ -68,8 +66,12 @@ public class CommandClaim extends CommandBase {
 		}
 		
 		boolean success = cp.getClan().getPlot().setCenter(cp.getWorld(), coords[0], coords[2]);
-		if (success) cp.message("Territory center set to your position.");
-		else cp.message("<r>Error setting territory!");
+		if (success) {
+			cp.getClan().messageClan("Your clan has claimed a "
+					+cp.getClan().getPlot().getRadius()+" block radius territory.");
+		} else {
+			cp.message("<r>Error setting territory!");
+		}
 		return true;
 	}
 	

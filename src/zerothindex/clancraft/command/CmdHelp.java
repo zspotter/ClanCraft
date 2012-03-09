@@ -3,7 +3,7 @@ package zerothindex.clancraft.command;
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.MessageReceiver;
 
-public class CommandHelp extends CommandBase {
+public class CmdHelp extends CommandBase {
 
 	@Override
 	public String getName() {
@@ -22,11 +22,6 @@ public class CommandHelp extends CommandBase {
 
 	@Override
 	public boolean playerOnly() {
-		return false;
-	}
-
-	@Override
-	public boolean adminOnly() {
 		return false;
 	}
 

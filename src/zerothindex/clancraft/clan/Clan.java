@@ -22,24 +22,26 @@ public class Clan implements Comparable<Clan>{
 	
 	private HashSet<Clan> allies;
 	private HashSet<Clan> enemies;
+	private HashSet<Clan> allyRequests;
 	
 	private boolean closed;
 	
 	private ClanPlot plot;
 	
 	public Clan(String name) {
-		this(name, "Default description.", new HashSet<ClanPlayer>(), new HashSet<ClanPlayer>(), 
+		this(name, "Default description.", new HashSet<ClanPlayer>(), 
 				new HashSet<ClanPlayer>(), new HashSet<Clan>(), new HashSet<Clan>(), true, null);
 		
 	}
 	
-	public Clan(String name, String desc, HashSet<ClanPlayer> members, HashSet<ClanPlayer> invites, HashSet<ClanPlayer> online,
+	public Clan(String name, String desc, HashSet<ClanPlayer> members, HashSet<ClanPlayer> online,
 			HashSet<Clan> allies, HashSet<Clan> enemies, boolean closed, ClanPlot plot) {
 		this.name = name;
 		this.description = desc;
 		this.members = members;
-		this.invites = invites;
+		this.invites = new HashSet<ClanPlayer>();
 		this.allies = allies;
+		this.allyRequests = new HashSet<Clan>();
 		this.enemies = enemies;
 		this.online = new HashSet<ClanPlayer>();
 		this.closed = closed;
@@ -133,6 +135,7 @@ public class Clan implements Comparable<Clan>{
 	}
 	
 	public void addAlly(Clan ally) {
+		allyRequests.remove(ally);
 		allies.add(ally);
 	}
 	public void removeAlly(Clan ally) {
@@ -143,6 +146,7 @@ public class Clan implements Comparable<Clan>{
 	}
 	
 	public void addEnemy(Clan enemy) {
+		allyRequests.remove(enemy);
 		enemies.add(enemy);
 	}
 	public void removeEnemy(Clan enemy) {
@@ -180,15 +184,23 @@ public class Clan implements Comparable<Clan>{
 	 */
 	public int compareTo(Clan c2) {
 		if (this.getOnlineSize() > c2.getOnlineSize())
-			return 1;
+			return -1;
 		if (this.getOnlineSize() < c2.getOnlineSize())
-			return -1;
-		if (this.getSize() > c2.getSize())
 			return 1;
-		if (this.getSize() < c2.getSize())
+		if (this.getSize() > c2.getSize())
 			return -1;
+		if (this.getSize() < c2.getSize())
+			return 1;
 		
 		return 0;
+	}
+
+	public boolean hasRequestedAlly(Clan clan) {
+		return allyRequests.contains(clan);
+	}
+
+	public void requestAlly(Clan ally) {
+		allyRequests.add(ally);
 	}
 	
 }

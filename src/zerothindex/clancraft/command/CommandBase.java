@@ -12,7 +12,5 @@ public abstract class CommandBase {
 	
 	public abstract boolean playerOnly();
 	
-	public abstract boolean adminOnly();
-	
 	public abstract boolean handle(MessageReceiver sender, String[] args);
 }

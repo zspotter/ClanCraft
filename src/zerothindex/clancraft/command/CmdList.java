@@ -8,7 +8,7 @@ import zerothindex.clancraft.MessageReceiver;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 
-public class CommandList extends CommandBase {
+public class CmdList extends CommandBase {
 
 	@Override
 	public String getName() {
@@ -27,11 +27,6 @@ public class CommandList extends CommandBase {
 
 	@Override
 	public boolean playerOnly() {
-		return false;
-	}
-
-	@Override
-	public boolean adminOnly() {
 		return false;
 	}
 

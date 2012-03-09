@@ -12,16 +12,16 @@ public class CommandManager {
 	
 	public CommandManager() {
 		commands = new HashSet<CommandBase>();
-		commandHelp = new CommandHelp();
+		commandHelp = new CmdHelp();
 		commands.add(commandHelp);
 		
-		commands.add(new CommandCreate());
-		commands.add(new CommandList());
-		commands.add(new CommandChatMode());
-		commands.add(new CommandLeave());
-		commands.add(new CommandJoin());
-		commands.add(new CommandPrivate());
-		commands.add(new CommandClaim());
+		commands.add(new CmdCreate());
+		commands.add(new CmdList());
+		commands.add(new CmdChatMode());
+		commands.add(new CmdLeave());
+		commands.add(new CmdJoin());
+		commands.add(new CmdPrivate());
+		commands.add(new CmdClaim());
 	}
 	
 	
