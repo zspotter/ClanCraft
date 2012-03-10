@@ -51,14 +51,13 @@ public class PlayerListener implements Listener {
 			return;
 		}
 		
-		// exiting a plot
-		if (exiting != null) {
-			cp.message("<t>Leaving "+exiting.getRelationTag(cp)+exiting.getName());
-		}
 		// entering a plot
 		if (entering != null) {
 			cp.message("<t>Entering "+entering.getRelationTag(cp)+entering.getName()+
 					(entering.getDescription().equals("")? "" : " - "+entering.getDescription()));
+		// exiting plot
+		} else if (exiting != null) {
+			cp.message("<t>Leaving "+exiting.getRelationTag(cp)+exiting.getName());
 		}
 		
 	}
