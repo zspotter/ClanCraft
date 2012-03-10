@@ -113,7 +113,7 @@ public class Clan implements Comparable<Clan>{
 		if (cp.getClan().isEnemy(this)) return "<r>";
 		if (cp.getClan().isAlly(this)) return "<b>";
 		if (cp.getClan().equals(this)) return "<g>";
-		return "n";
+		return "<n>";
 	}
 	
 	public int getSize() {

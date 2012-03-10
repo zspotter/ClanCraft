@@ -25,6 +25,7 @@ public class CommandManager {
 		commands.add(new CmdAlly());
 		commands.add(new CmdEnemy());
 		commands.add(new CmdRole());
+		commands.add(new CmdSetRadius());
 	}
 	
 	

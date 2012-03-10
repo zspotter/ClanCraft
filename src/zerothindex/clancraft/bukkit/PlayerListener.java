@@ -1,15 +1,18 @@
 package zerothindex.clancraft.bukkit;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import zerothindex.clancraft.ClanPlugin;
+import zerothindex.clancraft.PluginSettings;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 
@@ -22,10 +25,39 @@ public class PlayerListener implements Listener {
 	}
 	
 	/**
+	 * Prevents non-clan players from interacting with blocks in a plot
+	 */
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onPlayerInteract(PlayerInteractEvent e) {
+		if (e.isCancelled()) return;
+		Block block = e.getClickedBlock();
+		Clan clan = ClanPlugin.getInstance().getClanManager()
+				.getClanAtLocation(block.getWorld().getName(), block.getX(), block.getZ());
+		if (clan == null) return;
+		
+		ClanPlayer cp = ClanPlugin.getInstance().findClanPlayer(e.getPlayer().getName());
+		if (cp == null) {
+			e.setCancelled(true);
+			return;
+		}
+		if (cp.getClan() != null && clan.equals(cp.getClan())) {
+			// its the player's own clan
+			return;
+		}
+		// not the player's clan
+		if (!PluginSettings.allowUse.contains(block.getType().toString())) {
+			e.setCancelled(true);
+			//cp.message("<r>You can't use that here.");
+			return;
+		}
+	}
+	
+	/**
 	 * Messages players when they enter or exit claimed land.
 	 */
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
+		if (e.isCancelled()) return;
 		Location to = e.getTo();
 		Location from = e.getPlayer().getLocation();
 		// only perform plot enter/exit checks if player has moved whole block
