@@ -47,6 +47,7 @@ public class CmdClaim extends CommandBase {
 		}
 		if (cp.getClan().getSize() < PluginSettings.minimumMemberClaim) {
 			cp.message("You need at least "+PluginSettings.minimumMemberClaim+" players to claim land.");
+			return true;
 		}
 		if (cp.getClan().getPlot() == null) {
 			cp.getClan().setPlot(new BukkitWorldPlot(cp.getClan()));

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import zerothindex.clancraft.clan.ClanManager;
 import zerothindex.clancraft.clan.ClanPlayer;
 import zerothindex.clancraft.command.CommandManager;
-import zerothindex.clancraft.event.ClanEventManager;
 
 public class ClanPlugin {
 	
@@ -14,7 +13,6 @@ public class ClanPlugin {
 	private String name;
 	private CommandManager commandManager;
 	private ClanManager clanManager;
-	private ClanEventManager clanEventManager;
 	
 	private HashMap<String, ClanPlayer> players;
 	
@@ -26,7 +24,6 @@ public class ClanPlugin {
 		this.name = name;
 		commandManager = new CommandManager();
 		clanManager = new ClanManager();
-		clanEventManager = new ClanEventManager();
 		players = new HashMap<String, ClanPlayer>();
 		instance = this;
 	}
@@ -49,17 +46,13 @@ public class ClanPlugin {
 		return clanManager;
 	}
 	
-	public ClanEventManager getClanEventManager() {
-		return clanEventManager;
-	}
-	
 	/**
 	 * Find the ClanPlayer who's name is some String
 	 * @param name the name to identify by
 	 * @return a ClanPlayer or NULL
 	 */
 	public ClanPlayer findClanPlayer(String name) {
-		return players.get(name);
+		return players.get(name.toLowerCase());
 	}
 	
 	/**
@@ -83,10 +76,11 @@ public class ClanPlugin {
 	 * @return false if the name is already taken, true otherwise
 	 */
 	public boolean addClanPlayer(ClanPlayer cp) {
-		if (players.containsKey(cp.getName())) {
+		String name = cp.getName().toLowerCase();
+		if (players.containsKey(name)) {
 			return false;
 		} else {
-			players.put(cp.getName(), cp);
+			players.put(name, cp);
 			return true;
 		}
 	}
