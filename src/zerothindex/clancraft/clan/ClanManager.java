@@ -46,4 +46,22 @@ public class ClanManager {
 		return found;
 	}
 	
+	/**
+	 * Finds what clan's plot (if any) is at the given coords
+	 * @param world
+	 * @param x
+	 * @param z
+	 * @return a Clan or null
+	 */
+	public Clan getClanAtLocation(String world, double x, double z) {
+		for (Clan clan : clans) {
+			if (clan.getPlot().isActive()) {
+				if (clan.getPlot().contains(world, x, z)) {
+					return clan;
+				}
+			}
+		}
+		return null;
+	}
+	
 }

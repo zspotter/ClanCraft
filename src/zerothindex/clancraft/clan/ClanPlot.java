@@ -69,4 +69,19 @@ public interface ClanPlot {
 	 * @return is there land actually claimed?
 	 */
 	public boolean isActive();
+	
+	/**
+	 * Valid only if isActive() returns true
+	 * @return the world this plot is active in
+	 */
+	public String getWorld();
+	
+	/**
+	 * Is the given point in the plot?
+	 * @param world
+	 * @param x
+	 * @param z
+	 * @return
+	 */
+	public boolean contains(String world, double x, double z);
 }

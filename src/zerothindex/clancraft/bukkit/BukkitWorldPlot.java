@@ -60,8 +60,8 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 		this.setMembers(domain);
 		// Set flags for protection
 		HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
-		flags.put(DefaultFlag.GREET_MESSAGE, ("Entering "+clan.getName()+" - "+clan.getDescription()));
-		flags.put(DefaultFlag.FAREWELL_MESSAGE, ("Leaving "+clan.getName()+"."));
+		//flags.put(DefaultFlag.GREET_MESSAGE, ("Entering "+clan.getName()+" - "+clan.getDescription()));
+		//flags.put(DefaultFlag.FAREWELL_MESSAGE, ("Leaving "+clan.getName()+"."));
 		flags.put(DefaultFlag.CHEST_ACCESS, StateFlag.State.ALLOW);
 		flags.put(DefaultFlag.USE, StateFlag.State.ALLOW);
 		this.setFlags(flags);
@@ -134,6 +134,13 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 	public int getRadius() {
 		return radius;
 	}
+	
+	@Override
+	public boolean contains(String w, double x, double z) {
+		if (!active) return false;
+		if (!world.equals(w)) return false;
+		return contains(new Vector(x,0,z));
+	}
 
 	@Override
 	public boolean contains(Vector v) {
@@ -181,6 +188,12 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 	@Override
 	public boolean isActive() {
 		return active;
+	}
+
+	@Override
+	public String getWorld() {
+		if (active) return world;
+		return null;
 	}
 
 }

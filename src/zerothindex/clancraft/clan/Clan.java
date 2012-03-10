@@ -29,7 +29,7 @@ public class Clan implements Comparable<Clan>{
 	private ClanPlot plot;
 	
 	public Clan(String name) {
-		this(name, "Default description.", new HashSet<ClanPlayer>(), 
+		this(name, "", new HashSet<ClanPlayer>(), 
 				new HashSet<ClanPlayer>(), new HashSet<Clan>(), new HashSet<Clan>(), true, null);
 		
 	}
@@ -101,6 +101,19 @@ public class Clan implements Comparable<Clan>{
 		for (Clan a : allies) {
 			a.messageClan(msg);
 		}
+	}
+	
+	/**
+	 * Finds an appropriate color tag to represent the player's relationship to the clan
+	 * @param cp 
+	 * @return a color tag
+	 */
+	public String getRelationTag(ClanPlayer cp) {
+		if (cp.getClan() == null) return "<n>";
+		if (cp.getClan().isEnemy(this)) return "<r>";
+		if (cp.getClan().isAlly(this)) return "<b>";
+		if (cp.getClan().equals(this)) return "<g>";
+		return "n";
 	}
 	
 	public int getSize() {
