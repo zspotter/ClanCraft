@@ -6,6 +6,7 @@ import zerothindex.clancraft.clan.ClanManager;
 import zerothindex.clancraft.clan.ClanPlayer;
 import zerothindex.clancraft.command.CommandManager;
 
+//test
 public class ClanPlugin {
 	
 	private static ClanPlugin instance;
