@@ -87,7 +87,8 @@ public class ClanPlayer implements WorldPlayer {
 		return ClanPlugin.getInstance().getClanManager().getClan(clanID);
 	}
 	public void setClan(Clan c) {
-		clanID = c.getClanID();
+		if (c == null) clanID = -1;
+		else clanID = c.getClanID();
 	}
 	
 	public int getRole() {

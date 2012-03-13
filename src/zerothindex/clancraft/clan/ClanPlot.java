@@ -84,4 +84,14 @@ public interface ClanPlot {
 	 * @return
 	 */
 	public boolean contains(String world, double x, double z);
+
+	/**
+	 * @return [x,y,z]
+	 */
+	public double[] getSpawn();
+
+	/**
+	 * @return [yaw, pitch]
+	 */
+	public float[] getSpawnDir();
 }

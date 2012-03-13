@@ -5,6 +5,7 @@ import java.util.Set;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.bukkit.BukkitWorldPlot;
+import zerothindex.clancraft.bukkit.SaveStateClan;
 
 /**
  * A Clan has a collection of ClanPlayers and a ClanPlot.
@@ -28,7 +29,7 @@ public class Clan implements Comparable<Clan>{
 	
 	private boolean closed;
 	
-	private ClanPlot plot;
+	transient private ClanPlot plot; // transient - do not serialize
 	
 	public Clan(String name) {
 		this(ClanPlugin.getInstance().getClanManager().nextID(), name, "", new HashSet<ClanPlayer>(), 
@@ -190,6 +191,19 @@ public class Clan implements Comparable<Clan>{
 	}
 	public void setClosed(boolean cls) {
 		closed = cls;
+	}
+	
+	public Set<Integer> getAllies() {
+		return allies;
+	}
+	public Set<Integer> getEnemies() {
+		return enemies;
+	}
+	public Set<Integer> getAllyRequests() {
+		return allyRequests;
+	}
+	public Set<ClanPlayer> getMembers() {
+		return members;
 	}
 	
 	public ClanPlot getPlot() {

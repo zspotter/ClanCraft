@@ -198,6 +198,18 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 		return null;
 	}
 
+	@Override
+	public double[] getSpawn() {
+		if (spawn == null || !active) return null;
+		return new double[] {spawn.getX(), spawn.getBlockY(), spawn.getBlockZ()};
+	}
+
+	@Override
+	public float[] getSpawnDir() {
+		if (spawn == null || !active) return null;
+		return new float[] {spawn.getYaw(), spawn.getPitch()};
+	}
+
 }
 
 class ClanDomain extends DefaultDomain {

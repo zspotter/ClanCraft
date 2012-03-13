@@ -11,7 +11,7 @@ import zerothindex.clancraft.WorldPlayer;
  */
 public class BukkitPlayer implements WorldPlayer {
 	
-	private Player player;
+	transient private Player player; // transient - wont be serialized by gson
 	
 	public BukkitPlayer(Player player) {
 		this.player = player;
