@@ -7,6 +7,10 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
 
+import org.bukkit.entity.Player;
+
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -44,7 +48,21 @@ public class ClanPlugin {
 		Writer writer;
 		try {
 			writer = new OutputStreamWriter(new FileOutputStream("ClanData.json"));
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			Gson gson = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
+
+				@Override
+				public boolean shouldSkipClass(Class<?> arg0) {
+					//System.out.println("sC>"+arg0.getCanonicalName());
+					return (arg0 == Player.class);
+				}
+
+				@Override
+				public boolean shouldSkipField(FieldAttributes arg0) {
+					//System.out.println("sF>"+arg0.getName());
+					return false;
+				}
+				
+			}).setPrettyPrinting().create();
 		    gson.toJson(clanManager, writer);
 		    
 		    //writer = new OutputStreamWriter(new FileOutputStream("ClanSettings.json"));

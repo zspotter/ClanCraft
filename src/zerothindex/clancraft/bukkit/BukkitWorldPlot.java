@@ -109,7 +109,10 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 	@Override
 	public void recalculate() {
 		Clan clan = ClanPlugin.getInstance().getClanManager().getClan(clanID);
-		int numPlayers = clan.getSize();
+		int numPlayers;
+		if (clan == null) numPlayers = 0;
+		else numPlayers = clan.getSize();
+		
 		int newRadius = (int) 4*numPlayers+10; //Math.round(8*Math.sqrt(4*numPlayers));
 		if (newRadius > PluginSettings.maximumRadius) return; // radius cap
 		if (newRadius < radius && active) {
