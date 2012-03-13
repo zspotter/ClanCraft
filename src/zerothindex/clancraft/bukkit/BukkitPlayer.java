@@ -11,7 +11,7 @@ import zerothindex.clancraft.WorldPlayer;
  */
 public class BukkitPlayer implements WorldPlayer {
 	
-	transient private Player player; // transient - wont be serialized by gson
+	private Player player;
 	
 	public BukkitPlayer(Player player) {
 		this.player = player;
@@ -19,6 +19,7 @@ public class BukkitPlayer implements WorldPlayer {
 
 	@Override
 	public void message(String msg) {
+		if (player == null) return;
 		player.sendMessage(BukkitClanPlugin.parseMessage(msg));
 	}
 
@@ -29,6 +30,7 @@ public class BukkitPlayer implements WorldPlayer {
 
 	@Override
 	public String getName() {
+		if (player == null) return null;
 		return player.getName();
 	}
 
@@ -39,11 +41,13 @@ public class BukkitPlayer implements WorldPlayer {
 
 	@Override
 	public String getWorld() {
+		if (player == null) return null;
 		return player.getWorld().getName();
 	}
 
 	@Override
 	public double[] getCoordinates() {
+		if (player == null) return null;
 		return new double[]{
 				player.getLocation().getX(),
 				player.getLocation().getY(),
@@ -52,6 +56,7 @@ public class BukkitPlayer implements WorldPlayer {
 
 	@Override
 	public float[] getOrientation() {
+		if (player == null) return null;
 		return new float[] {
 				player.getLocation().getYaw(),
 				player.getLocation().getPitch()};

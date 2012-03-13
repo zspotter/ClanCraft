@@ -46,8 +46,8 @@ public class CmdEnemy extends CommandBase {
 			cp.message("Clan \""+args[1]+"\" not found.");
 			return true;
 		}
-		cp.getClan().addEnemy(enemy);
-		enemy.addEnemy(cp.getClan());
+		cp.getClan().addEnemy(enemy.getClanID());
+		enemy.addEnemy(cp.getClan().getClanID());
 		cp.getClan().messageClan("<r> You are now enemies with "+enemy.getName()+".");
 		enemy.messageClan("<r> You are now enemies with "+cp.getClan().getName()+".");
 		

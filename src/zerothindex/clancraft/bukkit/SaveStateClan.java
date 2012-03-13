@@ -1,7 +1,10 @@
 package zerothindex.clancraft.bukkit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
+import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
 
@@ -49,10 +52,12 @@ public class SaveStateClan {
 		allies = new Integer[0];
 		enemies = new Integer[0];
 		allyRequests = new Integer[0];
+		invites = new String[0];
 		
 		allies = clan.getAllies().toArray(allies);
 		enemies = clan.getEnemies().toArray(enemies);
 		allyRequests = clan.getAllyRequests().toArray(allyRequests);
+		invites = clan.getInvites().toArray(invites);
 		
 		if (clan.getPlot() != null && clan.getPlot().isActive()) {
 			world = clan.getPlot().getWorld();
@@ -64,8 +69,38 @@ public class SaveStateClan {
 		}
 	}
 	
+	/**
+	 * @return a restored version of what this state represents
+	 */
 	public Clan toClan() {
-		return null;
+		Clan clan = new Clan(clanID, name, description, new HashSet<ClanPlayer>(), 
+				new HashSet<ClanPlayer>(), new HashSet<Integer>(), new HashSet<Integer>(), closed, null);
+		for (SaveStatePlayer playerState : members) {
+			clan.addMember(playerState.toClanPlayer());
+		}
+		for (Integer id : allies) {
+			clan.addAlly(id);
+		}
+		for (Integer id : enemies) {
+			clan.addEnemy(id);
+		}
+		for (Integer id : allyRequests) {
+			clan.requestAlly(id);
+		}
+		for (String str : invites) {
+			clan.addInvite(str);
+		}
+		
+		if (world != null) {
+			BukkitWorldPlot plot = new BukkitWorldPlot(clan);
+			plot.setCenter(world, center[0], center[1]);
+			if (spawn != null) {
+				plot.setSpawn(world, spawn[0], spawn[1], spawn[2], spawnDir[0], spawnDir[1]);
+			}
+			clan.setPlot(plot);
+		}
+		
+		return clan;
 	}
 	
 }
@@ -85,6 +120,7 @@ class SaveStatePlayer {
 	}
 	
 	public ClanPlayer toClanPlayer() {
-		return null;
+		ClanPlayer player = new ClanPlayer(new BukkitPlayer(null), -1, rank, chatMode, lastLogin, false);
+		return player;
 	}
 }

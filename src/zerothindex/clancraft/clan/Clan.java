@@ -157,9 +157,9 @@ public class Clan implements Comparable<Clan>{
 		//online.remove(member);
 	}
 	
-	public void addAlly(Clan ally) {
-		allyRequests.remove(ally.getClanID());
-		allies.add(ally.getClanID());
+	public void addAlly(Integer id) {
+		allyRequests.remove(id);
+		allies.add(id);
 	}
 	public void removeAlly(Clan ally) {
 		allies.remove(ally);
@@ -168,9 +168,9 @@ public class Clan implements Comparable<Clan>{
 		return allies.contains(ally.getClanID());
 	}
 	
-	public void addEnemy(Clan enemy) {
-		allyRequests.remove(enemy.getClanID());
-		enemies.add(enemy.getClanID());
+	public void addEnemy(Integer id) {
+		allyRequests.remove(id);
+		enemies.add(id);
 	}
 	public void removeEnemy(Clan enemy) {
 		enemies.remove(enemy.getClanID());
@@ -191,6 +191,10 @@ public class Clan implements Comparable<Clan>{
 	}
 	public void setClosed(boolean cls) {
 		closed = cls;
+	}
+	
+	public HashSet<String> getInvites() {
+		return invites;
 	}
 	
 	public Set<Integer> getAllies() {
@@ -235,8 +239,8 @@ public class Clan implements Comparable<Clan>{
 		return allyRequests.contains(clan);
 	}
 
-	public void requestAlly(Clan ally) {
-		allyRequests.add(ally.getClanID());
+	public void requestAlly(Integer id) {
+		allyRequests.add(id);
 	}
 
 	/**

@@ -47,13 +47,13 @@ public class CmdAlly extends CommandBase {
 			return true;
 		}
 		if (ally.hasRequestedAlly(cp.getClan())) {
-			cp.getClan().addAlly(ally);
-			ally.addAlly(cp.getClan());
+			cp.getClan().addAlly(ally.getClanID());
+			ally.addAlly(cp.getClan().getClanID());
 			cp.getClan().messageClan("<b>You are now allies with "+ally.getName()+".");
 			ally.messageClan("<b>You are now allies with "+cp.getClan().getName()+".");
 			return true;
 		} else {
-			cp.getClan().requestAlly(ally);
+			cp.getClan().requestAlly(ally.getClanID());
 			cp.message("You have requested an alliance with "+ally.getName()
 					+". To complete the process, they must request an alliance with you.");
 			ally.messageClan("<t>Clan "+cp.getClan().getName()+" has requested an alliance. " +

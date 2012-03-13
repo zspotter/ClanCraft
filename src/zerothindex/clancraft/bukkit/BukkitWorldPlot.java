@@ -96,8 +96,10 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 
 	@Override
 	public void unclaim() {
-		BukkitClanPlugin.getWorldGuardPlugin().getGlobalRegionManager()
-			.get(Bukkit.getWorld(world)).removeRegion(getId());
+		if (registered) {
+			BukkitClanPlugin.getWorldGuardPlugin().getGlobalRegionManager()
+				.get(Bukkit.getWorld(world)).removeRegion(getId());
+		}
 		spawn = null;
 		world = null;
 		centerX = 0;
