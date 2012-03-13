@@ -1,6 +1,14 @@
 package zerothindex.clancraft;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.HashMap;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import zerothindex.clancraft.clan.ClanManager;
 import zerothindex.clancraft.clan.ClanPlayer;
@@ -33,6 +41,23 @@ public class ClanPlugin {
 	 * Safely destructs the object
 	 */
 	public void disable() {		
+		Writer writer;
+		try {
+			writer = new OutputStreamWriter(new FileOutputStream("ClanData.json"));
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		    gson.toJson(clanManager, writer);
+		    
+		    //writer = new OutputStreamWriter(new FileOutputStream("ClanSettings.json"));
+		    //gson.toJson(PluginSettings.class, writer);
+		    
+		    writer.close();
+		} catch (FileNotFoundException e) {
+			log("SEVERE ERROR: Could not save ClanPlugin, file not found.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			log("SEVERE ERROR: Could not save ClanPlugin, IO error.");
+			e.printStackTrace();
+		}
 	}
 	
 	public static ClanPlugin getInstance() {

@@ -68,7 +68,7 @@ public class BukkitClanPlugin extends JavaPlugin {
 	 * Called when the plugin is disabled.
 	 */
 	public void onDisable() {
-		clanPlugin.disable();
+		//clanPlugin.disable();
 	}
 	
 	/**
