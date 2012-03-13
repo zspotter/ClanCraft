@@ -3,6 +3,7 @@ package zerothindex.clancraft.clan;
 import java.util.HashSet;
 import java.util.Set;
 
+import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.bukkit.BukkitWorldPlot;
 
 /**
@@ -12,6 +13,8 @@ import zerothindex.clancraft.bukkit.BukkitWorldPlot;
  *
  */
 public class Clan implements Comparable<Clan>{
+	
+	private int clanID;
 	
 	private String name;
 	private String description;
@@ -29,13 +32,14 @@ public class Clan implements Comparable<Clan>{
 	private ClanPlot plot;
 	
 	public Clan(String name) {
-		this(name, "", new HashSet<ClanPlayer>(), 
+		this(ClanPlugin.getInstance().getClanManager().nextID(), name, "", new HashSet<ClanPlayer>(), 
 				new HashSet<ClanPlayer>(), new HashSet<Clan>(), new HashSet<Clan>(), true, null);
 		
 	}
 	
-	public Clan(String name, String desc, HashSet<ClanPlayer> members, HashSet<ClanPlayer> online,
+	public Clan(int clanID, String name, String desc, HashSet<ClanPlayer> members, HashSet<ClanPlayer> online,
 			HashSet<Clan> allies, HashSet<Clan> enemies, boolean closed, ClanPlot plot) {
+		this.clanID = clanID;
 		this.name = name;
 		this.description = desc;
 		this.members = members;
@@ -214,6 +218,13 @@ public class Clan implements Comparable<Clan>{
 
 	public void requestAlly(Clan ally) {
 		allyRequests.add(ally);
+	}
+
+	/**
+	 * @return the integer ID of this clan
+	 */
+	public int getClanID() {
+		return clanID;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package zerothindex.clancraft.clan;
 
+import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.WorldPlayer;
 
 /**
@@ -27,7 +28,7 @@ public class ClanPlayer implements WorldPlayer {
 	 */
 	private String name;
 	private WorldPlayer player;
-	private Clan clan;
+	private int clanID;
 	private int chatMode;
 	private long lastLogin;
 	private int role;
@@ -42,7 +43,7 @@ public class ClanPlayer implements WorldPlayer {
 	 * @param name the name of the player this object represents
 	 */
 	public ClanPlayer(WorldPlayer object) {
-		this(object, null, ROLE_NORMAL, CHAT_PUBLIC, System.currentTimeMillis(), false);
+		this(object, -1, ROLE_NORMAL, CHAT_PUBLIC, System.currentTimeMillis(), false);
 	}
 	
 	/**
@@ -53,10 +54,10 @@ public class ClanPlayer implements WorldPlayer {
 	 * @param chatMode see ClanPlayer's public static final int variables for values
 	 * @param lastLogin the time in milliseconds (System.currentTimeMillis())
 	 */
-	public ClanPlayer(WorldPlayer object, Clan clan, int role, int chatMode, long lastLogin, boolean isOnline) {
+	public ClanPlayer(WorldPlayer object, int clanID, int role, int chatMode, long lastLogin, boolean isOnline) {
 		this.name = object.getName();
 		this.player = object;
-		this.clan = clan;
+		this.clanID = clanID;
 		this.chatMode = chatMode;
 		this.lastLogin = lastLogin;
 		this.role = role;
@@ -83,10 +84,10 @@ public class ClanPlayer implements WorldPlayer {
 	}
 	
 	public Clan getClan() {
-		return clan;
+		return ClanPlugin.getInstance().getClanManager().getClan(clanID);
 	}
 	public void setClan(Clan c) {
-		clan = c;
+		clanID = c.getClanID();
 	}
 	
 	public int getRole() {
@@ -112,11 +113,11 @@ public class ClanPlayer implements WorldPlayer {
 	}
 	public void logIn() {
 		isOnline = true;
-		if (clan != null) clan.checkIn(this);
+		if (clanID != -1) getClan().checkIn(this);
 	}
 	public void logOut() {
 		isOnline = false;
-		if (clan != null) clan.checkOut(this);
+		if (clanID != -1) getClan().checkOut(this);
 	}
 
 	@Override
