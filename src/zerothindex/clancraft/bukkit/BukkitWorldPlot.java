@@ -1,6 +1,5 @@
 package zerothindex.clancraft.bukkit;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +17,6 @@ import com.sk89q.worldguard.protection.UnsupportedIntersectionException;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
-import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
@@ -30,13 +28,13 @@ import zerothindex.clancraft.clan.ClanPlot;
 
 /**
  * Manages and protects a plot of land in a Bukkit world using WorldGuard.
- * This is essentially an adapter between the clan plugin and WorldGuard.
+ * This is essentially an adapter between the clanID plugin and WorldGuard.
  * @author zerothindex
  *
  */
 public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 
-	private Clan clan;
+	private int clanID;
 	private int radius;
 	private Location spawn;
 	private String world;
@@ -48,7 +46,7 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 	
 	public BukkitWorldPlot(Clan c) {
 		super(("plot["+c.getName()+"]"), new BlockVector(0,0,0), new BlockVector(0,0,0));
-		clan = c;
+		clanID = c.getClanID();
 		radius = 0;
 		spawn = null;
 		centerX = 0;
@@ -60,8 +58,8 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 		this.setMembers(domain);
 		// Set flags for protection
 		HashMap<Flag<?>, Object> flags = new HashMap<Flag<?>, Object>();
-		//flags.put(DefaultFlag.GREET_MESSAGE, ("Entering "+clan.getName()+" - "+clan.getDescription()));
-		//flags.put(DefaultFlag.FAREWELL_MESSAGE, ("Leaving "+clan.getName()+"."));
+		//flags.put(DefaultFlag.GREET_MESSAGE, ("Entering "+clanID.getName()+" - "+clanID.getDescription()));
+		//flags.put(DefaultFlag.FAREWELL_MESSAGE, ("Leaving "+clanID.getName()+"."));
 		flags.put(DefaultFlag.CHEST_ACCESS, StateFlag.State.ALLOW);
 		flags.put(DefaultFlag.USE, StateFlag.State.ALLOW);
 		this.setFlags(flags);
@@ -92,8 +90,8 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 	}
 
 	@Override
-	public Clan getClan() {
-		return clan;
+	public int getClanID() {
+		return clanID;
 	}
 
 	@Override
@@ -110,6 +108,7 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 	
 	@Override
 	public void recalculate() {
+		Clan clan = ClanPlugin.getInstance().getClanManager().getClan(clanID);
 		int numPlayers = clan.getSize();
 		int newRadius = (int) 4*numPlayers+10; //Math.round(8*Math.sqrt(4*numPlayers));
 		if (newRadius > PluginSettings.maximumRadius) return; // radius cap
@@ -200,21 +199,22 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 
 class ClanDomain extends DefaultDomain {
 	
-	private Clan clan;
+	private int clanID;
 	
 	public ClanDomain(Clan c) {
-		clan = c;
+		clanID = c.getClanID();
 	}
 	
 	@Override
 	public boolean contains(LocalPlayer player) {
 		ClanPlayer cp = ClanPlugin.getInstance().findClanPlayer(player.getName());
 		if (cp == null) return false;
-		return (cp.getClan() == clan);
+		return (cp.getClan() == ClanPlugin.getInstance().getClanManager().getClan(clanID));
 	}
 	
 	@Override
 	public Set<String> getPlayers() {
+		Clan clan = ClanPlugin.getInstance().getClanManager().getClan(clanID);
 		Set<String> players = new HashSet<String>();
 		for (ClanPlayer cp : clan.getOnline()) {
 			players.add(cp.getName());
@@ -224,7 +224,7 @@ class ClanDomain extends DefaultDomain {
 	
 	@Override
 	public int size() {
-		return clan.getOnlineSize();
+		return ClanPlugin.getInstance().getClanManager().getClan(clanID).getOnlineSize();
 	}
 	
 	

@@ -30,9 +30,9 @@ public interface ClanPlot {
 	public boolean setCenter(String world, double x, double z);
 	
 	/**
-	 * @return the Clan which this plot protects
+	 * @return the Clan id which this plot protects
 	 */
-	public Clan getClan();
+	public int getClanID();
 	
 	/**
 	 * Stop protecting and forget the territory

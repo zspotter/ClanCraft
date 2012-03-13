@@ -20,12 +20,11 @@ public class Clan implements Comparable<Clan>{
 	private String description;
 
 	private HashSet<ClanPlayer> members;
-	private HashSet<ClanPlayer> invites;
-	private HashSet<ClanPlayer> online;
+	private HashSet<String> invites;
 	
-	private HashSet<Clan> allies;
-	private HashSet<Clan> enemies;
-	private HashSet<Clan> allyRequests;
+	private HashSet<Integer> allies;
+	private HashSet<Integer> enemies;
+	private HashSet<Integer> allyRequests;
 	
 	private boolean closed;
 	
@@ -33,21 +32,20 @@ public class Clan implements Comparable<Clan>{
 	
 	public Clan(String name) {
 		this(ClanPlugin.getInstance().getClanManager().nextID(), name, "", new HashSet<ClanPlayer>(), 
-				new HashSet<ClanPlayer>(), new HashSet<Clan>(), new HashSet<Clan>(), true, null);
+				new HashSet<ClanPlayer>(), new HashSet<Integer>(), new HashSet<Integer>(), true, null);
 		
 	}
 	
 	public Clan(int clanID, String name, String desc, HashSet<ClanPlayer> members, HashSet<ClanPlayer> online,
-			HashSet<Clan> allies, HashSet<Clan> enemies, boolean closed, ClanPlot plot) {
+			HashSet<Integer> allies, HashSet<Integer> enemies, boolean closed, ClanPlot plot) {
 		this.clanID = clanID;
 		this.name = name;
 		this.description = desc;
 		this.members = members;
-		this.invites = new HashSet<ClanPlayer>();
+		this.invites = new HashSet<String>();
 		this.allies = allies;
-		this.allyRequests = new HashSet<Clan>();
+		this.allyRequests = new HashSet<Integer>();
 		this.enemies = enemies;
-		this.online = new HashSet<ClanPlayer>();
 		this.closed = closed;
 		if (plot == null) this.plot = new BukkitWorldPlot(this);
 		else this.plot = plot;
@@ -57,7 +55,6 @@ public class Clan implements Comparable<Clan>{
 		newb.setClan(this);
 		members.add(newb);
 		invites.remove(newb);
-		if (newb.isOnline()) online.add(newb);
 		newb.message("You have joined "+getName()+".");
 		plot.recalculate();
 	}
@@ -67,7 +64,6 @@ public class Clan implements Comparable<Clan>{
 			member.setClan(null);
 			member.setRole(ClanPlayer.ROLE_NORMAL);
 			members.remove(member);
-			online.remove(member);
 			member.message("You have left "+getName()+".");
 			plot.recalculate();
 		}
@@ -79,11 +75,16 @@ public class Clan implements Comparable<Clan>{
 			cp.setRole(ClanPlayer.ROLE_NORMAL);
 			cp.message("Your faction has been disbanded.");
 		}
-		members = null;
-		invites = null;
-		online = null;
-		allies = null;
-		enemies = null;
+		for (Integer id : allies) {
+			ClanPlugin.getInstance().getClanManager().getClan(id).removeAlly(this);
+		}
+		for (Integer id : enemies) {
+			ClanPlugin.getInstance().getClanManager().getClan(id).removeEnemy(this);
+		}
+		members.clear();
+		invites.clear();
+		allies.clear();
+		enemies.clear();
 		closed = true;
 		plot.unclaim();
 	}
@@ -93,17 +94,17 @@ public class Clan implements Comparable<Clan>{
 	}
 
 	public void messageClan(String msg) {
-		for (ClanPlayer p : online) {
-			p.message(msg);
+		for (ClanPlayer p : members) {
+			if (p.isOnline()) p.message(msg);
 		}
 	}
 	
 	public void messageAllies(String msg) {
-		for (ClanPlayer p : online) {
-			p.message(msg);
+		for (ClanPlayer p : members) {
+			if (p.isOnline()) p.message(msg);
 		}
-		for (Clan a : allies) {
-			a.messageClan(msg);
+		for (Integer id : allies) {
+			ClanPlugin.getInstance().getClanManager().getClan(id).messageClan(msg);
 		}
 	}
 	
@@ -124,10 +125,14 @@ public class Clan implements Comparable<Clan>{
 		return members.size();
 	}
 	public int getOnlineSize() {
-		return online.size();
+		return getOnline().size();
 	}
 	
 	public Set<ClanPlayer> getOnline() {
+		HashSet<ClanPlayer> online = new HashSet<ClanPlayer>();
+		for (ClanPlayer p : members) {
+			if (p.isOnline()) online.add(p);
+		}
 		return online;
 	}
 	
@@ -145,38 +150,38 @@ public class Clan implements Comparable<Clan>{
 	}
 	
 	public void checkIn(ClanPlayer member) {
-		online.add(member);
+		//online.add(member);
 	}
 	public void checkOut(ClanPlayer member) {
-		online.remove(member);
+		//online.remove(member);
 	}
 	
 	public void addAlly(Clan ally) {
-		allyRequests.remove(ally);
-		allies.add(ally);
+		allyRequests.remove(ally.getClanID());
+		allies.add(ally.getClanID());
 	}
 	public void removeAlly(Clan ally) {
 		allies.remove(ally);
 	}
 	public boolean isAlly(Clan ally) {
-		return allies.contains(ally);
+		return allies.contains(ally.getClanID());
 	}
 	
 	public void addEnemy(Clan enemy) {
-		allyRequests.remove(enemy);
-		enemies.add(enemy);
+		allyRequests.remove(enemy.getClanID());
+		enemies.add(enemy.getClanID());
 	}
 	public void removeEnemy(Clan enemy) {
-		enemies.remove(enemy);
+		enemies.remove(enemy.getClanID());
 	}
 	public boolean isEnemy(Clan enemy) {
-		return enemies.contains(enemy);
+		return enemies.contains(enemy.getClanID());
 	}
 	
-	public void addInvite(ClanPlayer player) {
+	public void addInvite(String player) {
 		invites.add(player);
 	}
-	public void removeInvite(ClanPlayer player) {
+	public void removeInvite(String player) {
 		invites.remove(player);
 	}
 	
@@ -217,7 +222,7 @@ public class Clan implements Comparable<Clan>{
 	}
 
 	public void requestAlly(Clan ally) {
-		allyRequests.add(ally);
+		allyRequests.add(ally.getClanID());
 	}
 
 	/**
