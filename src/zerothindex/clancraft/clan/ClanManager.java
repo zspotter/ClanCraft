@@ -1,39 +1,26 @@
 package zerothindex.clancraft.clan;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 public class ClanManager {
 	
-	private int nextID;
-	
-	private HashMap<Integer, Clan> clans;
+	private HashSet<Clan> clans;
 	
 	public ClanManager() {
-		clans = new HashMap<Integer, Clan>();
-		nextID = 0;
+		clans = new HashSet<Clan>();
 	}
 	
 	public ClanManager(Set<Clan> clans) {
 		clans = new HashSet<Clan>(clans);
 	}
 	
-	public Collection<Clan> getClans() {
-		return clans.values();
+	public HashSet<Clan> getClans() {
+		return clans;
 	}
 	
 	public void addClan(Clan clan) {
-		clans.put(clan.getClanID(), clan);
+		clans.add(clan);
 	}
 	
 	public void disbandClan(Clan clan) {
@@ -49,7 +36,7 @@ public class ClanManager {
 	public Clan findClan(String str) {
 		String name = str.toLowerCase();
 		Clan found = null;
-		for (Clan clan : clans.values()) {
+		for (Clan clan : clans) {
 			if (clan.getName().toLowerCase().startsWith(name)) {
 				if (found == null || found.getSize() < clan.getSize()) {
 					found = clan;
@@ -67,7 +54,7 @@ public class ClanManager {
 	 * @return a Clan or null
 	 */
 	public Clan getClanAtLocation(String world, double x, double z) {
-		for (Clan clan : clans.values()) {
+		for (Clan clan : clans) {
 			if (clan.getPlot().isActive()) {
 				if (clan.getPlot().contains(world, x, z)) {
 					return clan;
@@ -75,22 +62,6 @@ public class ClanManager {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * @return the next unused clan id
-	 */
-	public int nextID() {
-		return nextID++;
-	}
-
-	/**
-	 * @param clanID the ID of the clan
-	 * @return a clan or null
-	 */
-	public Clan getClan(int clanID) {
-		return clans.get(clanID);
-		
 	}
 	
 }

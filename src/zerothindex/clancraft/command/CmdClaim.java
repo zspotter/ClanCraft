@@ -1,6 +1,5 @@
 package zerothindex.clancraft.command;
 
-import java.util.Collection;
 import java.util.Set;
 
 import zerothindex.clancraft.ClanPlugin;
@@ -55,7 +54,7 @@ public class CmdClaim extends CommandBase {
 		}
 		double[] coords = cp.getCoordinates();
 		// make sure no clans are within distance to grow into each other
-		Collection<Clan> clans = ClanPlugin.getInstance().getClanManager().getClans();
+		Set<Clan> clans = ClanPlugin.getInstance().getClanManager().getClans();
 		for (Clan clan : clans) {
 			ClanPlot plot = clan.getPlot();
 			if (plot != null && plot.isActive()
