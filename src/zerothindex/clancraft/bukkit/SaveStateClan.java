@@ -45,7 +45,7 @@ public class SaveStateClan {
 		
 		members = new SaveStatePlayer[clan.getSize()];
 		ArrayList<ClanPlayer> players = new ArrayList<ClanPlayer>(clan.getMembers());
-		for (int i = 0; i < members.length; i++) {
+		for (int i = 0; i < players.size(); i++) {
 			members[i] = new SaveStatePlayer(players.get(i));
 		}
 		
@@ -76,7 +76,9 @@ public class SaveStateClan {
 		Clan clan = new Clan(clanID, name, description, new HashSet<ClanPlayer>(), 
 				new HashSet<ClanPlayer>(), new HashSet<Integer>(), new HashSet<Integer>(), closed, null);
 		for (SaveStatePlayer playerState : members) {
-			clan.addMember(playerState.toClanPlayer());
+			ClanPlayer cp = playerState.toClanPlayer();
+			ClanPlugin.getInstance().addClanPlayer(cp);
+			clan.addMember(cp);
 		}
 		for (Integer id : allies) {
 			clan.addAlly(id);
@@ -120,7 +122,7 @@ class SaveStatePlayer {
 	}
 	
 	public ClanPlayer toClanPlayer() {
-		ClanPlayer player = new ClanPlayer(new BukkitPlayer(null), -1, rank, chatMode, lastLogin, false);
+		ClanPlayer player = new ClanPlayer(name, null, -1, rank, chatMode, lastLogin, false);
 		return player;
 	}
 }

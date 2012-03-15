@@ -57,7 +57,9 @@ public class Clan implements Comparable<Clan>{
 		members.add(newb);
 		invites.remove(newb);
 		newb.message("You have joined "+getName()+".");
-		plot.recalculate();
+		if (plot.isActive()) {
+			plot.recalculate();
+		}
 	}
 	
 	public void kickMember(ClanPlayer member) {

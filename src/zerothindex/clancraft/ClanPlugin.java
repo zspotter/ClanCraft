@@ -1,26 +1,9 @@
 package zerothindex.clancraft;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.util.HashMap;
-
-import org.bukkit.entity.Player;
-
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import zerothindex.clancraft.clan.ClanManager;
 import zerothindex.clancraft.clan.ClanPlayer;
-import zerothindex.clancraft.clan.ClanPlot;
 import zerothindex.clancraft.command.CommandManager;
 
 //test
@@ -31,9 +14,6 @@ public class ClanPlugin {
 	private String name;
 	private CommandManager commandManager;
 	private ClanManager clanManager;
-	
-	private Gson gson;
-	private static String clanPath = "ClanData.json";
 	
 	private HashMap<String, ClanPlayer> players;
 	
@@ -88,7 +68,7 @@ public class ClanPlugin {
 		if (cp == null) {
 			cp = new ClanPlayer(player);
 			ClanPlugin.getInstance().addClanPlayer(cp);
-			cp.logIn();
+			cp.logIn(player);
 		}
 		return cp;
 	}

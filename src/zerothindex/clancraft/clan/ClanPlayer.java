@@ -1,5 +1,7 @@
 package zerothindex.clancraft.clan;
 
+import org.bukkit.entity.Player;
+
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.WorldPlayer;
 
@@ -49,19 +51,24 @@ public class ClanPlayer implements WorldPlayer {
 	/**
 	 * A complete constructor
 	 * @param name the player's name (must match Bukkit Player's name exactly)
+	 * @param object null if player is offline
 	 * @param clan
 	 * @param role see ClanPlayer's public static final int variables for values
 	 * @param chatMode see ClanPlayer's public static final int variables for values
 	 * @param lastLogin the time in milliseconds (System.currentTimeMillis())
 	 */
-	public ClanPlayer(WorldPlayer object, int clanID, int role, int chatMode, long lastLogin, boolean isOnline) {
-		this.name = object.getName();
+	public ClanPlayer(String name, WorldPlayer object, int clanID, int role, int chatMode, long lastLogin, boolean isOnline) {
+		this.name = name;
 		this.player = object;
 		this.clanID = clanID;
 		this.chatMode = chatMode;
 		this.lastLogin = lastLogin;
 		this.role = role;
 		this.isOnline = isOnline;
+	}
+	
+	public ClanPlayer(WorldPlayer object, int clanID, int role, int chatMode, long lastLogin, boolean isOnline) {
+		this(object.getName(), object , clanID, role, chatMode, lastLogin, isOnline);
 	}
 	
 	/*
@@ -112,8 +119,9 @@ public class ClanPlayer implements WorldPlayer {
 	public boolean isOnline() {
 		return isOnline;
 	}
-	public void logIn() {
+	public void logIn(WorldPlayer logger) {
 		isOnline = true;
+		this.player = logger;
 		if (clanID != -1) getClan().checkIn(this);
 	}
 	public void logOut() {
@@ -123,6 +131,7 @@ public class ClanPlayer implements WorldPlayer {
 
 	@Override
 	public void message(String msg) {
+		if (player == null) return;
 		player.message(msg);
 		
 	}

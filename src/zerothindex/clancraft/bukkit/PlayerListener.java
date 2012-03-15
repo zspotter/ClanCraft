@@ -96,7 +96,7 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent e) {
-		bp.getClanPlayer(e.getPlayer()).logIn();
+		bp.getClanPlayer(e.getPlayer()).logIn(new BukkitPlayer(e.getPlayer()));
 	}
 	
 	@EventHandler
