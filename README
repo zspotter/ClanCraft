@@ -11,9 +11,10 @@ Color tags for Strings sent to MessageReceivers:
 <g> green/friendly
 <b> blue/ally
 <r> red/enemy
-<n> white/normal message
+<n> white/neutral message
 <t> gold/title
 <m> yellow/server message
+<*> MAGIC, MAN
 
 == Contact ==
 Feel free to email [zeroth index _at_ gmail _dot_ com].

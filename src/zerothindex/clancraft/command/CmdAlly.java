@@ -34,16 +34,16 @@ public class CmdAlly extends CommandBase {
 		if (args.length != 2) return false;
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (cp.getClan() == null) {
-			cp.message("You aren't part of a clan.");
+			cp.message("<m>You aren't part of a clan.");
 			return true;
 		}
 		if (cp.getRole() != ClanPlayer.ROLE_LEADER) {
-			cp.message("You must be a leader of your clan to declare allies.");
+			cp.message("<m>You must be a leader of your clan to declare allies.");
 			return true;
 		}
 		Clan ally = ClanPlugin.getInstance().getClanManager().findClan(args[1]);
 		if (ally == null) {
-			cp.message("Clan \""+args[1]+"\" not found.");
+			cp.message("<m>Clan \""+args[1]+"\" not found.");
 			return true;
 		}
 		if (ally.hasRequestedAlly(cp.getClan())) {
@@ -54,10 +54,10 @@ public class CmdAlly extends CommandBase {
 			return true;
 		} else {
 			cp.getClan().requestAlly(ally.getClanID());
-			cp.message("You have requested an alliance with "+ally.getName()
+			cp.message("<m>You have requested an alliance with "+ally.getName()
 					+". To complete the process, they must request an alliance with you.");
-			ally.messageClan("<t>Clan "+cp.getClan().getName()+" has requested an alliance. " +
-					"Type \"<m>/c ally "+cp.getClan().getName()+"<t>\" to accept.");
+			ally.messageClan("<b>Clan "+cp.getClan().getName()+" has requested an alliance. " +
+					"Type \"<m>/c ally "+cp.getClan().getName()+"<m>\" to accept.");
 			return true;
 		}
 		

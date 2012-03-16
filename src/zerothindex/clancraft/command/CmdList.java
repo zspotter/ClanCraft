@@ -38,7 +38,7 @@ public class CmdList extends CommandBase {
 			clans.addAll(ClanPlugin.getInstance().getClanManager().getClans());
 		}
 		if (clans.size() == 0){
-			sender.message(" There aren't any clans!");
+			sender.message(" <m>There aren't any clans!");
 			return true;
 		}
 		java.util.Collections.sort(clans); // sort by largest online
@@ -61,7 +61,7 @@ public class CmdList extends CommandBase {
 					+(clan.getPlot().isActive()? " - radius: "+clan.getPlot().getRadius() : " - no territory"));
 		}
 		if (anyPublic) {
-			sender.message("* - public clan");
+			sender.message("<m>* - public clan");
 		}
 		return true;
 	}

@@ -6,10 +6,10 @@ import java.util.HashSet;
 public class PluginSettings {
 
 	/** Maximum radius for a plot */
-	public static int maximumRadius = 200;
+	public static int maximumRadius = 75;
 	
 	/** Minimum number of clan members needed to claim land */
-	public static int minimumMemberClaim = 1;
+	public static int minimumMemberClaim = 3;
 	
 	/** Can clan members hurt each other? */
 	public static boolean friendlyFire = false;

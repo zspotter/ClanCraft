@@ -56,7 +56,7 @@ public class Clan implements Comparable<Clan>{
 		newb.setClan(this);
 		members.add(newb);
 		invites.remove(newb);
-		newb.message("You have joined "+getName()+".");
+		newb.message("<m>You have joined "+getName()+".");
 		if (plot.isActive()) {
 			plot.recalculate();
 		}
@@ -67,16 +67,17 @@ public class Clan implements Comparable<Clan>{
 			member.setClan(null);
 			member.setRole(ClanPlayer.ROLE_NORMAL);
 			members.remove(member);
-			member.message("You have left "+getName()+".");
+			member.message("<m>You have left "+getName()+".");
 			plot.recalculate();
 		}
 	}
 	
 	public void disband() {
+		ClanPlugin.getInstance().getClanManager().removeClan(this);
 		for (ClanPlayer cp : members) {
 			cp.setClan(null);
 			cp.setRole(ClanPlayer.ROLE_NORMAL);
-			cp.message("Your faction has been disbanded.");
+			cp.message("<m>Your faction has been disbanded.");
 		}
 		for (Integer id : allies) {
 			ClanPlugin.getInstance().getClanManager().getClan(id).removeAlly(this);
@@ -90,7 +91,6 @@ public class Clan implements Comparable<Clan>{
 		enemies.clear();
 		closed = true;
 		plot.unclaim();
-		ClanPlugin.getInstance().getClanManager().removeClan(this);
 	}
 
 	public boolean isInvited(ClanPlayer player) {

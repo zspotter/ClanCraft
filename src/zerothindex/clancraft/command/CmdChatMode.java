@@ -33,16 +33,16 @@ public class CmdChatMode extends CommandBase {
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (args[1].startsWith("p")) {
 			cp.setChatMode(ClanPlayer.CHAT_PUBLIC);
-			cp.message("Chat mode: public.");
+			cp.message("<m>Chat mode: <n>PUBLIC.");
 		} else if (cp.getClan() == null) {
-			cp.message("You don't have a clan to chat with!");
+			cp.message("<m>You don't have a clan to chat with!");
 			cp.setChatMode(ClanPlayer.CHAT_PUBLIC);
 		} else if (args[1].startsWith("c")) {
 			cp.setChatMode(ClanPlayer.CHAT_CLAN);
-			cp.message("Chat mode: clan.");
+			cp.message("<m>Chat mode: <g>CLAN");
 		} else if (args[1].startsWith("a")) {
 			cp.setChatMode(ClanPlayer.CHAT_ALLY);
-			cp.message("Chat mode: ally.");
+			cp.message("<m>Chat mode: <b>ALLY");
 		} else {
 			return false;
 		}

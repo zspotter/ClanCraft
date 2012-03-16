@@ -73,12 +73,13 @@ public class BukkitClanPlugin extends JavaPlugin {
 	    }
 	    
 	    tagMap = new HashMap<String,String>();
-	    tagMap.put("<r>", ChatColor.RED.toString());
-	    tagMap.put("<g>", ChatColor.GREEN.toString());
-	    tagMap.put("<b>", ChatColor.BLUE.toString());
+	    tagMap.put("<r>", ChatColor.DARK_RED.toString());
+	    tagMap.put("<g>", ChatColor.DARK_GREEN.toString());
+	    tagMap.put("<b>", ChatColor.DARK_AQUA.toString());
 	    tagMap.put("<n>", ChatColor.WHITE.toString());
 	    tagMap.put("<t>", ChatColor.GOLD.toString());
-	    tagMap.put("<m>", ChatColor.YELLOW.toString());
+	    tagMap.put("<m>", ChatColor.GRAY.toString());
+	    //tagMap.put("<*>", ChatColor.MAGIC.toString());
 	    
 	    // load an arraylist of savestateclan's into clanManager
  		gson = new GsonBuilder().setPrettyPrinting().create();
