@@ -1,7 +1,9 @@
 package zerothindex.clancraft.bukkit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -106,34 +108,41 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(PlayerChatEvent e) {
+		
 		if (e.isCancelled()) return;
 		e.setCancelled(true);
 		// [for future use, may want to consider not canceling the event]
 		ClanPlayer player = bp.getClanPlayer(e.getPlayer());
-		String msg = e.getMessage();
-		String name = (player.getClan() != null)? player.getClan().getName()+" " : "";
-		name += player.getName();
-		
+		String msg = BukkitClanPlugin.stripMessage(e.getMessage()); //so players cant use color tags in chat
+		String name = "";
+		String str;
+		if (player.getClan() == null) {
+			name = player.getName();
+			player.setChatMode(ClanPlayer.CHAT_PUBLIC);
+		} else {
+			name = player.getClan().getName()+" "+player.getName();
+		}
 		if (player.getChatMode() == ClanPlayer.CHAT_CLAN) {
-			if (player.getClan() != null) {
-				player.getClan().messageClan("<"+name+"> (clan) "+msg);
-				ClanPlugin.getInstance().log("<"+name+"> (clan) "+msg);
-				return;
-			} else {
-				player.setChatMode(ClanPlayer.CHAT_PUBLIC);
+			str = "<<g>"+name+"<n>> <g>(clan) <n>"+msg;
+			player.getClan().messageClan(str);
+		} else if (player.getChatMode() == ClanPlayer.CHAT_ALLY) {
+			str = "<<g>"+name+"<n>> <b>(ally) <n>"+msg;
+			player.getClan().messageClan(str);
+			str = "<<b>"+name+"<n>> <b>(ally) <n>"+msg;
+			player.getClan().messageAllies(str);
+		} else {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				String tag = "";
+				if (player.getClan() != null) {
+					ClanPlayer target = ClanPlugin.getInstance().findClanPlayer(p.getName());
+					if (target != null) 
+						tag = player.getClan().getRelationTag(target);
+				}
+				p.sendMessage(BukkitClanPlugin.parseMessage("<"+tag+name+"<n>> "+msg));
 			}
+			str = "<"+name+"> "+msg;
 		}
-		if (player.getChatMode() == ClanPlayer.CHAT_ALLY) {
-			if (player.getClan() != null) {
-				player.getClan().messageAllies("<"+name+"> (ally) "+msg);
-				ClanPlugin.getInstance().log("<"+name+"> (ally) "+msg);
-				return;
-			} else {
-				player.setChatMode(ClanPlayer.CHAT_PUBLIC);
-			}
-		}
-		ClanPlugin.getInstance().messageAll("<"+name+"> "+msg);
-		ClanPlugin.getInstance().log("<"+name+"> "+msg);
+		ClanPlugin.getInstance().log(BukkitClanPlugin.stripMessage(str));
 	}
 	
 	

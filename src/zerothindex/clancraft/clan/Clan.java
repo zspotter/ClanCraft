@@ -90,10 +90,11 @@ public class Clan implements Comparable<Clan>{
 		enemies.clear();
 		closed = true;
 		plot.unclaim();
+		ClanPlugin.getInstance().getClanManager().removeClan(this);
 	}
 
 	public boolean isInvited(ClanPlayer player) {
-		return invites.contains(player);
+		return invites.contains(player.getName().toLowerCase());
 	}
 
 	public void messageClan(String msg) {
@@ -103,9 +104,6 @@ public class Clan implements Comparable<Clan>{
 	}
 	
 	public void messageAllies(String msg) {
-		for (ClanPlayer p : members) {
-			if (p.isOnline()) p.message(msg);
-		}
 		for (Integer id : allies) {
 			ClanPlugin.getInstance().getClanManager().getClan(id).messageClan(msg);
 		}
@@ -182,10 +180,10 @@ public class Clan implements Comparable<Clan>{
 	}
 	
 	public void addInvite(String player) {
-		invites.add(player);
+		invites.add(player.toLowerCase());
 	}
 	public void removeInvite(String player) {
-		invites.remove(player);
+		invites.remove(player.toLowerCase());
 	}
 	
 	public boolean isClosed() {

@@ -5,11 +5,11 @@ import zerothindex.clancraft.MessageReceiver;
 import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.clan.ClanPlayer;
 
-public class CmdRole extends CommandBase {
+public class CmdRank extends CommandBase {
 
 	@Override
 	public String getName() {
-		return "role";
+		return "rank";
 	}
 
 	@Override
@@ -19,7 +19,7 @@ public class CmdRole extends CommandBase {
 
 	@Override
 	public String getUsage() {
-		return "/c role <player> <leader|normal>";
+		return "/c rank <player> <leader|normal>";
 	}
 
 	@Override
@@ -46,9 +46,9 @@ public class CmdRole extends CommandBase {
 							&& cp.getClan().equals(subject.getClan())) {
 						subject.setRole( (args[2].startsWith("l")? 
 								ClanPlayer.ROLE_LEADER : ClanPlayer.ROLE_NORMAL));
-						cp.message("You set "+subject.getName()+"'s role to <t>"+(args[2].startsWith("l")? 
+						cp.message("You set "+subject.getName()+"'s rank to <t>"+(args[2].startsWith("l")? 
 								"leader" : "normal member")+"<m>.");
-						subject.message("Your role was set to <t>"+(args[2].startsWith("l")? 
+						subject.message("Your rank was set to <t>"+(args[2].startsWith("l")? 
 								"leader" : "normal member")+"<m> by "+cp.getName()+".");
 						return true;
 					} else {
@@ -67,9 +67,9 @@ public class CmdRole extends CommandBase {
 				if (subject.getClan() != null) {
 					subject.setRole( (args[2].startsWith("l")? 
 							ClanPlayer.ROLE_LEADER : ClanPlayer.ROLE_NORMAL));
-					sender.message("You set "+subject.getName()+"'s role to <t>"+(args[2].startsWith("l")? 
+					sender.message("You set "+subject.getName()+"'s rank to <t>"+(args[2].startsWith("l")? 
 							"leader" : "normal member")+"<m>.");
-					subject.message("Your role was set to <t>"+(args[2].startsWith("l")? 
+					subject.message("Your rank was set to <t>"+(args[2].startsWith("l")? 
 							"leader" : "normal member")+"<m> by "+sender.getName()+".");
 					return true;
 				} else {

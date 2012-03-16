@@ -5,21 +5,21 @@ import zerothindex.clancraft.MessageReceiver;
 import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.clan.ClanPlayer;
 
-public class CmdLeave extends CommandBase {
+public class CmdInvite extends CommandBase {
 
 	@Override
 	public String getName() {
-		return "leave";
+		return "invite";
 	}
 
 	@Override
 	public String getDescription() {
-		return "leave your faction";
+		return "invite a player to join your clan";
 	}
 
 	@Override
 	public String getUsage() {
-		return "/c leave";
+		return "/c invite <player>";
 	}
 
 	@Override
@@ -29,16 +29,17 @@ public class CmdLeave extends CommandBase {
 
 	@Override
 	public boolean handle(MessageReceiver sender, String[] args) {
+		if (args.length != 2) return false;
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (cp.getClan() == null) {
-			sender.message("You aren't part of a clan!");
-		} else {
-			if (cp.getClan().getSize() == 1) {
-				cp.getClan().disband();
-			} else {
-				cp.getClan().kickMember(cp);
-			}
+			sender.message("<r>You aren't part of a clan.");
+			return true;
 		}
+		if (cp.getRole() != ClanPlayer.ROLE_LEADER) {
+			sender.message("<r>You must be a clan leader to do that.");
+		}
+		cp.getClan().addInvite(args[1]);
+		sender.message("<t>You invited \""+args[1]+"\" to your clan.");
 		return true;
 	}
 

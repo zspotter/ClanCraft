@@ -28,9 +28,9 @@ public class ClanManager {
 		clans.put(clan.getClanID(), clan);
 	}
 	
-	public void disbandClan(Clan clan) {
+	public void removeClan(Clan clan) {
 		clans.remove(clan);
-		clan.disband();
+		//clan.disband();
 	}
 	
 	/**

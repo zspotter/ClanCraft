@@ -24,8 +24,10 @@ public class CommandManager {
 		commands.add(new CmdClaim());
 		commands.add(new CmdAlly());
 		commands.add(new CmdEnemy());
-		commands.add(new CmdRole());
-		commands.add(new CmdSetRadius());
+		commands.add(new CmdRank());
+		//commands.add(new CmdSetRadius());
+		commands.add(new CmdInvite());
+		commands.add(new CmdKick());
 	}
 	
 	

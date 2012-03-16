@@ -63,6 +63,7 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 		flags.put(DefaultFlag.CHEST_ACCESS, StateFlag.State.ALLOW);
 		flags.put(DefaultFlag.USE, StateFlag.State.ALLOW);
 		this.setFlags(flags);
+		recalculate();
 	}
 	
 	@Override

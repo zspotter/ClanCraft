@@ -33,9 +33,9 @@ public class CmdCreate extends CommandBase {
 		if (args.length != 2) {
 			return false;
 		}
-		sender.message("Created the clan \""+args[1]+"\".");
+		sender.message("<t>Created the clan \""+args[1]+"\".");
 		Clan c = new Clan(args[1]);
-		c.setDescription("Change the defualt description with the \"c desc\" command.");
+		//sender.message("<t>Change the defualt description with the \"c desc\" command.");
 		
 		if (sender.isPlayer()) {
 			ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);

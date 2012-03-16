@@ -177,7 +177,7 @@ public class BukkitClanPlugin extends JavaPlugin {
      * @return a parsed string with color chars
      */
     public static String parseMessage(String str) {
-    	String out = "<m>"+str;
+    	String out = str;
     	
     	Iterator<Entry<String,String>> iter = getInstance().tagMap.entrySet().iterator();
     	
