@@ -39,15 +39,15 @@ public class CmdClaim extends CommandBase {
 		if (!(sender instanceof WorldPlayer)) return false;
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (cp.getClan() == null) {
-			cp.message("You need to belong to a clan claim land.");
+			cp.message("<m>You need to belong to a clan claim land.");
 			return true;
 		}
 		if (cp.getRole() != ClanPlayer.ROLE_LEADER) {
-			cp.message("You must be a leader of your clan to claim land.");
+			cp.message("<m>You must be a leader of your clan to claim land.");
 			return true;
 		}
 		if (cp.getClan().getSize() < PluginSettings.minimumMemberClaim) {
-			cp.message("You need at least "+PluginSettings.minimumMemberClaim+" players to claim land.");
+			cp.message("<m>You need at least "+PluginSettings.minimumMemberClaim+" players to claim land.");
 			return true;
 		}
 		if (cp.getClan().getPlot() == null) {
@@ -61,7 +61,7 @@ public class CmdClaim extends CommandBase {
 			if (plot != null && plot.isActive()
 					&& distance(plot.getX(), plot.getZ(), 
 								(int)coords[0], (int)coords[2]) > 2*PluginSettings.maximumRadius) {
-				cp.message("Your territory's center must be "+(2*PluginSettings.maximumRadius)
+				cp.message("<m>Your territory's center must be "+(2*PluginSettings.maximumRadius)
 						+" blocks away from the closest clan's center.");
 				return true;
 			}
@@ -69,8 +69,9 @@ public class CmdClaim extends CommandBase {
 		
 		boolean success = cp.getClan().getPlot().setCenter(cp.getWorld(), coords[0], coords[2]);
 		if (success) {
-			cp.getClan().messageClan("Your clan has claimed a "
+			cp.getClan().messageClan("<t>Your clan has claimed a "
 					+cp.getClan().getPlot().getRadius()+" block radius territory.");
+			cp.message("<t>To set a spawn within your territory, type \"/c setspawn\".");
 		} else {
 			cp.message("<r>Error setting territory!");
 		}

@@ -29,7 +29,7 @@ public class ClanManager {
 	}
 	
 	public void removeClan(Clan clan) {
-		clans.remove(clan);
+		clans.remove(clan.getClanID());
 		//clan.disband();
 	}
 	

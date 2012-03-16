@@ -12,11 +12,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.PluginSettings;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
+import zerothindex.clancraft.clan.ClanPlot;
 
 public class PlayerListener implements Listener {
 
@@ -94,6 +96,18 @@ public class PlayerListener implements Listener {
 			cp.message("<m>Leaving "+exiting.getRelationTag(cp)+exiting.getName());
 		}
 		
+	}
+	
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onPlayerRespawn(PlayerRespawnEvent e) {
+		ClanPlayer cp = bp.getClanPlayer(e.getPlayer());
+		if (cp.getClan() != null && cp.getClan().getPlot().getSpawn() != null) {
+			ClanPlot p = cp.getClan().getPlot();
+			double[] coords = p.getSpawn();
+			float[] dir = p.getSpawnDir();
+			e.setRespawnLocation(new Location(Bukkit.getWorld(p.getWorld()), coords[0], coords[1], coords[2], 
+					dir[0], dir[1]));
+		}
 	}
 	
 	@EventHandler
