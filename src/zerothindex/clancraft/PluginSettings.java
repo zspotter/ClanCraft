@@ -9,9 +9,10 @@ public class PluginSettings {
 	public static int maximumRadius = 75;
 	
 	/** Minimum number of clan members needed to claim land */
-	public static int minimumMemberClaim = 1;
+	public static int minimumMemberClaim = 3;
 	
-	/** Can clan members hurt each other? */
+	
+	/** Can clan members hurt t each other? */
 	public static boolean friendlyFire = false;
 	
 	/** Blocks that any player can interact with inside of any plot */

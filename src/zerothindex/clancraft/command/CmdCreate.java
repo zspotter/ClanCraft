@@ -33,12 +33,19 @@ public class CmdCreate extends CommandBase {
 		if (args.length != 2) {
 			return false;
 		}
+		ClanPlayer cp = null;
+		if (sender instanceof WorldPlayer) {
+			cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
+		}
+		if (cp != null && cp.getClan() != null) {
+			sender.message("<r>You are already part of a clan.");
+			return true;
+		}
 		sender.message("<t>Created the clan \""+args[1]+"\".");
 		Clan c = new Clan(args[1]);
 		//sender.message("<t>Change the defualt description with the \"c desc\" command.");
 		
 		if (sender.isPlayer()) {
-			ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 			c.addMember(cp);
 			cp.setRole(ClanPlayer.ROLE_LEADER);
 		}

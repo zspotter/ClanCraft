@@ -16,7 +16,7 @@ import zerothindex.clancraft.clan.ClanPlayer;
  *
  */
 public class SaveStateClan {
-
+	
 	/* general clan info */
 	public int clanID;
 	public String name;

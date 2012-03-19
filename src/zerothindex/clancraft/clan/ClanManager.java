@@ -73,7 +73,11 @@ public class ClanManager {
 	 * @return the next unused clan id
 	 */
 	public int nextID() {
-		return nextID++;
+		nextID++;
+		while (clans.containsKey(nextID)) {
+			nextID++;
+		}
+		return nextID;
 	}
 
 	/**

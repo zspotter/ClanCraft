@@ -53,9 +53,12 @@ public class Clan implements Comparable<Clan>{
 	}
 	
 	public void addMember(ClanPlayer newb) {
+		if (newb.getClan() != null) {
+			newb.getClan().kickMember(newb);
+		}
 		newb.setClan(this);
 		members.add(newb);
-		invites.remove(newb);
+		invites.remove(newb.getName());
 		newb.message("<m>You have joined "+getName()+".");
 		if (plot.isActive()) {
 			plot.recalculate();
@@ -77,7 +80,7 @@ public class Clan implements Comparable<Clan>{
 		for (ClanPlayer cp : members) {
 			cp.setClan(null);
 			cp.setRole(ClanPlayer.ROLE_NORMAL);
-			cp.message("<m>Your faction has been disbanded.");
+			cp.message("<t>Your clan has been disbanded.");
 		}
 		for (Integer id : allies) {
 			ClanPlugin.getInstance().getClanManager().getClan(id).removeAlly(this);
@@ -236,7 +239,7 @@ public class Clan implements Comparable<Clan>{
 	}
 
 	public boolean hasRequestedAlly(Clan clan) {
-		return allyRequests.contains(clan);
+		return allyRequests.contains(new Integer(clan.getClanID()));
 	}
 
 	public void requestAlly(Integer id) {
