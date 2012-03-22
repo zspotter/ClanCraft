@@ -104,21 +104,25 @@ public class PlayerListener implements Listener {
 		
 	}
 	
-	@EventHandler
-	public void onBlockPlace(BlockPlaceEvent event) {		
+	/*@EventHandler
+	public void onBlockPlace(BlockPlaceEvent event) {
+		System.out.println("place event");
 		//If placing TNT in enemy territory, allow + auto-ignite!
 		ClanPlayer cp = bp.getClanPlayer(event.getPlayer());
 		if (cp.getClan() == null) {
+			System.out.println("--no clan");
 			//TODO: figure out if this is necessary: event.setCancelled(true);
 			return;
 		}
 		if (event.getBlock().getType() == Material.TNT) {
+			System.out.println("--is tnt");
 			//find out if block was placed in enemy territory
 			Block b = event.getBlock();
 			Clan attacking = ClanPlugin.getInstance().getClanManager()
 					.getClanAtLocation(b.getWorld().getName(), (int)b.getX(), (int)b.getZ());
 			//determine if TNT should auto ignite
-			if (attacking.isEnemy(cp.getClan())) {
+			if (attacking != null && attacking.isEnemy(cp.getClan())) {
+				System.out.println("--do attack tnt");
 				//  cancel and then process event MANUALLY
 				event.setCancelled(true);
 				//remove 1 TNT from player inventory because the event was cancelled
@@ -146,7 +150,7 @@ public class PlayerListener implements Listener {
 			}
 		}
 		
-	}
+	}*/
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
