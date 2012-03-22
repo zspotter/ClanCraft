@@ -62,6 +62,7 @@ public class BukkitClanPlugin extends JavaPlugin {
 		clanPlugin = new ClanPlugin(this.getDescription().getName());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerListener(this), this);
+		pm.registerEvents(new EntityListener(), this);
 		
 		Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
 	    // WorldGuard may not be loaded

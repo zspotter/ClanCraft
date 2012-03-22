@@ -60,7 +60,7 @@ public class CmdClaim extends CommandBase {
 			ClanPlot plot = clan.getPlot();
 			if (plot != null && plot.isActive()
 					&& distance(plot.getX(), plot.getZ(), 
-								(int)coords[0], (int)coords[2]) > 2*PluginSettings.maximumRadius) {
+								(int)coords[0], (int)coords[2]) <= 2*PluginSettings.maximumRadius) {
 				cp.message("<m>Your territory's center must be "+(2*PluginSettings.maximumRadius)
 						+" blocks away from the closest clan's center.");
 				return true;

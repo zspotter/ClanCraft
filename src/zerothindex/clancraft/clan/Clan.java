@@ -162,6 +162,7 @@ public class Clan implements Comparable<Clan>{
 	
 	public void addAlly(Integer id) {
 		allyRequests.remove(id);
+		enemies.remove(id);
 		allies.add(id);
 	}
 	public void removeAlly(Clan ally) {
@@ -173,6 +174,7 @@ public class Clan implements Comparable<Clan>{
 	
 	public void addEnemy(Integer id) {
 		allyRequests.remove(id);
+		allies.remove(id);
 		enemies.add(id);
 	}
 	public void removeEnemy(Clan enemy) {

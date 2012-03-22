@@ -1,18 +1,24 @@
 package zerothindex.clancraft.bukkit;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.PluginSettings;
@@ -94,6 +100,50 @@ public class PlayerListener implements Listener {
 		// exiting plot
 		} else if (exiting != null) {
 			cp.message("<m>Leaving "+exiting.getRelationTag(cp)+exiting.getName());
+		}
+		
+	}
+	
+	@EventHandler
+	public void onBlockPlace(BlockPlaceEvent event) {		
+		//If placing TNT in enemy territory, allow + auto-ignite!
+		ClanPlayer cp = bp.getClanPlayer(event.getPlayer());
+		if (cp.getClan() == null) {
+			//TODO: figure out if this is necessary: event.setCancelled(true);
+			return;
+		}
+		if (event.getBlock().getType() == Material.TNT) {
+			//find out if block was placed in enemy territory
+			Block b = event.getBlock();
+			Clan attacking = ClanPlugin.getInstance().getClanManager()
+					.getClanAtLocation(b.getWorld().getName(), (int)b.getX(), (int)b.getZ());
+			//determine if TNT should auto ignite
+			if (attacking.isEnemy(cp.getClan())) {
+				//  cancel and then process event MANUALLY
+				event.setCancelled(true);
+				//remove 1 TNT from player inventory because the event was cancelled
+				ItemStack tntStack = event.getPlayer().getItemInHand();
+				if (tntStack.getAmount() <= 1) {
+					//Can't set amount to 0 for some reason...
+					event.getPlayer().setItemInHand(null);
+				} else {
+					//Deduct 1 TNT from hand
+					tntStack.setAmount(tntStack.getAmount() -1);
+				}
+				
+				//Never actually place a block in enemy land... Just spawn a lit TNT entity
+				Block block = event.getBlock();
+				Location location = new Location(block.getWorld(), block.getX() + 0.5D, block.getY() + 0.5D, block.getZ() + 0.5D);
+	            TNTPrimed tnt = block.getWorld().spawn(location, TNTPrimed.class);
+	            ClanPlugin.getInstance().log("Let ["+cp.getClan().getName()+"] "+cp.getName()+" place TNT in territory of "+attacking.getName());
+			}
+		} else if (event.getBlock().getType() == Material.IRON_DOOR_BLOCK) {
+			if (event.getBlock().getRelative(0, -1, 0).getType() == Material.BEDROCK) {
+				event.getPlayer().sendMessage(ChatColor.RED+"I bet you think you're clever.");
+				event.getPlayer().setFireTicks(20);
+				event.setCancelled(true);
+				return;
+			}
 		}
 		
 	}
