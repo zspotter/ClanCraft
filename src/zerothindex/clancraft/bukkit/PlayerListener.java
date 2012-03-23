@@ -104,7 +104,7 @@ public class PlayerListener implements Listener {
 		
 	}
 	
-	/*@EventHandler
+	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
 		System.out.println("place event");
 		//If placing TNT in enemy territory, allow + auto-ignite!
@@ -150,7 +150,7 @@ public class PlayerListener implements Listener {
 			}
 		}
 		
-	}*/
+	}
 	
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
