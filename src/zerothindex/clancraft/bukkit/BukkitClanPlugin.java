@@ -96,7 +96,11 @@ public class BukkitClanPlugin extends JavaPlugin {
  			ArrayList<SaveStateClan> clanStates = gson.fromJson(reader, type);
  			ClanPlugin.getInstance().log("Loading "+clanStates.size()+" clans...");
  			for (SaveStateClan clanState : clanStates) {
- 				ClanPlugin.getInstance().getClanManager().addClan(clanState.toClan());
+ 				Clan clan = clanState.toClan();
+ 				ClanPlugin.getInstance().getClanManager().addClan(clan);
+ 				if (clan.getPlot() != null) {
+ 					clan.getPlot().recalculate();
+ 				}
  			}
  			reader.close();
  		} catch (FileNotFoundException e) {
