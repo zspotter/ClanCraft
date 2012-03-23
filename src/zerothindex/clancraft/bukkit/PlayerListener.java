@@ -7,9 +7,11 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -39,23 +41,50 @@ public class PlayerListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerInteract(PlayerInteractEvent e) {
+		if (e.getClickedBlock() == null) return;
+		//if interacting with tnt in hand in enemy land, make explosion
+		//If interacting with TNT in enemy territory, allow + auto-ignite!
+		ClanPlayer cp = bp.getClanPlayer(e.getPlayer());
+		Block b = e.getClickedBlock().getRelative(e.getBlockFace());
+		Clan clan = ClanPlugin.getInstance().getClanManager()
+				.getClanAtLocation(b.getWorld().getName(), (int)b.getX(), (int)b.getZ());
+		if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)
+				&& (e.getItem() != null) 
+				&& (e.getItem().getType() == Material.TNT)) {
+			//find out if block was placed in enemy territory
+			//determine if TNT should auto ignite
+			if (clan != null && clan.isEnemy(cp.getClan())) {
+				//remove 1 TNT from player inventory because the event was cancelled
+				ItemStack tntStack = e.getItem();
+				if (tntStack.getAmount() <= 1) {
+					//Can't set amount to 0 for some reason...
+					e.getPlayer().setItemInHand(null);
+				} else {
+					//Deduct 1 TNT from hand
+					tntStack.setAmount(tntStack.getAmount() -1);
+				}
+				
+				//Never actually place a block in enemy land... Just spawn a lit TNT entity
+				Location location = new Location(b.getWorld(), b.getX() + 0.5D, b.getY() + 0.5D, b.getZ() + 0.5D);
+	            TNTPrimed tnt = b.getWorld().spawn(location, TNTPrimed.class);
+	            ClanPlugin.getInstance().log("Let ["+cp.getClan().getName()+"] "+cp.getName()+" place TNT in territory of "+clan.getName());
+	            
+	            return;
+			}
+		}
+		
+		
 		if (e.isCancelled()) return;
 		Block block = e.getClickedBlock();
-		Clan clan = ClanPlugin.getInstance().getClanManager()
-				.getClanAtLocation(block.getWorld().getName(), block.getX(), block.getZ());
 		if (clan == null) return;
-		
-		ClanPlayer cp = ClanPlugin.getInstance().findClanPlayer(e.getPlayer().getName());
+
 		if (cp == null) {
 			e.setCancelled(true);
 			return;
-		}
-		if (cp.getClan() != null && clan.equals(cp.getClan())) {
+		} else if (cp.getClan() != null && clan.equals(cp.getClan())) {
 			// its the player's own clan
 			return;
-		}
-		// not the player's clan
-		if (!PluginSettings.allowUse.contains(block.getType().toString())) {
+		} else if (!PluginSettings.allowUse.contains(block.getType().toString())) {
 			e.setCancelled(true);
 			//cp.message("<r>You can't use that here.");
 			return;
@@ -100,54 +129,6 @@ public class PlayerListener implements Listener {
 		// exiting plot
 		} else if (exiting != null) {
 			cp.message("<m>Leaving "+exiting.getRelationTag(cp)+exiting.getName());
-		}
-		
-	}
-	
-	@EventHandler
-	public void onBlockPlace(BlockPlaceEvent event) {
-		System.out.println("place event");
-		//If placing TNT in enemy territory, allow + auto-ignite!
-		ClanPlayer cp = bp.getClanPlayer(event.getPlayer());
-		if (cp.getClan() == null) {
-			System.out.println("--no clan");
-			//TODO: figure out if this is necessary: event.setCancelled(true);
-			return;
-		}
-		if (event.getBlock().getType() == Material.TNT) {
-			System.out.println("--is tnt");
-			//find out if block was placed in enemy territory
-			Block b = event.getBlock();
-			Clan attacking = ClanPlugin.getInstance().getClanManager()
-					.getClanAtLocation(b.getWorld().getName(), (int)b.getX(), (int)b.getZ());
-			//determine if TNT should auto ignite
-			if (attacking != null && attacking.isEnemy(cp.getClan())) {
-				System.out.println("--do attack tnt");
-				//  cancel and then process event MANUALLY
-				event.setCancelled(true);
-				//remove 1 TNT from player inventory because the event was cancelled
-				ItemStack tntStack = event.getPlayer().getItemInHand();
-				if (tntStack.getAmount() <= 1) {
-					//Can't set amount to 0 for some reason...
-					event.getPlayer().setItemInHand(null);
-				} else {
-					//Deduct 1 TNT from hand
-					tntStack.setAmount(tntStack.getAmount() -1);
-				}
-				
-				//Never actually place a block in enemy land... Just spawn a lit TNT entity
-				Block block = event.getBlock();
-				Location location = new Location(block.getWorld(), block.getX() + 0.5D, block.getY() + 0.5D, block.getZ() + 0.5D);
-	            TNTPrimed tnt = block.getWorld().spawn(location, TNTPrimed.class);
-	            ClanPlugin.getInstance().log("Let ["+cp.getClan().getName()+"] "+cp.getName()+" place TNT in territory of "+attacking.getName());
-			}
-		} else if (event.getBlock().getType() == Material.IRON_DOOR_BLOCK) {
-			if (event.getBlock().getRelative(0, -1, 0).getType() == Material.BEDROCK) {
-				event.getPlayer().sendMessage(ChatColor.RED+"I bet you think you're clever.");
-				event.getPlayer().setFireTicks(20);
-				event.setCancelled(true);
-				return;
-			}
 		}
 		
 	}
