@@ -181,6 +181,7 @@ public class Clan implements Comparable<Clan>{
 		enemies.remove(enemy.getClanID());
 	}
 	public boolean isEnemy(Clan enemy) {
+		if (enemy == null) return false;
 		return enemies.contains(enemy.getClanID());
 	}
 	

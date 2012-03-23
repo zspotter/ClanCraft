@@ -48,12 +48,32 @@ public class PlayerListener implements Listener {
 		Block b = e.getClickedBlock().getRelative(e.getBlockFace());
 		Clan clan = ClanPlugin.getInstance().getClanManager()
 				.getClanAtLocation(b.getWorld().getName(), (int)b.getX(), (int)b.getZ());
-		if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)
+		
+		if (clan == null) return;
+		if (e.isCancelled()) return;
+		Block block = e.getClickedBlock();
+		boolean placeTnt = true;
+		if (cp == null) {
+			e.setCancelled(true);
+			return;
+		} 
+		if (cp.getClan() != null && clan.equals(cp.getClan())) {
+			// its the player's own clan
+			return;
+		}
+		if (PluginSettings.allowUse.contains(block.getType().toString())) {
+			placeTnt = false;
+			//cp.message("<r>You can't use that here.");
+		} else {
+			e.setCancelled(true);
+		}
+		
+		if (placeTnt && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) 
 				&& (e.getItem() != null) 
 				&& (e.getItem().getType() == Material.TNT)) {
 			//find out if block was placed in enemy territory
 			//determine if TNT should auto ignite
-			if (clan != null && clan.isEnemy(cp.getClan())) {
+			if (clan.isEnemy(cp.getClan())) {
 				//remove 1 TNT from player inventory because the event was cancelled
 				ItemStack tntStack = e.getItem();
 				if (tntStack.getAmount() <= 1) {
@@ -71,23 +91,6 @@ public class PlayerListener implements Listener {
 	            
 	            return;
 			}
-		}
-		
-		
-		if (e.isCancelled()) return;
-		Block block = e.getClickedBlock();
-		if (clan == null) return;
-
-		if (cp == null) {
-			e.setCancelled(true);
-			return;
-		} else if (cp.getClan() != null && clan.equals(cp.getClan())) {
-			// its the player's own clan
-			return;
-		} else if (!PluginSettings.allowUse.contains(block.getType().toString())) {
-			e.setCancelled(true);
-			//cp.message("<r>You can't use that here.");
-			return;
 		}
 	}
 	
