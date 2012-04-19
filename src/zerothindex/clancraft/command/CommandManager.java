@@ -29,6 +29,7 @@ public class CommandManager {
 		commands.add(new CmdInvite());
 		commands.add(new CmdKick());
 		commands.add(new CmdSetspawn());
+		commands.add(new CmdDescription());
 	}
 	
 	

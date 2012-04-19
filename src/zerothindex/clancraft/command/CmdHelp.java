@@ -35,10 +35,10 @@ public class CmdHelp extends CommandBase {
 		}
 		if (args.length != 2 || (page == 1)) {
 			sender.message("<t>-- ClanCraft (1/3) --");
-			sender.message(" <m>ClanCraft is a PvP and land management plugin.");
-			sender.message(" <m>This is a <r>TEST VERSION<m>, and does not represent the final");
-			sender.message(" <m>mechanics or state of the plugin.");
-			sender.message(" <m>Type \"/c help <page>\" or \"/c help <cmd>\" for help.");
+			sender.message(" <n>ClanCraft is a PvP and land management plugin.");
+			sender.message(" <n>This is a <r>TEST VERSION<n>, and does not represent the final");
+			sender.message(" <n>mechanics or state of the plugin.");
+			sender.message(" <b>Type \"/c help <page>\" or \"/c help <cmd>\" for help.");
 			return true;
 		}
 		if (page == 2) {

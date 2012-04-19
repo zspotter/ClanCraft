@@ -2,6 +2,7 @@ package zerothindex.clancraft.command;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.MessageReceiver;
+import zerothindex.clancraft.PluginSettings;
 import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.clan.Clan;
 import zerothindex.clancraft.clan.ClanPlayer;
@@ -39,6 +40,11 @@ public class CmdCreate extends CommandBase {
 		}
 		if (cp != null && cp.getClan() != null) {
 			sender.message("<r>You are already part of a clan.");
+			return true;
+		}
+		if (args[1].length() > PluginSettings.maximumClanNameLength) {
+			sender.message("<r>Maximum clan name length is "
+					+PluginSettings.maximumClanNameLength+" characters.");
 			return true;
 		}
 		sender.message("<t>Created the clan \""+args[1]+"\".");

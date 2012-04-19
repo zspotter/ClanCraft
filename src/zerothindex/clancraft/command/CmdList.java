@@ -46,11 +46,12 @@ public class CmdList extends CommandBase {
 				clan.getRelationTag(cp);
 			}
 			sender.message("<t>--- Clan: "+color+clan.getName()+" <t>---");
-			sender.message("  <m>Online: "+clan.getOnlineSize()+"/"+clan.getSize());
+			sender.message("<t>'"+clan.getDescription()+"'");
+			sender.message("  <t>Online: "+clan.getOnlineSize()+"/"+clan.getSize());
 			if (clan.isClosed()) {
-				sender.message("  <m>Invite only.");
+				sender.message("  <t>Invite only.");
 			} else {
-				sender.message("  <m>Public clan.");
+				sender.message("  <t>Public clan.");
 			}
 			String players = "";
 			for (ClanPlayer member : clan.getMembers()) {
@@ -60,7 +61,7 @@ public class CmdList extends CommandBase {
 				}
 			}
 			players = players.substring(2);
-			sender.message("  <m>Members: "+color+players);
+			sender.message("  <t>Members: "+color+players);
 			sender.message("  <m>* - clan leader");
 			return true;
 		}

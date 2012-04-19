@@ -11,6 +11,8 @@ public class PluginSettings {
 	/** Minimum number of clan members needed to claim land */
 	public static int minimumMemberClaim = 3;
 	
+	/** Maximum number of characters in a clan name **/
+	public static int maximumClanNameLength = 7;
 	
 	/** Can clan members hurt t each other? */
 	public static boolean friendlyFire = false;

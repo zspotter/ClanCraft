@@ -45,14 +45,13 @@ public class PlayerListener implements Listener {
 		//if interacting with tnt in hand in enemy land, make explosion
 		//If interacting with TNT in enemy territory, allow + auto-ignite!
 		ClanPlayer cp = bp.getClanPlayer(e.getPlayer());
-		Block b = e.getClickedBlock().getRelative(e.getBlockFace());
+		Block adjacent = e.getClickedBlock().getRelative(e.getBlockFace());
 		Clan clan = ClanPlugin.getInstance().getClanManager()
-				.getClanAtLocation(b.getWorld().getName(), (int)b.getX(), (int)b.getZ());
+				.getClanAtLocation(adjacent.getWorld().getName(), (int)adjacent.getX(), (int)adjacent.getZ());
 		
 		if (clan == null) return;
 		if (e.isCancelled()) return;
-		Block block = e.getClickedBlock();
-		boolean placeTnt = true;
+		Block clicked = e.getClickedBlock();
 		if (cp == null) {
 			e.setCancelled(true);
 			return;
@@ -61,14 +60,13 @@ public class PlayerListener implements Listener {
 			// its the player's own clan
 			return;
 		}
-		if (PluginSettings.allowUse.contains(block.getType().toString())) {
-			placeTnt = false;
-			//cp.message("<r>You can't use that here.");
+		if (PluginSettings.allowUse.contains(clicked.getType().toString())) {
+			return;
 		} else {
 			e.setCancelled(true);
 		}
 		
-		if (placeTnt && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) 
+		if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) 
 				&& (e.getItem() != null) 
 				&& (e.getItem().getType() == Material.TNT)) {
 			//find out if block was placed in enemy territory
@@ -85,8 +83,8 @@ public class PlayerListener implements Listener {
 				}
 				
 				//Never actually place a block in enemy land... Just spawn a lit TNT entity
-				Location location = new Location(b.getWorld(), b.getX() + 0.5D, b.getY() + 0.5D, b.getZ() + 0.5D);
-	            TNTPrimed tnt = b.getWorld().spawn(location, TNTPrimed.class);
+				Location location = new Location(adjacent.getWorld(), adjacent.getX() + 0.5D, adjacent.getY() + 0.5D, adjacent.getZ() + 0.5D);
+	            TNTPrimed tnt = adjacent.getWorld().spawn(location, TNTPrimed.class);
 	            ClanPlugin.getInstance().log("Let ["+cp.getClan().getName()+"] "+cp.getName()+" place TNT in territory of "+clan.getName());
 	            
 	            return;
@@ -101,7 +99,7 @@ public class PlayerListener implements Listener {
 	public void onPlayerMove(PlayerMoveEvent e) {
 		if (e.isCancelled()) return;
 		Location to = e.getTo();
-		Location from = e.getPlayer().getLocation();
+		Location from = e.getFrom();
 		// only perform plot enter/exit checks if player has moved whole block
 		if (to.getBlockX() == from.getBlockX()
 				&& to.getBlockZ() == from.getBlockZ()
@@ -150,7 +148,15 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent e) {
-		bp.getClanPlayer(e.getPlayer()).logIn(new BukkitPlayer(e.getPlayer()));
+		ClanPlayer cp = bp.getClanPlayer(e.getPlayer());
+		cp.logIn(new BukkitPlayer(e.getPlayer()));
+		Clan entering = ClanPlugin.getInstance().getClanManager()
+				.getClanAtLocation(e.getPlayer().getLocation().getWorld().getName(), 
+						(int)e.getPlayer().getLocation().getX(), 
+						(int)e.getPlayer().getLocation().getZ());
+		if (entering == null) return;
+		cp.message("<m>Entering "+entering.getRelationTag(cp)+entering.getName()+
+				(entering.getDescription().equals("")? "" : " - "+entering.getDescription()));
 	}
 	
 	@EventHandler
@@ -194,7 +200,8 @@ public class PlayerListener implements Listener {
 			}
 			str = "<"+name+"> "+msg;
 		}
-		ClanPlugin.getInstance().log(BukkitClanPlugin.stripMessage(str));
+		//log the message
+		System.out.println(BukkitClanPlugin.stripMessage(str));
 	}
 	
 	

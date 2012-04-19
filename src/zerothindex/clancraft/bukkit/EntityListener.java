@@ -9,6 +9,7 @@ import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 
 public class EntityListener implements Listener {
@@ -79,6 +80,14 @@ public class EntityListener implements Listener {
 					}
 				}
 			}
+		}
+	}
+	
+	// to prevent mobs from triggering stone plates (everywhere, but especially in territories)
+	@EventHandler
+	public void onEntityInteract(EntityInteractEvent e) {
+		if (e.getBlock().getType().equals(Material.STONE_PLATE)) {
+			e.setCancelled(true);
 		}
 	}
 }
