@@ -8,13 +8,19 @@ something wrong! The only Bukkit specific interaction should be taking place in
 the zerothindex.clancraft.bukkit package. 
 
 Color tags for Strings sent to MessageReceivers:
-<g> green/friendly
-<b> blue/ally
-<r> red/enemy
-<n> white/neutral message
-<t> gold/title
-<m> yellow/server message
-<*> MAGIC, MAN
+&f friendly color
+&a ally color
+&e enemy color
+&n neutral color
+
+&c normal chat message
+&m normal server message/notification
+&t title message
+&x exception/error message
+
+&b bold
+&u underline
+&m magic man
 
 == Contact ==
 Feel free to email [zeroth index _at_ gmail _dot_ com].

@@ -28,9 +28,7 @@ import com.google.gson.reflect.TypeToken;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import zerothindex.clancraft.ClanPlugin;
-import zerothindex.clancraft.WorldPlayer;
 import zerothindex.clancraft.clan.Clan;
-import zerothindex.clancraft.clan.ClanManager;
 import zerothindex.clancraft.clan.ClanPlayer;
 
 /**
