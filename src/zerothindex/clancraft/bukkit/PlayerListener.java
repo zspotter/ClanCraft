@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,7 +19,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.PluginSettings;
@@ -85,10 +83,22 @@ public class PlayerListener implements Listener {
 				//Never actually place a block in enemy land... Just spawn a lit TNT entity
 				Location location = new Location(adjacent.getWorld(), adjacent.getX() + 0.5D, adjacent.getY() + 0.5D, adjacent.getZ() + 0.5D);
 	            TNTPrimed tnt = adjacent.getWorld().spawn(location, TNTPrimed.class);
-	            ClanPlugin.getInstance().log("Let ["+cp.getClan().getName()+"] "+cp.getName()+" place TNT in territory of "+clan.getName());
+	            ClanPlugin.getInstance().log("Let ["+cp.getClan().getName()+"] "+cp.getName()+" TNT "+clan.getName());
 	            
 	            return;
 			}
+		}
+	}
+	
+	/**
+	 * Can't place iron doors on bedrock!
+	 */
+	@EventHandler
+	public void onBlockPlace(BlockPlaceEvent e) {
+		if (e.getBlockAgainst().getType() == Material.BEDROCK
+				&& e.getBlockPlaced().getType() == Material.IRON_DOOR_BLOCK) {
+			e.setCancelled(true);
+			e.getPlayer().setFireTicks(10);
 		}
 	}
 	
