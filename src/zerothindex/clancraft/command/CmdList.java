@@ -37,7 +37,7 @@ public class CmdList extends CommandBase {
 		if (args.length == 2) {
 			Clan clan = ClanPlugin.getInstance().getClanManager().findClan(args[1]);
 			if (clan == null) {
-				sender.message("<m>Clan \""+args[1]+"\" not found.");
+				sender.message("&xClan \""+args[1]+"\" not found.");
 				return true;
 			}
 			String color = "";
@@ -45,13 +45,13 @@ public class CmdList extends CommandBase {
 				ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 				clan.getRelationTag(cp);
 			}
-			sender.message("<t>--- Clan: "+color+clan.getName()+" <t>---");
-			sender.message("<t>'"+clan.getDescription()+"'");
-			sender.message("  <t>Online: "+clan.getOnlineSize()+"/"+clan.getSize());
+			sender.message("&t--- Clan: "+color+clan.getName()+" &t---");
+			sender.message("&i&m\""+clan.getDescription()+"\"");
+			sender.message("  &mOnline: "+clan.getOnlineSize()+"/"+clan.getSize());
 			if (clan.isClosed()) {
-				sender.message("  <t>Invite only.");
+				sender.message("  &mInvite only.");
 			} else {
-				sender.message("  <t>Public clan.");
+				sender.message("  &mPublic clan.");
 			}
 			String players = "";
 			for (ClanPlayer member : clan.getMembers()) {
@@ -61,19 +61,19 @@ public class CmdList extends CommandBase {
 				}
 			}
 			players = players.substring(2);
-			sender.message("  <t>Members: "+color+players);
-			sender.message("  <m>* - clan leader");
+			sender.message("  &mMembers: "+color+players);
+			sender.message("  &i&m* - clan leader");
 			return true;
 		}
 		
 		// list all clans
-		sender.message("<t>-- Clan List --");
+		sender.message("&t-- Clan List --");
 		List<Clan> clans = new ArrayList<Clan>();
 		if (ClanPlugin.getInstance().getClanManager().getClans() != null) {
 			clans.addAll(ClanPlugin.getInstance().getClanManager().getClans());
 		}
 		if (clans.size() == 0){
-			sender.message(" <m>There aren't any clans!");
+			sender.message(" &i&mThere aren't any clans!");
 			return true;
 		}
 		java.util.Collections.sort(clans); // sort by largest online
@@ -85,18 +85,18 @@ public class CmdList extends CommandBase {
 			if (!clan.isClosed()) anyPublic = true;
 			String color = "";
 			if (myClan != null && clan.isAlly(myClan)) {
-				color = "<b>";
+				color = "&a";
 			} else if (myClan != null && clan.isEnemy(myClan)) {
-				color = "<r>";
+				color = "&e";
 			} else if (myClan != null && clan.equals(myClan)) {
-				color = "<g>";
+				color = "&f";
 			}
-			sender.message(" "+color+clan.getName()+"<m>"+(!clan.isClosed()? "*" : "")
+			sender.message(" "+color+clan.getName()+"&m"+(!clan.isClosed()? "*" : "")
 					+" - "+clan.getOnlineSize()+"/"+clan.getSize()+" online"
 					+(clan.getPlot().isActive()? " - radius: "+clan.getPlot().getRadius() : " - no territory"));
 		}
 		if (anyPublic) {
-			sender.message("<m>* - public clan");
+			sender.message("&i&m* - public clan");
 		}
 		return true;
 	}

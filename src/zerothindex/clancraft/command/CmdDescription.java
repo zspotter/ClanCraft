@@ -32,11 +32,11 @@ public class CmdDescription extends CommandBase {
 		if (args.length < 2) return false;
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (cp.getClan() == null) {
-			sender.message("<r>You aren't part of a clan.");
+			sender.message("&xYou aren't part of a clan.");
 			return true;
 		}
 		if (cp.getRole() != ClanPlayer.ROLE_LEADER) {
-			sender.message("<r>You must be a clan leader to do that.");
+			sender.message("&xYou must be a clan leader to do that.");
 		}
 		String desc = "";
 		for (int i = 1; i < args.length; i++) {
@@ -44,7 +44,7 @@ public class CmdDescription extends CommandBase {
 		}
 		desc = desc.substring(1);
 		cp.getClan().setDescription(desc);
-		cp.getClan().messageClan("<t>"+cp.getName()+" changed the clan description to: "+desc);
+		cp.getClan().messageClan("&m"+cp.getName()+" changed the clan description to: "+desc);
 		return true;
 	}
 

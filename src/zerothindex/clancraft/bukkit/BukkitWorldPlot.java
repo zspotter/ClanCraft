@@ -119,9 +119,9 @@ public class BukkitWorldPlot extends ProtectedCuboidRegion implements ClanPlot {
 		int newRadius = (int) 4*numPlayers+10; //Math.round(8*Math.sqrt(4*numPlayers));
 		if (newRadius > PluginSettings.maximumRadius) return; // radius cap
 		if (newRadius < radius && active) {
-			clan.messageClan("Territory radius decreased to "+newRadius+" blocks.");
+			clan.messageClan("&mTerritory radius decreased to "+newRadius+" blocks.");
 		} else if (newRadius > radius && active) {
-			clan.messageClan("Territory radius increased to "+newRadius+" blocks.");
+			clan.messageClan("&mTerritory radius increased to "+newRadius+" blocks.");
 		}
 		setRadius(newRadius);
 		

@@ -31,7 +31,7 @@ public class CmdLeave extends CommandBase {
 	public boolean handle(MessageReceiver sender, String[] args) {
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (cp.getClan() == null) {
-			sender.message("You aren't part of a clan!");
+			sender.message("&xYou aren't part of a clan!");
 		} else {
 			if (cp.getClan().getSize() == 1) {
 				cp.getClan().disband();

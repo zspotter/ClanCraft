@@ -1,7 +1,6 @@
 package zerothindex.clancraft.bukkit;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -135,11 +134,11 @@ public class PlayerListener implements Listener {
 		
 		// entering a plot
 		if (entering != null) {
-			cp.message("<m>Entering "+entering.getRelationTag(cp)+entering.getName()+
+			cp.message("&mEntering "+entering.getRelationTag(cp)+entering.getName()+
 					(entering.getDescription().equals("")? "" : " - "+entering.getDescription()));
 		// exiting plot
 		} else if (exiting != null) {
-			cp.message("<m>Leaving "+exiting.getRelationTag(cp)+exiting.getName());
+			cp.message("&mLeaving "+exiting.getRelationTag(cp)+exiting.getName());
 		}
 		
 	}
@@ -165,7 +164,7 @@ public class PlayerListener implements Listener {
 						(int)e.getPlayer().getLocation().getX(), 
 						(int)e.getPlayer().getLocation().getZ());
 		if (entering == null) return;
-		cp.message("<m>Entering "+entering.getRelationTag(cp)+entering.getName()+
+		cp.message("&mEntering "+entering.getRelationTag(cp)+entering.getName()+
 				(entering.getDescription().equals("")? "" : " - "+entering.getDescription()));
 	}
 	
@@ -181,7 +180,10 @@ public class PlayerListener implements Listener {
 		e.setCancelled(true);
 		// [for future use, may want to consider not canceling the event]
 		ClanPlayer player = bp.getClanPlayer(e.getPlayer());
-		String msg = BukkitClanPlugin.stripMessage(e.getMessage()); //so players cant use color tags in chat
+		String msg = e.getMessage(); 
+		if (!e.getPlayer().isOp()) { //so players cant use color tags in chat
+			msg = BukkitClanPlugin.stripMessage(msg);
+		}
 		String name = "";
 		String str;
 		if (player.getClan() == null) {
@@ -191,12 +193,12 @@ public class PlayerListener implements Listener {
 			name = player.getClan().getName()+" "+player.getName();
 		}
 		if (player.getChatMode() == ClanPlayer.CHAT_CLAN) {
-			str = "<<g>"+name+"<n>> <g>(clan) <n>"+msg;
+			str = "&f(clan) <"+name+"> &c"+msg;
 			player.getClan().messageClan(str);
 		} else if (player.getChatMode() == ClanPlayer.CHAT_ALLY) {
-			str = "<<g>"+name+"<n>> <b>(ally) <n>"+msg;
+			str = "&b(ally) &f<"+name+"> &c"+msg;
 			player.getClan().messageClan(str);
-			str = "<<b>"+name+"<n>> <b>(ally) <n>"+msg;
+			str = "&b(ally) <"+name+"> &c"+msg;
 			player.getClan().messageAllies(str);
 		} else {
 			for (Player p : Bukkit.getOnlinePlayers()) {
@@ -206,7 +208,7 @@ public class PlayerListener implements Listener {
 					if (target != null) 
 						tag = player.getClan().getRelationTag(target);
 				}
-				p.sendMessage(BukkitClanPlugin.parseMessage("<"+tag+name+"<n>> "+msg));
+				p.sendMessage(BukkitClanPlugin.parseMessage(tag+ "<"+name+"> &c"+msg));
 			}
 			str = "<"+name+"> "+msg;
 		}

@@ -33,17 +33,17 @@ public class CmdJoin extends CommandBase{
 		if (args.length != 2) return false;
 		Clan c = ClanPlugin.getInstance().getClanManager().findClan(args[1]);
 		if (c == null) {
-			sender.message("<r>Clan \""+args[1]+"\" not found.");
+			sender.message("&xClan \""+args[1]+"\" not found.");
 			return true;
 		}
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (cp != null && cp.getClan() != null) {
-			sender.message("<r>You must leave your current clan first!");
+			sender.message("&xYou must leave your current clan first!");
 		}
 		if (!c.isClosed() || c.isInvited(cp)) {
 			c.addMember(cp);
 		} else {
-			sender.message("<r>That clan is invite only.");
+			sender.message("&xThat clan is invite only.");
 		}
 		return true;
 	}

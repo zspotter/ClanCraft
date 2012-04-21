@@ -40,7 +40,7 @@ public class CmdSetRadius extends CommandBase {
 			return false;
 		}
 		clan.getPlot().setRadius(radius);
-		sender.message("Set "+clan.getName()+"'s radius to "+radius);
+		sender.message("&mSet "+clan.getName()+"'s radius to "+radius);
 		return true;
 	}
 

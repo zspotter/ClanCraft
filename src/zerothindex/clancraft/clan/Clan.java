@@ -59,7 +59,7 @@ public class Clan implements Comparable<Clan>{
 		newb.setClan(this);
 		members.add(newb);
 		invites.remove(newb.getName());
-		newb.message("<m>You have joined "+getName()+".");
+		this.messageClan("&b&m"+newb.getName()+" has joined "+this.getName()+".");
 		if (plot.isActive()) {
 			plot.recalculate();
 		}
@@ -70,8 +70,9 @@ public class Clan implements Comparable<Clan>{
 			member.setClan(null);
 			member.setRole(ClanPlayer.ROLE_NORMAL);
 			members.remove(member);
-			member.message("<m>You have left "+getName()+".");
+			member.message("&b&mYou have left "+getName()+".");
 			plot.recalculate();
+			this.messageClan("&b&m"+member.getName()+" has left the clan.");
 		}
 	}
 	
@@ -80,7 +81,7 @@ public class Clan implements Comparable<Clan>{
 		for (ClanPlayer cp : members) {
 			cp.setClan(null);
 			cp.setRole(ClanPlayer.ROLE_NORMAL);
-			cp.message("<t>Your clan has been disbanded.");
+			cp.message("&b&mYour clan has been disbanded.");
 		}
 		for (Integer id : allies) {
 			ClanPlugin.getInstance().getClanManager().getClan(id).removeAlly(this);
@@ -118,11 +119,11 @@ public class Clan implements Comparable<Clan>{
 	 * @return a color tag
 	 */
 	public String getRelationTag(ClanPlayer cp) {
-		if (cp.getClan() == null) return "<n>";
-		if (cp.getClan().isEnemy(this)) return "<r>";
-		if (cp.getClan().isAlly(this)) return "<b>";
-		if (cp.getClan().equals(this)) return "<g>";
-		return "<n>";
+		if (cp.getClan() == null) return "&n";
+		if (cp.getClan().isEnemy(this)) return "&e";
+		if (cp.getClan().isAlly(this)) return "&a";
+		if (cp.getClan().equals(this)) return "&f";
+		return "&n";
 	}
 	
 	public int getSize() {

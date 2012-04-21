@@ -71,14 +71,21 @@ public class BukkitClanPlugin extends JavaPlugin {
 	    	this.getServer().getPluginManager().disablePlugin(this);
 	    }
 	    
+	    //check the README for what each of these stings represents
 	    tagMap = new HashMap<String,String>();
-	    tagMap.put("<r>", ChatColor.DARK_RED.toString());
-	    tagMap.put("<g>", ChatColor.DARK_GREEN.toString());
-	    tagMap.put("<b>", ChatColor.DARK_AQUA.toString());
-	    tagMap.put("<n>", ChatColor.WHITE.toString());
-	    tagMap.put("<t>", ChatColor.GOLD.toString());
-	    tagMap.put("<m>", ChatColor.GRAY.toString());
-	    //tagMap.put("<*>", ChatColor.MAGIC.toString());
+	    tagMap.put("&e", ChatColor.DARK_RED.toString());
+	    tagMap.put("&f", ChatColor.DARK_GREEN.toString());
+	    tagMap.put("&a", ChatColor.DARK_AQUA.toString());
+	    tagMap.put("&n", ChatColor.YELLOW.toString());
+	    tagMap.put("&c", ChatColor.WHITE.toString());
+	    tagMap.put("&m", ChatColor.GOLD.toString());
+	    tagMap.put("&t", (ChatColor.GOLD.toString()+ChatColor.UNDERLINE.toString()+ChatColor.BOLD.toString()));
+	    tagMap.put("&x", (ChatColor.RED.toString()+ChatColor.ITALIC.toString()));
+	    tagMap.put("&b", ChatColor.BOLD.toString());
+	    tagMap.put("&u", ChatColor.UNDERLINE.toString());
+	    tagMap.put("&i", ChatColor.ITALIC.toString());
+	    //tagMap.put("&*", ChatColor.MAGIC.toString());
+	    tagMap.put("&r", ChatColor.RESET.toString());
 	    
 	    // load an arraylist of savestateclan's into clanManager
  		gson = new GsonBuilder().setPrettyPrinting().create();

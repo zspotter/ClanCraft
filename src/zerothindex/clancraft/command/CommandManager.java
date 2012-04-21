@@ -43,19 +43,19 @@ public class CommandManager {
 		for (CommandBase cmd : commands) {
 			if (cmd.getName().equalsIgnoreCase(args[0])) {
 				if (cmd.playerOnly() && !sender.isPlayer()) {
-					sender.message("<r>You must be a player to use that command.");
+					sender.message("&xYou must be a player to use that command.");
 					return;
 				}
 				if (cmd.handle(sender, args)) {
 					return;
 				} else {
-					sender.message("<r>Usage: "+cmd.getUsage());
+					sender.message("&xUsage: "+cmd.getUsage());
 					return;
 				}
 			}
 		}
 		
-		sender.message("<r>Unkown command \""+args[0]+"\"");
+		sender.message("&xUnkown command \""+args[0]+"\"");
 	}
 	
 	public Set<CommandBase> getCommands() {

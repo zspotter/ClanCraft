@@ -1,11 +1,12 @@
-"A Minecraft Bukkit plugin that manages a clan and territory system."
+A Minecraft Bukkit plugin that manages a clan and territory system.
 
 A work in progress.
 
-== Note to collaborators! ==
-If you are importing anything that has "bukkit" in the path, you are designing
-something wrong! The only Bukkit specific interaction should be taking place in
-the zerothindex.clancraft.bukkit package. 
+== Contact ==
+Feel free to email [zeroth index _at_ gmail _dot_ com].
+
+== Licensing ==
+This project is released under a GPLv3 license.
 
 Color tags for Strings sent to MessageReceivers:
 &f friendly color
@@ -20,10 +21,6 @@ Color tags for Strings sent to MessageReceivers:
 
 &b bold
 &u underline
-&m magic man
-
-== Contact ==
-Feel free to email [zeroth index _at_ gmail _dot_ com].
-
-== Licensing ==
-This project is released under a GPLv3 license.
+&i italic
+&* magic man
+&r reset

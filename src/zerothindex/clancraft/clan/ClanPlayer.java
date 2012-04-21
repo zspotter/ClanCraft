@@ -1,7 +1,5 @@
 package zerothindex.clancraft.clan;
 
-import org.bukkit.entity.Player;
-
 import zerothindex.clancraft.ClanPlugin;
 import zerothindex.clancraft.WorldPlayer;
 

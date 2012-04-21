@@ -34,25 +34,25 @@ public class CmdRank extends CommandBase {
 		if (sender instanceof WorldPlayer) {
 			ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer) sender);
 			if (cp.getRole() != ClanPlayer.ROLE_LEADER) {
-				cp.message("You must be a clan leader to do that.");
+				cp.message("&xYou must be a clan leader to do that.");
 				return true;
 			} else {
 				ClanPlayer subject = ClanPlugin.getInstance().findClanPlayer(args[1]);
 				if (subject == null) {
-					cp.message("Player \""+args[1]+"\" not found.");
+					cp.message("&xPlayer \""+args[1]+"\" not found.");
 					return true;
 				} else {
 					if (cp.getClan() != null && subject.getClan() != null 
 							&& cp.getClan().equals(subject.getClan())) {
 						subject.setRole( (args[2].startsWith("l")? 
 								ClanPlayer.ROLE_LEADER : ClanPlayer.ROLE_NORMAL));
-						cp.message("You set "+subject.getName()+"'s rank to <t>"+(args[2].startsWith("l")? 
-								"leader" : "normal member")+"<m>.");
-						subject.message("Your rank was set to <t>"+(args[2].startsWith("l")? 
-								"leader" : "normal member")+"<m> by "+cp.getName()+".");
+						cp.message("&mYou set "+subject.getName()+"'s rank to "+(args[2].startsWith("l")? 
+								"leader" : "normal member")+".");
+						subject.message("&b&mYour rank was set to "+(args[2].startsWith("l")? 
+								"leader" : "normal member")+" by "+cp.getName()+".");
 						return true;
 					} else {
-						cp.message("You aren't part of the same clan as "+subject.getName()+".");
+						cp.message("&xYou aren't part of the same clan as "+subject.getName()+".");
 						return true;
 					}
 				}
@@ -61,19 +61,19 @@ public class CmdRank extends CommandBase {
 			// assume console command
 			ClanPlayer subject = ClanPlugin.getInstance().findClanPlayer(args[1]);
 			if (subject == null) {
-				sender.message("Player \""+args[1]+"\" not found.");
+				sender.message("&xPlayer \""+args[1]+"\" not found.");
 				return true;
 			} else {
 				if (subject.getClan() != null) {
 					subject.setRole( (args[2].startsWith("l")? 
 							ClanPlayer.ROLE_LEADER : ClanPlayer.ROLE_NORMAL));
-					sender.message("You set "+subject.getName()+"'s rank to <t>"+(args[2].startsWith("l")? 
-							"leader" : "normal member")+"<m>.");
-					subject.message("Your rank was set to <t>"+(args[2].startsWith("l")? 
-							"leader" : "normal member")+"<m> by "+sender.getName()+".");
+					sender.message("&mYou set "+subject.getName()+"'s rank to "+(args[2].startsWith("l")? 
+							"leader" : "normal member")+".");
+					subject.message("&b&mYour rank was set to "+(args[2].startsWith("l")? 
+							"leader" : "normal member")+" by "+sender.getName()+".");
 					return true;
 				} else {
-					sender.message(subject.getName()+" doesn't belong to a clan.");
+					sender.message("&x"+subject.getName()+" doesn't belong to a clan.");
 					return true;
 				}
 			}

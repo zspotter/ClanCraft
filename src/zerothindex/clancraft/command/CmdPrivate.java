@@ -40,19 +40,19 @@ public class CmdPrivate extends CommandBase {
 		}
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (cp.getClan() == null) {
-			sender.message("You aren't part of a clan!");
+			sender.message("&xYou aren't part of a clan!");
 			return true;
 		}
 		if (cp.getRole() != ClanPlayer.ROLE_LEADER) {
-			sender.message("You must be a leader of your clan to do that.");
+			sender.message("&xYou must be a leader of your clan to do that.");
 			return true;
 		}
 		if (closed == cp.getClan().isClosed()) {
-			sender.message("Your clan is already "+ (closed? "private" : "public")+".");
+			sender.message("&xYour clan is already "+ (closed? "private" : "public")+".");
 			return true;
 		}
 		cp.getClan().setClosed(closed);
-		cp.getClan().messageClan("Your clan is now "+(closed? "private" : "public")+".");
+		cp.getClan().messageClan("&b&mYour clan is now "+(closed? "private" : "public")+".");
 		return true;
 		
 	}

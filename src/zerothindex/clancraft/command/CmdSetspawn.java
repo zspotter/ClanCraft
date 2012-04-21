@@ -31,7 +31,7 @@ public class CmdSetspawn extends CommandBase {
 	public boolean handle(MessageReceiver sender, String[] args) {
 		ClanPlayer cp = ClanPlugin.getInstance().findClanPlayer(sender.getName());
 		if (cp == null || cp.getClan() == null || !cp.getClan().getPlot().isActive()) {
-			cp.message("<m>You need to belong to a clan with claimed land to set a spawn.");
+			cp.message("&xYou need to belong to a clan with claimed land to set a spawn.");
 			return true;
 		}
 
@@ -41,9 +41,9 @@ public class CmdSetspawn extends CommandBase {
 		float[] dir = player.getOrientation();
 		if (cp.getClan().getPlot().contains(world, coords[0], coords[2])) {
 			cp.getClan().getPlot().setSpawn(world, coords[0], coords[1], coords[2], dir[0], dir[1]);
-			sender.message("<t>Set your clan's spawn to your position.");
+			sender.message("&mSet your clan's spawn to your position.");
 		} else {
-			sender.message("<m>Your spawn must be inside your territory.");
+			sender.message("&xYour spawn must be inside your territory.");
 		}
 		return true;
 	}

@@ -39,17 +39,17 @@ public class CmdCreate extends CommandBase {
 			cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		}
 		if (cp != null && cp.getClan() != null) {
-			sender.message("<r>You are already part of a clan.");
+			sender.message("&xYou are already part of a clan.");
 			return true;
 		}
 		if (args[1].length() > PluginSettings.maximumClanNameLength) {
-			sender.message("<r>Maximum clan name length is "
+			sender.message("&xMaximum clan name length is "
 					+PluginSettings.maximumClanNameLength+" characters.");
 			return true;
 		}
-		sender.message("<t>Created the clan \""+args[1]+"\".");
+		sender.message("&b&mCreated the clan \""+args[1]+"\".");
 		Clan c = new Clan(args[1]);
-		//sender.message("<t>Change the defualt description with the \"c desc\" command.");
+		sender.message("&mChange the defualt description with the \"c desc\" command.");
 		
 		if (sender.isPlayer()) {
 			c.addMember(cp);

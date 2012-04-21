@@ -34,22 +34,22 @@ public class CmdEnemy extends CommandBase {
 		if (args.length != 2) return false;
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
 		if (cp.getClan() == null) {
-			cp.message("You aren't part of a clan.");
+			cp.message("&xYou aren't part of a clan.");
 			return true;
 		}
 		if (cp.getRole() != ClanPlayer.ROLE_LEADER) {
-			cp.message("You must be a leader of your clan to declare enemies.");
+			cp.message("&xYou must be a leader of your clan to declare enemies.");
 			return true;
 		}
 		Clan enemy = ClanPlugin.getInstance().getClanManager().findClan(args[1]);
 		if (enemy == null) {
-			cp.message("Clan \""+args[1]+"\" not found.");
+			cp.message("&xClan \""+args[1]+"\" not found.");
 			return true;
 		}
 		cp.getClan().addEnemy(enemy.getClanID());
 		enemy.addEnemy(cp.getClan().getClanID());
-		cp.getClan().messageClan("<r> You are now enemies with "+enemy.getName()+".");
-		enemy.messageClan("<r> You are now enemies with "+cp.getClan().getName()+".");
+		cp.getClan().messageClan("&b&mYou are now enemies with &e"+enemy.getName());
+		enemy.messageClan("&b&mYou are now enemies with &e"+cp.getClan().getName());
 		
 		return true;
 	}

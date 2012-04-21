@@ -19,7 +19,7 @@ public class CmdChatMode extends CommandBase {
 
 	@Override
 	public String getUsage() {
-		return "/c chat <public|clan|ally>";
+		return "/c chat OR /c chat <public|clan|ally>";
 	}
 
 	@Override
@@ -29,20 +29,35 @@ public class CmdChatMode extends CommandBase {
 
 	@Override
 	public boolean handle(MessageReceiver sender, String[] args) {
-		if (args.length != 2) return false;
+		if (args.length > 2) return false;
 		ClanPlayer cp = ClanPlugin.getInstance().getClanPlayer((WorldPlayer)sender);
-		if (args[1].startsWith("p")) {
+		String mode;
+		if (args.length == 2) {
+			mode = args[1];
+		} else {
+			if (cp.getClan() != null) {
+				if (cp.getChatMode() == ClanPlayer.CHAT_ALLY)
+					mode = "p";
+				else if (cp.getChatMode() == ClanPlayer.CHAT_CLAN) 
+					mode = "a";
+				else mode = "c";
+			} else {
+				return true;
+			}
+		}
+	
+		if (mode.startsWith("p")) {
 			cp.setChatMode(ClanPlayer.CHAT_PUBLIC);
-			cp.message("<m>Chat mode: <n>PUBLIC.");
+			cp.message("&mChat mode: &nPUBLIC.");
 		} else if (cp.getClan() == null) {
-			cp.message("<m>You don't have a clan to chat with!");
+			cp.message("&xYou don't have a clan to chat with!");
 			cp.setChatMode(ClanPlayer.CHAT_PUBLIC);
-		} else if (args[1].startsWith("c")) {
+		} else if (mode.startsWith("c")) {
 			cp.setChatMode(ClanPlayer.CHAT_CLAN);
-			cp.message("<m>Chat mode: <g>CLAN");
-		} else if (args[1].startsWith("a")) {
+			cp.message("&mChat mode: &fCLAN");
+		} else if (mode.startsWith("a")) {
 			cp.setChatMode(ClanPlayer.CHAT_ALLY);
-			cp.message("<m>Chat mode: <b>ALLY");
+			cp.message("&mChat mode: &aALLY");
 		} else {
 			return false;
 		}
