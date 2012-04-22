@@ -44,7 +44,7 @@ public class CmdInvite extends CommandBase {
 			sender.message("&xCouldn't find \""+args[1]+"\".");
 			return true;
 		}
-		if (invited.getClan().equals(cp.getClan())) {
+		if (invited.getClan() != null && invited.getClan().equals(cp.getClan())) {
 			sender.message("&xThat player is already part of this clan!");
 			return true;
 		}

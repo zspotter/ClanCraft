@@ -94,8 +94,8 @@ public class PlayerListener implements Listener {
 	 */
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
-		if (e.getBlockAgainst().getType() == Material.BEDROCK
-				&& e.getBlockPlaced().getType() == Material.IRON_DOOR_BLOCK) {
+		if (e.getBlock().getType() == Material.IRON_DOOR_BLOCK
+				&& e.getBlock().getRelative(0, -1, 0).getType() == Material.BEDROCK) {
 			e.setCancelled(true);
 			e.getPlayer().setFireTicks(10);
 		}
@@ -187,18 +187,19 @@ public class PlayerListener implements Listener {
 		String name = "";
 		String str;
 		if (player.getClan() == null) {
-			name = player.getName();
 			player.setChatMode(ClanPlayer.CHAT_PUBLIC);
-		} else {
-			name = player.getClan().getName()+" "+player.getName();
+		} else if (player.getChatMode() != ClanPlayer.CHAT_CLAN){
+			name = player.getClan().getName()+" ";
 		}
+		name += player.getName();
 		if (player.getChatMode() == ClanPlayer.CHAT_CLAN) {
 			str = "&f(clan) <"+name+"> &c"+msg;
 			player.getClan().messageClan(str);
+			str = "&f(clan) <"+player.getClan().getName()+" "+name+"> &c"+msg;
 		} else if (player.getChatMode() == ClanPlayer.CHAT_ALLY) {
-			str = "&b(ally) &f<"+name+"> &c"+msg;
+			str = "&a(ally) &f<"+name+"> &c"+msg;
 			player.getClan().messageClan(str);
-			str = "&b(ally) <"+name+"> &c"+msg;
+			str = "&a(ally) <"+name+"> &c"+msg;
 			player.getClan().messageAllies(str);
 		} else {
 			for (Player p : Bukkit.getOnlinePlayers()) {
