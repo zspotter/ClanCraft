@@ -39,7 +39,7 @@ import zerothindex.clancraft.clan.ClanPlayer;
  * This class will try to be THE ONLY WAY that Bukkit and Clan classes will 
  * interact with each other!
  * 
- * @author zerothindex
+ * @author Szab54
  *
  */
 public class BukkitClanPlugin extends JavaPlugin {
