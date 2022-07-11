@@ -1,8 +1,8 @@
-name: ClanCraft
+name: Hackelt
 version: 0.0
 main: zerothindex.clancraft.bukkit.BukkitClanPlugin
 author: zerothindex@gmail.com
-softdepend: [WorldGuard]
+softdepend: [Worledit]
 commands:
   c:
     description: the root command
