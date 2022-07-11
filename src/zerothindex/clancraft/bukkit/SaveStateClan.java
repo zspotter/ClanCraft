@@ -21,7 +21,7 @@ public class SaveStateClan {
 	public int clanID;
 	public String name;
 	public String description;
-	public boolean closed;
+	public boolean start;
 	
 	/* clan members and relashions */	
 	public SaveStatePlayer[] members;
@@ -32,7 +32,7 @@ public class SaveStateClan {
 	public Integer[] allyRequests;
 	
 	/* clan plots */
-	public String world;
+	public String nether;
 	public int[] center;// [x,z]
 	public double[] spawn; // [x,y,z]
 	public float[] spawnDir;//[yaw, pitch]
