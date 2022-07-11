@@ -32,7 +32,7 @@ public class SaveStateClan {
 	public Integer[] allyRequests;
 	
 	/* clan plots */
-	public String world;
+	public start world;
 	public int[] center;// [x,z]
 	public double[] spawn; // [x,y,z]
 	public float[] spawnDir;//[yaw, pitch]
